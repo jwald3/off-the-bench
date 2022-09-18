@@ -1,0 +1,498 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model all_stats_2021_season {
+  player_id                     String  @id
+  team                          String?
+  player_name_abbrev            String?
+  jersey_number                 Int?
+  position                      String?
+  player_name_full              String?
+  first_name                    String?
+  last_name                     String?
+  exp                           Float?
+  height                        Float?
+  weight                        Float?
+  birth_date                    String?
+  headshot_url                  String?
+  player_name_bio               String?
+  games_played_bio              Float?
+  passing_yards                 Float?
+  longest_pass                  Float?
+  passing_tds                   Float?
+  interceptions                 Float?
+  completed_passes              Float?
+  incomplete_passes             Float?
+  pass_attempts                 Float?
+  qb_dropbacks                  Float?
+  shotgun_snaps                 Float?
+  no_huddle_snaps               Float?
+  qb_kneels_bio                 Float?
+  qb_spikes                     Float?
+  sacks                         Float?
+  air_yards_bio                 Float?
+  first_down_passes             Float?
+  player_number                 Float?
+  deep_pass_attempts            Float?
+  short_pass_attempts           Float?
+  left_pass_attempts            Float?
+  middle_pass_attempts          Float?
+  right_passes_attempts         Float?
+  left_pass_complete            Float?
+  left_pass_incomplete          Float?
+  middle_pass_complete          Float?
+  middle_pass_incomplete        Float?
+  right_pass_complete           Float?
+  right_pass_incomplete         Float?
+  deep_pass_complete            Float?
+  deep_pass_incomplete          Float?
+  short_pass_complete           Float?
+  short_pass_incomplete         Float?
+  deep_left_complete            Float?
+  deep_left_incomplete          Float?
+  deep_middle_complete          Float?
+  deep_middle_incomplete        Float?
+  deep_right_complete           Float?
+  deep_right_incomplete         Float?
+  short_left_complete           Float?
+  short_left_incomplete         Float?
+  short_middle_complete         Float?
+  short_middle_incomplete       Float?
+  short_right_complete          Float?
+  short_right_incomplete        Float?
+  between_20s_passing_yards     Float?
+  red_zone_passing_yards        Float?
+  between_20s_pass              Float?
+  red_zone_pass                 Float?
+  between_20s_passing_touchdown Float?
+  red_zone_passing_touchdown    Float?
+  goalline_pass                 Float?
+  goalline_pass_touchdown       Float?
+  endzone_target                Float?
+  endzone_target_touchdown      Float?
+  between_20s_completion        Float?
+  red_zone_completion           Float?
+  player_name_rushing           String?
+  games_played_rushing          Float?
+  rushing_yards                 Float?
+  longest_rush                  Float?
+  rushing_tds                   Float?
+  rush_attempts                 Float?
+  first_down_rushes             Float?
+  rusher_jersey_number          String?
+  qb_kneels_rushing             Float?
+  rush_left                     Float?
+  rush_middle                   Float?
+  rush_right                    Float?
+  rush_end                      Float?
+  rush_tackle                   Float?
+  rush_guard                    Float?
+  left_end_rush                 Float?
+  rush_left_tackle              Float?
+  rush_left_guard               Float?
+  rush_middle_end               Float?
+  rush_middle_tackle            Float?
+  rush_middle_guard             Float?
+  rush_right_end                Float?
+  rush_right_tackle             Float?
+  rush_right_guard              Float?
+  left_rush_yards               Float?
+  middle_rush_yards             Float?
+  right_rush_yards              Float?
+  left_end_rush_yards           Float?
+  left_tackle_rush_yards        Float?
+  left_guard_rush_yards         Float?
+  middle_end_rush_yards         Float?
+  middle_tackle_rush_yards      Float?
+  middle_guard_rush_yards       Float?
+  right_end_rush_yards          Float?
+  right_tackle_rush_yards       Float?
+  right_guard_rush_yards        Float?
+  left_end_rush_touchdown       Float?
+  left_tackle_rush_touchdown    Float?
+  left_guard_rush_touchdown     Float?
+  middle_end_rush_touchdown     Float?
+  middle_tackle_rush_touchdown  Float?
+  middle_guard_rush_touchdown   Float?
+  right_end_rush_touchdown      Float?
+  right_tackle_rush_touchdown   Float?
+  right_guard_rush_touchdown    Float?
+  between_20s_rushing_yards     Float?
+  red_zone_rushing_yards        Float?
+  between_20s_rush              Float?
+  red_zone_rush                 Float?
+  between_20s_rushing_touchdown Float?
+  red_zone_rushing_touchdown    Float?
+  goalline_rush                 Float?
+  goalline_rush_touchdown       Float?
+  player_name                   String?
+  receiving_yards               Float?
+  longest_reception             Float?
+  receiving_tds                 Float?
+  targets                       Float?
+  receptions                    Float?
+  first_downs                   Float?
+  yards_after_catch             Float?
+  air_yards_receiving           Float?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model fantasy_season_2021 {
+  player_id            String?
+  position             String?
+  games_played         BigInt?
+  pass_attempt         BigInt?
+  complete_pass        BigInt?
+  incomplete_pass      BigInt?
+  passing_yards        BigInt?
+  pass_touchdown       BigInt?
+  interception         BigInt?
+  sack                 BigInt?
+  over_300_passing     BigInt?
+  rush_attempt         BigInt?
+  rushing_yards        BigInt?
+  rush_touchdown       BigInt?
+  tackled_for_loss     BigInt?
+  fumble               BigInt?
+  first_down_rush      BigInt?
+  over_10_rush         BigInt?
+  over_100_rushing     BigInt?
+  receptions           BigInt?
+  targets              BigInt?
+  receiving_yards      BigInt?
+  receiving_touchdown  BigInt?
+  first_down_reception BigInt?
+  over_10_reception    BigInt?
+  over_100_receiving   BigInt?
+  gsis_id              String @id
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model passing_stats_2021_season {
+  player_id                     String?
+  team                          String?
+  player_name                   String?
+  games_played                  BigInt?
+  passing_yards                 BigInt?
+  longest_pass                  BigInt?
+  passing_tds                   BigInt?
+  interceptions                 BigInt?
+  completed_passes              BigInt?
+  incomplete_passes             BigInt?
+  pass_attempts                 BigInt?
+  qb_dropbacks                  BigInt?
+  shotgun_snaps                 BigInt?
+  no_huddle_snaps               BigInt?
+  qb_kneels                     BigInt?
+  qb_spikes                     BigInt?
+  sacks                         BigInt?
+  air_yards                     BigInt?
+  first_down_passes             BigInt?
+  player_number                 BigInt?
+  deep_pass_attempts            BigInt?
+  short_pass_attempts           BigInt?
+  left_pass_attempts            BigInt?
+  middle_pass_attempts          BigInt?
+  right_passes_attempts         BigInt?
+  left_pass_complete            BigInt?
+  left_pass_incomplete          BigInt?
+  middle_pass_complete          BigInt?
+  middle_pass_incomplete        BigInt?
+  right_pass_complete           BigInt?
+  right_pass_incomplete         BigInt?
+  deep_pass_complete            BigInt?
+  deep_pass_incomplete          BigInt?
+  short_pass_complete           BigInt?
+  short_pass_incomplete         BigInt?
+  deep_left_complete            BigInt?
+  deep_left_incomplete          BigInt?
+  deep_middle_complete          BigInt?
+  deep_middle_incomplete        BigInt?
+  deep_right_complete           BigInt?
+  deep_right_incomplete         BigInt?
+  short_left_complete           BigInt?
+  short_left_incomplete         BigInt?
+  short_middle_complete         BigInt?
+  short_middle_incomplete       BigInt?
+  short_right_complete          BigInt?
+  short_right_incomplete        BigInt?
+  between_20s_passing_yards     BigInt?
+  red_zone_passing_yards        BigInt?
+  between_20s_pass              BigInt?
+  red_zone_pass                 BigInt?
+  between_20s_passing_touchdown BigInt?
+  red_zone_passing_touchdown    BigInt?
+  goalline_pass                 BigInt?
+  goalline_pass_touchdown       BigInt?
+  endzone_target                BigInt?
+  endzone_target_touchdown      BigInt?
+  between_20s_completion        BigInt?
+  red_zone_completion           BigInt?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model player_bios_2021 {
+  player_id          String?
+  team               String?
+  player_name_abbrev String?
+  jersey_number      Int?
+  position           String?
+  player_name_full   String?
+  first_name         String?
+  last_name          String?
+  exp                Float?
+  height             Float?
+  weight             Float?
+  birth_date         DateTime? @db.Timestamp(6)
+  headshot_url       String?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model player_offense_stats_2021_basic {
+  player_id        String @unique
+  team_abbr        String?
+  pass_attempt     Float?
+  completion       Float?
+  incompletion     Float?
+  passing_yards    Float?
+  passing_TD       Float?
+  interception     Float?
+  sack             Float?
+  rush_attempt     Float?
+  rushing_yards    Float?
+  rushing_TD       Float?
+  tackled_for_loss Float?
+  fumble           Float?
+  reception        Float?
+  target           Float?
+  receiving_yards  Float?
+  receiving_TD     Float?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model player_offense_stats_season_2021_basic {
+  player_id        String @unique
+  team_abbr        String?
+  pass_attempt     Float?
+  completion       Float?
+  incompletion     Float?
+  passing_yards    Float?
+  passing_TD       Float?
+  interception     Float?
+  sack             Float?
+  rush_attempt     Float?
+  rushing_yards    Float?
+  rushing_TD       Float?
+  tackled_for_loss Float?
+  fumble           Float?
+  reception        Float?
+  target           Float?
+  receiving_yards  Float?
+  receiving_TD     Float?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model player_offense_stats_weekly_2021_basic {
+  player_id        String?
+  game_id          String?
+  pass_attempt     Float?
+  completion       Float?
+  incompletion     Float?
+  passing_yards    Float?
+  passing_TD       Float?
+  interception     Float?
+  sack             Float?
+  rush_attempt     Float?
+  rushing_yards    Float?
+  rushing_TD       Float?
+  tackled_for_loss Float?
+  fumble           Float?
+  reception        Float?
+  target           Float?
+  receiving_yards  Float?
+  receiving_TD     Float?
+  game_id_db       String?
+  week             Int?
+  gsis_id          String @id
+  club_code        String?
+  position         String?
+  week_count       BigInt?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model receiving_stats_2021_season {
+  player_id         String?
+  team              String?
+  player_name       String?
+  receiving_yards   BigInt?
+  longest_reception BigInt?
+  receiving_tds     BigInt?
+  targets           BigInt?
+  receptions        BigInt?
+  first_downs       BigInt?
+  yards_after_catch BigInt?
+  air_yards         BigInt?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model rushing_stats_2021_season {
+  player_id                     String?
+  team                          String?
+  player_name                   String?
+  games_played                  BigInt?
+  rushing_yards                 BigInt?
+  longest_rush                  BigInt?
+  rushing_tds                   BigInt?
+  rush_attempts                 BigInt?
+  first_down_rushes             BigInt?
+  rusher_jersey_number          String?
+  qb_kneels                     BigInt?
+  rush_left                     BigInt?
+  rush_middle                   BigInt?
+  rush_right                    BigInt?
+  rush_end                      BigInt?
+  rush_tackle                   BigInt?
+  rush_guard                    BigInt?
+  left_end_rush                 BigInt?
+  rush_left_tackle              BigInt?
+  rush_left_guard               BigInt?
+  rush_middle_end               BigInt?
+  rush_middle_tackle            BigInt?
+  rush_middle_guard             BigInt?
+  rush_right_end                BigInt?
+  rush_right_tackle             BigInt?
+  rush_right_guard              BigInt?
+  left_rush_yards               BigInt?
+  middle_rush_yards             BigInt?
+  right_rush_yards              BigInt?
+  left_end_rush_yards           BigInt?
+  left_tackle_rush_yards        BigInt?
+  left_guard_rush_yards         BigInt?
+  middle_end_rush_yards         BigInt?
+  middle_tackle_rush_yards      BigInt?
+  middle_guard_rush_yards       BigInt?
+  right_end_rush_yards          BigInt?
+  right_tackle_rush_yards       BigInt?
+  right_guard_rush_yards        BigInt?
+  left_end_rush_touchdown       BigInt?
+  left_tackle_rush_touchdown    BigInt?
+  left_guard_rush_touchdown     BigInt?
+  middle_end_rush_touchdown     BigInt?
+  middle_tackle_rush_touchdown  BigInt?
+  middle_guard_rush_touchdown   BigInt?
+  right_end_rush_touchdown      BigInt?
+  right_tackle_rush_touchdown   BigInt?
+  right_guard_rush_touchdown    BigInt?
+  between_20s_rushing_yards     BigInt?
+  red_zone_rushing_yards        BigInt?
+  between_20s_rush              BigInt?
+  red_zone_rush                 BigInt?
+  between_20s_rushing_touchdown BigInt?
+  red_zone_rushing_touchdown    BigInt?
+  goalline_rush                 BigInt?
+  goalline_rush_touchdown       BigInt?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model season_team_defense_2021 {
+  season             BigInt?
+  defteam            String @id
+  points_scored      BigInt?
+  passing_attempts   BigInt?
+  complete_pass      BigInt?
+  incomplete_pass    BigInt?
+  pass_touchdown     BigInt?
+  interception       BigInt?
+  sack               BigInt?
+  passing_yds        BigInt?
+  first_down_pass    BigInt?
+  rush_attempt       BigInt?
+  rushing_yards      BigInt?
+  rush_touchdown     BigInt?
+  first_down_rush    BigInt?
+  penalty            BigInt?
+  first_down_penalty BigInt?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model season_team_offense_2021 {
+  season             BigInt?
+  posteam            String @id
+  points_scored      BigInt?
+  passing_attempts   BigInt?
+  complete_pass      BigInt?
+  incomplete_pass    BigInt?
+  pass_touchdown     BigInt?
+  interception       BigInt?
+  sack               BigInt?
+  passing_yds        BigInt?
+  first_down_pass    BigInt?
+  rush_attempt       BigInt?
+  rushing_yards      BigInt?
+  rush_touchdown     BigInt?
+  first_down_rush    BigInt?
+  penalty            BigInt?
+  first_down_penalty BigInt?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model weekly_team_defense_2021 {
+  season             BigInt?
+  week               BigInt?
+  game_id            String?
+  posteam            String?
+  points_scored      BigInt?
+  passing_attempts   BigInt?
+  complete_pass      BigInt?
+  incomplete_pass    BigInt?
+  pass_touchdown     BigInt?
+  interception       BigInt?
+  sack               BigInt?
+  passing_yds        BigInt?
+  first_down_pass    BigInt?
+  rush_attempt       BigInt?
+  rushing_yards      BigInt?
+  rush_touchdown     BigInt?
+  first_down_rush    BigInt?
+  penalty            BigInt?
+  first_down_penalty BigInt?
+  game_id_db         String @id
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model weekly_team_offense_2021 {
+  season             BigInt?
+  week               BigInt?
+  game_id            String?
+  posteam            String?
+  points_scored      BigInt?
+  passing_attempts   BigInt?
+  complete_pass      BigInt?
+  incomplete_pass    BigInt?
+  pass_touchdown     BigInt?
+  interception       BigInt?
+  sack               BigInt?
+  passing_yds        BigInt?
+  first_down_pass    BigInt?
+  rush_attempt       BigInt?
+  rushing_yards      BigInt?
+  rush_touchdown     BigInt?
+  first_down_rush    BigInt?
+  penalty            BigInt?
+  first_down_penalty BigInt?
+  game_id_db         String @id
+}
