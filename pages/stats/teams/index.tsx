@@ -47,7 +47,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
     return {
         props: {
-            key: phase,
             teams: JSON.parse(
                 JSON.stringify(team, (_, v) =>
                     typeof v === "bigint" ? v.toString() : v
