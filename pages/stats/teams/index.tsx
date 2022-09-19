@@ -6,6 +6,7 @@ import {
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import StatTable from "../../../components/StatTable";
+import StatTableHeader from "../../../components/StatTableHeader";
 import Checkbox from "../../../components/WeekCheckboxFilter";
 import prisma from "../../../lib/prisma";
 
@@ -46,6 +47,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
     return {
         props: {
+            key: phase,
             teams: JSON.parse(
                 JSON.stringify(team, (_, v) =>
                     typeof v === "bigint" ? v.toString() : v
@@ -341,6 +343,7 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
 
     return (
         <div className="weekly-team-page">
+            <StatTableHeader />
             <Checkbox handleFilters={setWeekFilter} />
             <div className="weekly-team-stats">
                 <StatTable
