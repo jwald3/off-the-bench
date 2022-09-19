@@ -26,7 +26,12 @@ export default function DrawerAppBar() {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-            <Typography variant="h6" component="a" sx={{ my: 2 }} href="/">
+            <Typography
+                variant="h6"
+                component="a"
+                sx={{ my: 2 }}
+                href="/"
+            >
                 OFF THE BENCH
             </Typography>
             <Divider />

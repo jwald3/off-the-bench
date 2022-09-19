@@ -16,6 +16,15 @@ a {
     font-family: "Sarabun", sans-serif;
 }
 
+.app-logo {
+    font-family: "Sarabun", sans-serif !important;
+}
+
+.item-selector {
+    cursor: pointer;
+    color: #3a3855;
+}
+
 .home-grid {
     display: grid;
     grid-template-columns: auto auto;
@@ -94,6 +103,7 @@ a {
 
 .active-item {
     color: #827fbb;
+    font-family: "Sarabun", sans-serif;
 }
 
 .inactive {
@@ -108,7 +118,7 @@ a {
     text-align: center;
     background-color: gainsboro;
     cursor: pointer;
-    font-size: 0.6em;
+    font-size: 0.8em;
 }
 
 .control-btn:nth-child(odd) {

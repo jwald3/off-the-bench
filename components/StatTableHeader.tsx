@@ -11,8 +11,8 @@ const StatTableHeader = () => {
                 <h1
                     className={
                         phase?.toLocaleString().toLowerCase() == "offense"
-                            ? "active-item"
-                            : ""
+                            ? "active-item item-selector"
+                            : "item-selector"
                     }
                 >
                     Offense
@@ -23,8 +23,8 @@ const StatTableHeader = () => {
                 <h1
                     className={
                         phase?.toLocaleString().toLowerCase() == "defense"
-                            ? "active-item"
-                            : ""
+                            ? "active-item item-selector"
+                            : "item-selector"
                     }
                 >
                     Defense
