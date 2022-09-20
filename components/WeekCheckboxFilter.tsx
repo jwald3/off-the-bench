@@ -88,6 +88,21 @@ const Checkbox = (props: CheckboxProps) => {
 
     return (
         <div className="checkbox-filters">
+            <div
+                style={{
+                    marginRight: "2%",
+                    alignItems: "center",
+                }}
+            >
+                <h1
+                    style={{
+                        fontSize: "1.2em",
+                    }}
+                >
+                    Weeks
+                </h1>
+            </div>
+
             {wks.map((val, idx) => (
                 <div key={idx}>
                     <div
