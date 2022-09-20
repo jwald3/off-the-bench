@@ -1,14 +1,33 @@
-import React, { useState } from "react";
-import weeks from "../data/weeks.json";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
+import wks from "../data/weeks.json";
 
 interface CheckboxProps {
     handleFilters: Function;
+    weekFilter: number[];
+}
+
+interface Parameters {
+    weeks: string | string[];
+    phase: string | string[];
 }
 
 const Checkbox = (props: CheckboxProps) => {
-    const [checked, setChecked] = useState([
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-    ]);
+    const router = useRouter();
+    const path = router.pathname;
+    const { query } = router;
+
+    const [checked, setChecked] = useState(props.weekFilter);
+
+    useEffect(() => {
+        if (query.weeks !== undefined) {
+            const selectedWeeks = (query.weeks as string)
+                ?.split(",")
+                .map(Number);
+
+            setChecked(selectedWeeks);
+        }
+    }, []);
 
     const handleToggle = (value: number) => {
         const currentIndex = checked.indexOf(value); // will find index or return -1 if not found
@@ -22,12 +41,31 @@ const Checkbox = (props: CheckboxProps) => {
 
         setChecked(newChecked);
         props.handleFilters(newChecked);
+
+        const urlNewChecked = newChecked.map(String).join(",");
+
+        router.push({
+            pathname: path,
+            query: {
+                phase: query.phase,
+                weeks: urlNewChecked,
+            },
+        });
     };
 
     const handleClearAll = () => {
         const newChecked: [] = [];
         setChecked(newChecked);
         props.handleFilters(newChecked);
+
+        const urlNewChecked = newChecked.map(String).join(",");
+
+        router.push({
+            pathname: path,
+            query: {
+                phase: query.phase,
+            },
+        });
     };
 
     const handleSelectAll = () => {
@@ -36,11 +74,21 @@ const Checkbox = (props: CheckboxProps) => {
         ];
         setChecked(newChecked);
         props.handleFilters(newChecked);
+
+        const urlNewChecked = newChecked.map(String).join(",");
+
+        router.push({
+            pathname: path,
+            query: {
+                phase: query.phase,
+                weeks: urlNewChecked,
+            },
+        });
     };
 
     return (
         <div className="checkbox-filters">
-            {weeks.map((val, idx) => (
+            {wks.map((val, idx) => (
                 <div key={idx}>
                     <div
                         className={

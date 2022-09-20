@@ -4,27 +4,76 @@ import { useRouter } from "next/router";
 const StatTableHeader = () => {
     const router = useRouter();
     const { phase } = router.query;
+    const path = router.pathname;
+    const { query } = router;
 
     return (
-        <div style={{ display: "flex", gap: "1%", marginLeft: "5%" }}>
-            <Link href="/stats/teams?phase=offense">
+        <div
+            style={{
+                display: "flex",
+                gap: "1%",
+                margin: "auto",
+                paddingLeft: "2%",
+                maxWidth: "1400px",
+                alignItems: "center",
+            }}
+        >
+            <Link
+                href={{
+                    pathname: path,
+                    query: {
+                        phase: "offense",
+                        weeks: query.weeks,
+                    },
+                }}
+            >
                 <h1
                     className={
                         phase?.toLocaleString().toLowerCase() == "offense"
                             ? "active-item item-selector"
                             : "item-selector"
                     }
+                    onClick={() =>
+                        router
+                            .replace({
+                                pathname: path,
+                                query: {
+                                    phase: "offense",
+                                    weeks: query.weeks,
+                                },
+                            })
+                            .then(() => router.reload())
+                    }
                 >
                     Offense
                 </h1>
             </Link>
             <h1>|</h1>
-            <Link href="/stats/teams?phase=defense">
+            <Link
+                href={{
+                    pathname: path,
+                    query: {
+                        phase: "defense",
+                        weeks: query.weeks,
+                    },
+                }}
+            >
                 <h1
                     className={
                         phase?.toLocaleString().toLowerCase() == "defense"
                             ? "active-item item-selector"
                             : "item-selector"
+                    }
+                    onClick={() =>
+                        router
+                            .replace({
+                                pathname: path,
+                                query: {
+                                    phase: "defense",
+                                    weeks: query.weeks,
+                                },
+                            })
+                            .then(() => router.reload())
                     }
                 >
                     Defense

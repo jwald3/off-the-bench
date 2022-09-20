@@ -4,6 +4,7 @@ import {
     GridValueFormatterParams,
 } from "@mui/x-data-grid";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import StatTable from "../../../components/StatTable";
 import StatTableHeader from "../../../components/StatTableHeader";
@@ -15,7 +16,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let phase = query.phase;
     let teamQueryResponse;
 
-    if (phase === "offense" || phase === undefined) {
+    if (phase === "offense") {
         teamQueryResponse = await prisma.weekly_team_offense_2021.findMany({
             where: {
                 week: {
@@ -78,6 +79,11 @@ interface TeamProps {
 }
 
 const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
+    const router = useRouter();
+    const path = router.pathname;
+    const { query } = router;
+    const { phase } = query;
+
     const columns: GridColDef[] = [
         { headerName: "Team", field: "posteam", flex: 1 },
         // { headerName: "Week", field: "week", flex: 1 },
@@ -183,6 +189,18 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     const [weekFilter, setWeekFilter] = useState([
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
     ]);
+
+    useEffect(() => {
+        if (query.weeks !== undefined && query.weeks !== "") {
+            const selectedWeeks = (query.weeks as string)
+                ?.split(",")
+                .map(Number);
+
+            setWeekFilter(selectedWeeks);
+        } else if (query.weeks === "") {
+            setWeekFilter([]);
+        }
+    }, []);
 
     useEffect(() => {
         let teamsMap = new Map();
@@ -343,7 +361,7 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     return (
         <div className="weekly-team-page">
             <StatTableHeader />
-            <Checkbox handleFilters={setWeekFilter} />
+            <Checkbox handleFilters={setWeekFilter} weekFilter={weekFilter} />
             <div className="weekly-team-stats">
                 <StatTable
                     data={aggTeams}
