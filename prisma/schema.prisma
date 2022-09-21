@@ -63,13 +63,13 @@ model player_bios_2021 {
 model player_offense_stats_weekly_2021_basic {
   player_id        String?
   game_id          String?
-  pass_attempt     BigInt?
-  completion       BigInt?
-  incompletion     BigInt?
-  passing_yards    BigInt?
-  passing_TD       BigInt?
-  interception     BigInt?
-  sack             BigInt?
+  pass_attempt     Float?
+  completion       Float?
+  incompletion     Float?
+  passing_yards    Float?
+  passing_TD       Float?
+  interception     Float?
+  sack             Float?
   rush_attempt     Float?
   rushing_yards    Float?
   rushing_TD       Float?
@@ -179,4 +179,27 @@ model weekly_team_offense_2021 {
   penalty            BigInt?
   first_down_penalty BigInt?
   game_id_db         String @id
+}
+
+model player_defense_stats_weekly_2021_basic {
+  player_id            String?
+  game_id              String?
+  passes_defended      Float?
+  interception         Float?
+  int_return_yards     Float?
+  int_return_touchdown Float?
+  tackles_for_loss     Float?
+  qb_hits              Float?
+  fumbles_forced       Float?
+  solo_tackles         Float?
+  assist_tackls        Float?
+  sack                 Float?
+  half_sack            Float?
+  tackle_with_assist   Float?
+  game_id_db           String  @id
+  gsis_id              String?
+  team_abbr            String?
+  position             String?
+  week                 Int?
+  week_count           BigInt?
 }
