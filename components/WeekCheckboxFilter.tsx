@@ -58,8 +58,6 @@ const Checkbox = (props: CheckboxProps) => {
         setChecked(newChecked);
         props.handleFilters(newChecked);
 
-        const urlNewChecked = newChecked.map(String).join(",");
-
         router.push({
             pathname: path,
             query: {

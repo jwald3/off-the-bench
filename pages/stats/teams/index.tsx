@@ -80,9 +80,7 @@ interface TeamProps {
 
 const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     const router = useRouter();
-    const path = router.pathname;
     const { query } = router;
-    const { phase } = query;
 
     const columns: GridColDef[] = [
         { headerName: "Team", field: "posteam", flex: 1 },
