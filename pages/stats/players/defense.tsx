@@ -7,6 +7,7 @@ import Checkbox from "../../../components/WeekCheckboxFilter";
 import { useRouter } from "next/router";
 import StatTableHeader from "../../../components/StatTableHeader";
 import PlayerTableHeader from "../../../components/PlayerTableHeader";
+import { playerDefenseColumns } from "../../../data/tableColumns";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: IPlayerSeason[];
@@ -69,107 +70,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     const router = useRouter();
     const { query } = router;
 
-    const columns: GridColDef[] = [
-        {
-            headerName: "Player",
-            field: "player_id",
-            width: 150,
-            type: "string",
-        },
-        {
-            headerName: "Position",
-            field: "position",
-            // flex: 0.75,
-            type: "string",
-        },
-        {
-            headerName: "Team",
-            field: "team_abbr",
-            type: "string",
-        },
-        {
-            headerName: "Games",
-            field: "week_count",
-            type: "number",
-        },
-        {
-            headerName: "INTs",
-            field: "interception",
-            // flex: 1,
-            type: "number",
-        },
-        {
-            headerName: "INT Yards",
-            field: "int_return_yards",
-            // flex: 0.75,
-            type: "number",
-        },
-        {
-            headerName: "INT TDs",
-            field: "int_return_touchdown",
-            // flex: 0.75,
-            type: "number",
-        },
-        {
-            headerName: "Passes Defended",
-            field: "passes_defended",
-            // flex: 0.75,
-            type: "number",
-        },
-        {
-            headerName: "Forced Fumbles",
-            field: "fumbles_forced",
-            // flex: 0.75,
-            type: "number",
-        },
-        {
-            headerName: "Sacks",
-            field: "sack",
-            type: "number",
-            valueGetter: getTotalSacks,
-        },
-        {
-            headerName: "Combined Tackles",
-            field: "comb_tackles",
-            // flex: 0.75,
-            valueGetter: getComboTackles,
-            type: "number",
-        },
-        {
-            headerName: "Solo Tackles",
-            field: "solo_tackles",
-            type: "number",
-        },
-        {
-            headerName: "Assists on Tackles",
-            field: "assist_tackls",
-            type: "number",
-        },
-        {
-            headerName: "Tackles For Loss",
-            field: "tackles_for_loss",
-            // flex: 0.75,
-            type: "number",
-        },
-        {
-            headerName: "QB Hits",
-            field: "qb_hits",
-            // flex: 0.75,
-            type: "number",
-        },
-    ];
-
-    function getTotalSacks(params: GridCellParams) {
-        return params.row.sack + params.row.half_sack * 0.5;
-    }
-
-    function getComboTackles(params: GridCellParams) {
-        return (
-            params.row.solo_tackles +
-            params.row.assist_tackls +
-            params.row.tackle_with_assist
-        );
-    }
+    const columns = playerDefenseColumns;
 
     const [aggTeams, setAggTeams] = useState(props.teams);
     const [weekFilter, setWeekFilter] = useState([
