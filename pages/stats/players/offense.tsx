@@ -212,84 +212,74 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
         }
     }, []);
 
-    useEffect(() => {
+    const aggregateStats = (dataframe: IPlayerSeason[]) => {
         let teamsMap = new Map();
 
-        for (let obj in props.teams) {
-            if (teamsMap.get(props.teams[obj].player_id)) {
-                let currentObj = teamsMap.get(props.teams[obj].player_id);
+        for (let obj in dataframe) {
+            if (teamsMap.get(dataframe[obj].player_id)) {
+                let currentObj = teamsMap.get(dataframe[obj].player_id);
                 let newObj = {
-                    player_id: props.teams[obj].player_id,
+                    player_id: dataframe[obj].player_id,
                     week_count:
                         Number.parseInt(currentObj.week_count.toString()) +
-                        Number.parseInt(props.teams[obj].week_count.toString()),
+                        Number.parseInt(dataframe[obj].week_count.toString()),
                     pass_attempt:
                         Number.parseInt(currentObj.pass_attempt.toString()) +
-                        Number.parseInt(
-                            props.teams[obj].pass_attempt.toString()
-                        ),
+                        Number.parseInt(dataframe[obj].pass_attempt.toString()),
                     completion:
                         Number.parseInt(currentObj.completion.toString()) +
-                        Number.parseInt(props.teams[obj].completion.toString()),
+                        Number.parseInt(dataframe[obj].completion.toString()),
                     incompletion:
                         Number.parseInt(currentObj.incompletion.toString()) +
-                        Number.parseInt(
-                            props.teams[obj].incompletion.toString()
-                        ),
+                        Number.parseInt(dataframe[obj].incompletion.toString()),
                     passing_yards:
                         Number.parseInt(currentObj.passing_yards.toString()) +
                         Number.parseInt(
-                            props.teams[obj].passing_yards.toString()
+                            dataframe[obj].passing_yards.toString()
                         ),
                     passing_TD:
                         Number.parseInt(currentObj.passing_TD.toString()) +
-                        Number.parseInt(props.teams[obj].passing_TD.toString()),
+                        Number.parseInt(dataframe[obj].passing_TD.toString()),
                     sack:
                         Number.parseInt(currentObj.sack.toString()) +
-                        Number.parseInt(props.teams[obj].sack.toString()),
+                        Number.parseInt(dataframe[obj].sack.toString()),
                     interception:
                         Number.parseInt(currentObj.interception.toString()) +
-                        Number.parseInt(
-                            props.teams[obj].interception.toString()
-                        ),
+                        Number.parseInt(dataframe[obj].interception.toString()),
                     rushing_yards:
                         Number.parseInt(currentObj.rushing_yards.toString()) +
                         Number.parseInt(
-                            props.teams[obj].rushing_yards.toString()
+                            dataframe[obj].rushing_yards.toString()
                         ),
                     rush_attempt:
                         Number.parseInt(currentObj.rush_attempt.toString()) +
-                        Number.parseInt(
-                            props.teams[obj].rush_attempt.toString()
-                        ),
+                        Number.parseInt(dataframe[obj].rush_attempt.toString()),
                     rushing_TD:
                         Number.parseInt(currentObj.rushing_TD.toString()) +
-                        Number.parseInt(props.teams[obj].rushing_TD.toString()),
+                        Number.parseInt(dataframe[obj].rushing_TD.toString()),
                     tackled_for_loss:
                         Number.parseInt(
                             currentObj.tackled_for_loss.toString()
                         ) +
                         Number.parseInt(
-                            props.teams[obj].tackled_for_loss.toString()
+                            dataframe[obj].tackled_for_loss.toString()
                         ),
                     receiving_TD:
                         Number.parseInt(currentObj.receiving_TD.toString()) +
-                        Number.parseInt(
-                            props.teams[obj].receiving_TD.toString()
-                        ),
+                        Number.parseInt(dataframe[obj].receiving_TD.toString()),
                     fumble:
                         Number.parseInt(currentObj.fumble.toString()) +
-                        Number.parseInt(props.teams[obj].fumble.toString()),
+                        Number.parseInt(dataframe[obj].fumble.toString()),
                     reception:
                         Number.parseInt(currentObj.reception.toString()) +
-                        Number.parseInt(props.teams[obj].reception.toString()),
+                        Number.parseInt(dataframe[obj].reception.toString()),
                     target:
                         Number.parseInt(currentObj.target.toString()) +
-                        Number.parseInt(props.teams[obj].target.toString()),
+                        Number.parseInt(dataframe[obj].target.toString()),
                     receiving_yards:
                         Number.parseInt(currentObj.receiving_yards.toString()) +
                         Number.parseInt(
-                            props.teams[obj].receiving_yards.toString()
+                            dataframe[obj].receiving_yards.toString()
                         ),
                     game_id_db: currentObj.game_id_db,
                     team_abbr: currentObj.team_abbr,
@@ -297,119 +287,26 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 };
                 teamsMap.set(currentObj.player_id, newObj);
             } else {
-                teamsMap.set(props.teams[obj].player_id, {
-                    ...props.teams[obj],
+                teamsMap.set(dataframe[obj].player_id, {
+                    ...dataframe[obj],
                 });
             }
         }
-        const reducedTeams = Array.from(teamsMap.values());
+        return Array.from(teamsMap.values());
+    };
+
+    useEffect(() => {
+        const reducedTeams = aggregateStats(props.teams);
 
         setAggTeams(reducedTeams);
     }, []);
 
     useEffect(() => {
-        let teamsMap = new Map();
-
         const filteredTeams = props.teams.filter((team) =>
             weekFilter.includes(Number.parseInt(team.week.toString()))
         );
 
-        for (let obj in filteredTeams) {
-            if (teamsMap.get(filteredTeams[obj].player_id)) {
-                let currentObj = teamsMap.get(filteredTeams[obj].player_id);
-                let newObj = {
-                    player_id: currentObj.player_id,
-                    week_count:
-                        Number.parseInt(currentObj.week_count.toString()) +
-                        Number.parseInt(props.teams[obj].week_count.toString()),
-                    pass_attempt:
-                        Number.parseInt(currentObj.pass_attempt.toString()) +
-                        Number.parseInt(
-                            filteredTeams[obj].pass_attempt.toString()
-                        ),
-                    completion:
-                        Number.parseInt(currentObj.completion.toString()) +
-                        Number.parseInt(
-                            filteredTeams[obj].completion.toString()
-                        ),
-                    incompletion:
-                        Number.parseInt(currentObj.incompletion.toString()) +
-                        Number.parseInt(
-                            filteredTeams[obj].incompletion.toString()
-                        ),
-                    passing_yards:
-                        Number.parseInt(currentObj.passing_yards.toString()) +
-                        Number.parseInt(
-                            filteredTeams[obj].passing_yards.toString()
-                        ),
-                    passing_TD:
-                        Number.parseInt(currentObj.passing_TD.toString()) +
-                        Number.parseInt(
-                            filteredTeams[obj].passing_TD.toString()
-                        ),
-                    sack:
-                        Number.parseInt(currentObj.sack.toString()) +
-                        Number.parseInt(filteredTeams[obj].sack.toString()),
-                    interception:
-                        Number.parseInt(currentObj.interception.toString()) +
-                        Number.parseInt(
-                            filteredTeams[obj].interception.toString()
-                        ),
-                    rushing_yards:
-                        Number.parseInt(currentObj.rushing_yards.toString()) +
-                        Number.parseInt(
-                            filteredTeams[obj].rushing_yards.toString()
-                        ),
-                    rush_attempt:
-                        Number.parseInt(currentObj.rush_attempt.toString()) +
-                        Number.parseInt(
-                            filteredTeams[obj].rush_attempt.toString()
-                        ),
-                    rushing_TD:
-                        Number.parseInt(currentObj.rushing_TD.toString()) +
-                        Number.parseInt(
-                            filteredTeams[obj].rushing_TD.toString()
-                        ),
-                    tackled_for_loss:
-                        Number.parseInt(
-                            currentObj.tackled_for_loss.toString()
-                        ) +
-                        Number.parseInt(
-                            filteredTeams[obj].tackled_for_loss.toString()
-                        ),
-                    receiving_TD:
-                        Number.parseInt(currentObj.receiving_TD.toString()) +
-                        Number.parseInt(
-                            filteredTeams[obj].receiving_TD.toString()
-                        ),
-                    fumble:
-                        Number.parseInt(currentObj.fumble.toString()) +
-                        Number.parseInt(filteredTeams[obj].fumble.toString()),
-                    reception:
-                        Number.parseInt(currentObj.reception.toString()) +
-                        Number.parseInt(
-                            filteredTeams[obj].reception.toString()
-                        ),
-                    target:
-                        Number.parseInt(currentObj.target.toString()) +
-                        Number.parseInt(filteredTeams[obj].target.toString()),
-                    receiving_yards:
-                        Number.parseInt(currentObj.receiving_yards.toString()) +
-                        Number.parseInt(
-                            filteredTeams[obj].receiving_yards.toString()
-                        ),
-                    game_id_db: currentObj.game_id_db,
-                    team_abbr: currentObj.team_abbr,
-                    position: currentObj.position,
-                };
-                teamsMap.set(currentObj.player_id, newObj);
-            } else {
-                teamsMap.set(filteredTeams[obj].player_id, {
-                    ...filteredTeams[obj],
-                });
-            }
-        }
-        const reducedTeams = Array.from(teamsMap.values());
+        const reducedTeams = aggregateStats(filteredTeams);
 
         setAggTeams(reducedTeams);
     }, [weekFilter]);
