@@ -5,6 +5,7 @@ import StatTable from "../../../components/StatTable";
 import { useEffect, useState } from "react";
 import Checkbox from "../../../components/WeekCheckboxFilter";
 import { useRouter } from "next/router";
+import PlayerTableHeader from "../../../components/PlayerTableHeader";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: IPlayerSeason[];
@@ -415,6 +416,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
 
     return (
         <div className="weekly-team-page">
+            <PlayerTableHeader />
             <Checkbox handleFilters={setWeekFilter} weekFilter={weekFilter} />
             <div className="weekly-team-stats">
                 <StatTable
