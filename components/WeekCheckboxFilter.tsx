@@ -44,13 +44,22 @@ const Checkbox = (props: CheckboxProps) => {
 
         const urlNewChecked = newChecked.map(String).join(",");
 
-        router.push({
-            pathname: path,
-            query: {
-                phase: query.phase,
-                weeks: urlNewChecked,
-            },
-        });
+        if (query.phase) {
+            router.push({
+                pathname: path,
+                query: {
+                    phase: query.phase,
+                    weeks: urlNewChecked,
+                },
+            });
+        } else {
+            router.push({
+                pathname: path,
+                query: {
+                    weeks: urlNewChecked,
+                },
+            });
+        }
     };
 
     const handleClearAll = () => {
@@ -58,13 +67,22 @@ const Checkbox = (props: CheckboxProps) => {
         setChecked(newChecked);
         props.handleFilters(newChecked);
 
-        router.push({
-            pathname: path,
-            query: {
-                phase: query.phase,
-                weeks: "none",
-            },
-        });
+        if (query.phase) {
+            router.push({
+                pathname: path,
+                query: {
+                    phase: query.phase,
+                    weeks: "none",
+                },
+            });
+        } else {
+            router.push({
+                pathname: path,
+                query: {
+                    weeks: "none",
+                },
+            });
+        }
     };
 
     const handleSelectAll = () => {
@@ -76,13 +94,22 @@ const Checkbox = (props: CheckboxProps) => {
 
         const urlNewChecked = newChecked.map(String).join(",");
 
-        router.push({
-            pathname: path,
-            query: {
-                phase: query.phase,
-                weeks: urlNewChecked,
-            },
-        });
+        if (query.phase) {
+            router.push({
+                pathname: path,
+                query: {
+                    phase: query.phase,
+                    weeks: urlNewChecked,
+                },
+            });
+        } else {
+            router.push({
+                pathname: path,
+                query: {
+                    weeks: urlNewChecked,
+                },
+            });
+        }
     };
 
     return (

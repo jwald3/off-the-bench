@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 const PlayerTableHeader = () => {
@@ -17,39 +16,69 @@ const PlayerTableHeader = () => {
                 alignItems: "center",
             }}
         >
-            <Link
-                href={{
-                    pathname: "/stats/players/offense",
-                    query: { weeks: query.weeks },
-                }}
-            >
+            <div>
                 <h1
                     className={
                         path.toLocaleString().toLowerCase().includes("offense")
                             ? "active-item item-selector"
                             : "item-selector"
                     }
+                    onClick={() => {
+                        if (query.weeks) {
+                            {
+                                router
+                                    .replace({
+                                        pathname: "/stats/players/offense",
+                                        query: {
+                                            weeks: query.weeks,
+                                        },
+                                    })
+                                    .then(() => router.reload());
+                            }
+                        } else {
+                            router
+                                .replace({
+                                    pathname: "/stats/players/offense",
+                                })
+                                .then(() => router.reload());
+                        }
+                    }}
                 >
                     Offense
                 </h1>
-            </Link>
+            </div>
             <h1>|</h1>
-            <Link
-                href={{
-                    pathname: "/stats/players/defense",
-                    query: { weeks: query.weeks },
-                }}
-            >
+            <div>
                 <h1
                     className={
                         path.toLocaleString().toLowerCase().includes("defense")
                             ? "active-item item-selector"
                             : "item-selector"
                     }
+                    onClick={() => {
+                        if (query.weeks) {
+                            {
+                                router
+                                    .replace({
+                                        pathname: "/stats/players/defense",
+                                        query: {
+                                            weeks: query.weeks,
+                                        },
+                                    })
+                                    .then(() => router.reload());
+                            }
+                        } else {
+                            router
+                                .replace({
+                                    pathname: "/stats/players/defense",
+                                })
+                                .then(() => router.reload());
+                        }
+                    }}
                 >
                     Defense
                 </h1>
-            </Link>
+            </div>
         </div>
     );
 };

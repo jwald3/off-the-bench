@@ -160,14 +160,14 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     };
 
     useEffect(() => {
-        if (query.weeks !== undefined && query.weeks !== "") {
+        if (query.weeks !== undefined && query.weeks !== "none") {
             const selectedWeeks = (query.weeks as string)
                 ?.split(",")
                 .map(Number);
 
             console.log(query.weeks);
             setWeekFilter(selectedWeeks);
-        } else if (query.weeks === "") {
+        } else if (query.weeks === "none") {
             console.log(query.weeks);
             setWeekFilter([]);
         }
