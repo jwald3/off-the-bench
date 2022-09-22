@@ -1,4 +1,8 @@
-import { GridCellParams, GridColDef } from "@mui/x-data-grid";
+import {
+    GridCellParams,
+    GridColDef,
+    GridValueFormatterParams,
+} from "@mui/x-data-grid";
 
 export const playerDefenseColumns: GridColDef[] = [
     {
@@ -224,3 +228,104 @@ export const playerOffenseColumns: GridColDef[] = [
         type: "number",
     },
 ];
+
+export const teamStatColumns: GridColDef[] = [
+    { headerName: "Team", field: "posteam", flex: 1 },
+    // { headerName: "Week", field: "week", flex: 1 },
+    {
+        headerName: "Completions",
+        field: "complete_pass",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Pass Attempts",
+        field: "passing_attempts",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Completion %",
+        field: "compPercent",
+        flex: 1,
+        valueGetter: getCompletionPct,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "Passing TDs",
+        field: "pass_touchdown",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "INTs",
+        field: "interception",
+        flex: 0.5,
+        type: "number",
+    },
+    { headerName: "Sacks", field: "sack", flex: 0.5, type: "number" },
+    {
+        headerName: "Passing Yards",
+        field: "passing_yds",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Passing 1Ds",
+        field: "first_down_pass",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rush Attempts",
+        field: "rush_attempt",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rushing Yards",
+        field: "rushing_yards",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Yards Per Carry",
+        field: "yardsPerCarry",
+        flex: 1,
+        valueGetter: getYPC,
+        type: "number",
+    },
+    {
+        headerName: "Rushing TDs",
+        field: "rush_touchdown",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rushing 1Ds",
+        field: "first_down_rush",
+        flex: 1,
+        type: "number",
+    },
+];
+
+function getCompletionPct(params: GridCellParams) {
+    return (
+        ((params.row.complete_pass || 0) / params.row.passing_attempts) *
+        100
+    ).toFixed(2);
+}
+
+function getYPC(params: GridCellParams) {
+    return `${(
+        (params.row.rushing_yards || 0) / params.row.rush_attempt
+    ).toFixed(2)}`;
+}
