@@ -86,13 +86,13 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     ]);
 
     useEffect(() => {
-        if (query.weeks !== undefined && query.weeks !== "") {
+        if (query.weeks !== undefined && query.weeks !== "none") {
             const selectedWeeks = (query.weeks as string)
                 ?.split(",")
                 .map(Number);
 
             setWeekFilter(selectedWeeks);
-        } else if (query.weeks === "") {
+        } else if (query.weeks === "none") {
             setWeekFilter([]);
         }
     }, []);

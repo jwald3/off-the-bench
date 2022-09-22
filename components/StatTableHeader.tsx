@@ -33,17 +33,30 @@ const StatTableHeader = () => {
                             ? "active-item item-selector"
                             : "item-selector"
                     }
-                    onClick={() =>
-                        router
-                            .replace({
-                                pathname: path,
-                                query: {
-                                    phase: "offense",
-                                    weeks: query.weeks,
-                                },
-                            })
-                            .then(() => router.reload())
-                    }
+                    onClick={() => {
+                        if (query.weeks) {
+                            {
+                                router
+                                    .replace({
+                                        pathname: path,
+                                        query: {
+                                            phase: "offense",
+                                            weeks: query.weeks,
+                                        },
+                                    })
+                                    .then(() => router.reload());
+                            }
+                        } else {
+                            router
+                                .replace({
+                                    pathname: path,
+                                    query: {
+                                        phase: "offense",
+                                    },
+                                })
+                                .then(() => router.reload());
+                        }
+                    }}
                 >
                     Offense
                 </h1>
@@ -53,7 +66,7 @@ const StatTableHeader = () => {
                 href={{
                     pathname: path,
                     query: {
-                        phase: "defense",
+                        phase: "offense",
                         weeks: query.weeks,
                     },
                 }}
@@ -64,17 +77,30 @@ const StatTableHeader = () => {
                             ? "active-item item-selector"
                             : "item-selector"
                     }
-                    onClick={() =>
-                        router
-                            .replace({
-                                pathname: path,
-                                query: {
-                                    phase: "defense",
-                                    weeks: query.weeks,
-                                },
-                            })
-                            .then(() => router.reload())
-                    }
+                    onClick={() => {
+                        if (query.weeks) {
+                            {
+                                router
+                                    .replace({
+                                        pathname: path,
+                                        query: {
+                                            phase: "defense",
+                                            weeks: query.weeks,
+                                        },
+                                    })
+                                    .then(() => router.reload());
+                            }
+                        } else {
+                            router
+                                .replace({
+                                    pathname: path,
+                                    query: {
+                                        phase: "defense",
+                                    },
+                                })
+                                .then(() => router.reload());
+                        }
+                    }}
                 >
                     Defense
                 </h1>

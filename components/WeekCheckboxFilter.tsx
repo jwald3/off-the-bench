@@ -62,6 +62,7 @@ const Checkbox = (props: CheckboxProps) => {
             pathname: path,
             query: {
                 phase: query.phase,
+                weeks: "none",
             },
         });
     };
