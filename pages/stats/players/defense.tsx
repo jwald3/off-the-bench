@@ -1,11 +1,9 @@
 import { GetServerSideProps } from "next";
 import prisma from "../../../lib/prisma";
-import { GridCellParams, GridColDef } from "@mui/x-data-grid";
 import StatTable from "../../../components/StatTable";
 import { useEffect, useState } from "react";
 import Checkbox from "../../../components/WeekCheckboxFilter";
 import { useRouter } from "next/router";
-import StatTableHeader from "../../../components/StatTableHeader";
 import PlayerTableHeader from "../../../components/PlayerTableHeader";
 import { playerDefenseColumns } from "../../../data/tableColumns";
 

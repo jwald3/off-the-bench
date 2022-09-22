@@ -1,6 +1,5 @@
 import { GetServerSideProps } from "next";
 import prisma from "../../../lib/prisma";
-import { GridColDef } from "@mui/x-data-grid";
 import StatTable from "../../../components/StatTable";
 import { useEffect, useState } from "react";
 import Checkbox from "../../../components/WeekCheckboxFilter";
