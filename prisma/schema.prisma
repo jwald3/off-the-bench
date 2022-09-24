@@ -7,62 +7,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-model fantasy_season_2021 {
+model player_defense_stats_basic {
   player_id            String?
-  position             String?
-  games_played         BigInt?
-  pass_attempt         BigInt?
-  complete_pass        BigInt?
-  incomplete_pass      BigInt?
-  passing_yards        BigInt?
-  pass_touchdown       BigInt?
-  interception         BigInt?
-  sack                 BigInt?
-  over_300_passing     BigInt?
-  rush_attempt         BigInt?
-  rushing_yards        BigInt?
-  rush_touchdown       BigInt?
-  tackled_for_loss     BigInt?
-  fumble               BigInt?
-  first_down_rush      BigInt?
-  over_10_rush         BigInt?
-  over_100_rushing     BigInt?
-  receptions           BigInt?
-  targets              BigInt?
-  receiving_yards      BigInt?
-  receiving_touchdown  BigInt?
-  first_down_reception BigInt?
-  over_10_reception    BigInt?
-  over_100_receiving   BigInt?
+  game_id              String?
+  passes_defended      Float?
+  interception         Float?
+  int_return_yards     Float?
+  int_return_touchdown Float?
+  tackles_for_loss     Float?
+  qb_hits              Float?
+  fumbles_forced       Float?
+  solo_tackles         Float?
+  assist_tackls        Float?
+  sack                 Float?
+  half_sack            Float?
+  tackle_with_assist   Float?
+  game_id_db           String  @id
   gsis_id              String?
-
-  @@ignore
+  team_abbr            String?
+  position             String?
+  week                 Int?
+  week_count           String?
+  season               BigInt?
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-model player_bios_2021 {
-  player_id          String?
-  team               String?
-  player_name_abbrev String?
-  jersey_number      Int?
-  position           String?
-  player_name_full   String?
-  first_name         String?
-  last_name          String?
-  exp                Float?
-  height             Float?
-  weight             Float?
-  birth_date         DateTime? @db.Timestamp(6)
-  headshot_url       String?
-
-  @@ignore
-}
-
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-model player_offense_stats_weekly_2021_basic {
+model player_offense_stats_basic {
   player_id        String?
   game_id          String?
+  season           String?
   pass_attempt     Float?
   completion       Float?
   incompletion     Float?
@@ -87,119 +59,42 @@ model player_offense_stats_weekly_2021_basic {
   week_count       BigInt?
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-model season_team_defense_2021 {
-  season             BigInt?
-  defteam            String?
-  points_scored      BigInt?
-  passing_attempts   BigInt?
-  complete_pass      BigInt?
-  incomplete_pass    BigInt?
-  pass_touchdown     BigInt?
-  interception       BigInt?
-  sack               BigInt?
-  passing_yds        BigInt?
-  first_down_pass    BigInt?
-  rush_attempt       BigInt?
-  rushing_yards      BigInt?
-  rush_touchdown     BigInt?
-  first_down_rush    BigInt?
-  penalty            BigInt?
-  first_down_penalty BigInt?
-
-  @@ignore
+model team_defense_stats_basic {
+  season         BigInt?
+  posteam        String?
+  game_id        String?
+  points_allowed Float?  @db.Real
+  points_for     Float?  @db.Real
+  completions    Float?  @db.Real
+  pass_attempts  Float?  @db.Real
+  interceptions  Float?  @db.Real
+  sacks          Float?  @db.Real
+  passing_yards  Float?  @db.Real
+  pass_touchdown Float?  @db.Real
+  rush_attempt   Float?  @db.Real
+  rushing_yards  Float?  @db.Real
+  rush_touchdown Float?  @db.Real
+  fumbles        Float?  @db.Real
+  week           Int?
+  db_id          String  @id
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-model season_team_offense_2021 {
-  season             BigInt?
-  posteam            String?
-  points_scored      BigInt?
-  passing_attempts   BigInt?
-  complete_pass      BigInt?
-  incomplete_pass    BigInt?
-  pass_touchdown     BigInt?
-  interception       BigInt?
-  sack               BigInt?
-  passing_yds        BigInt?
-  first_down_pass    BigInt?
-  rush_attempt       BigInt?
-  rushing_yards      BigInt?
-  rush_touchdown     BigInt?
-  first_down_rush    BigInt?
-  penalty            BigInt?
-  first_down_penalty BigInt?
-
-  @@ignore
-}
-
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-model weekly_team_defense_2021 {
-  season             BigInt?
-  week               BigInt?
-  game_id            String?
-  posteam            String?
-  points_scored      BigInt?
-  passing_attempts   BigInt?
-  complete_pass      BigInt?
-  incomplete_pass    BigInt?
-  pass_touchdown     BigInt?
-  interception       BigInt?
-  sack               BigInt?
-  passing_yds        BigInt?
-  first_down_pass    BigInt?
-  rush_attempt       BigInt?
-  rushing_yards      BigInt?
-  rush_touchdown     BigInt?
-  first_down_rush    BigInt?
-  penalty            BigInt?
-  first_down_penalty BigInt?
-  game_id_db         String @id
-}
-
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-model weekly_team_offense_2021 {
-  season             BigInt?
-  week               BigInt?
-  game_id            String?
-  posteam            String?
-  points_scored      BigInt?
-  passing_attempts   BigInt?
-  complete_pass      BigInt?
-  incomplete_pass    BigInt?
-  pass_touchdown     BigInt?
-  interception       BigInt?
-  sack               BigInt?
-  passing_yds        BigInt?
-  first_down_pass    BigInt?
-  rush_attempt       BigInt?
-  rushing_yards      BigInt?
-  rush_touchdown     BigInt?
-  first_down_rush    BigInt?
-  penalty            BigInt?
-  first_down_penalty BigInt?
-  game_id_db         String @id
-}
-
-model player_defense_stats_weekly_2021_basic {
-  player_id            String?
-  game_id              String?
-  passes_defended      Float?
-  interception         Float?
-  int_return_yards     Float?
-  int_return_touchdown Float?
-  tackles_for_loss     Float?
-  qb_hits              Float?
-  fumbles_forced       Float?
-  solo_tackles         Float?
-  assist_tackls        Float?
-  sack                 Float?
-  half_sack            Float?
-  tackle_with_assist   Float?
-  game_id_db           String  @id
-  gsis_id              String?
-  team_abbr            String?
-  position             String?
-  week                 Int?
-  week_count           BigInt?
+model team_offense_stats_basic {
+  season         BigInt?
+  posteam        String?
+  game_id        String?
+  points_for     Float?  @db.Real
+  points_against Float?  @db.Real
+  completions    Float?  @db.Real
+  pass_attempts  Float?  @db.Real
+  interceptions  Float?  @db.Real
+  sacks          Float?  @db.Real
+  passing_yards  Float?  @db.Real
+  pass_touchdown Float?  @db.Real
+  rush_attempt   Float?  @db.Real
+  rushing_yards  Float?  @db.Real
+  rush_touchdown Float?  @db.Real
+  fumbles        Float?  @db.Real
+  week           Int?
+  db_id          String  @id
 }
