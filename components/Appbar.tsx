@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import styles from "../styles/Appbar.module.scss";
 import Link from "next/link";
+import { AiFillHome } from "react-icons/ai";
 
 const drawerWidth = 240;
 const navItems = ["Home", "Team Stats", "Player Stats"];
@@ -46,7 +47,9 @@ export default function DrawerAppBar() {
 
     return (
         <div className={styles.navbar}>
-            <div className={styles.appLogo}>OFF THE BENCH</div>
+            <div className={styles.appLogo}>
+                <Link href="/">OFF THE BENCH</Link>
+            </div>
             <div className={styles.navbarLinks}>
                 <div className={styles.navbarLink}>
                     <Link href="/stats/teams?phase=offense">TEAM STATS</Link>
@@ -54,8 +57,12 @@ export default function DrawerAppBar() {
                 <div className={styles.navbarLink}>
                     <Link href="/stats/players/offense">PLAYER STATS</Link>
                 </div>
-                <div className={styles.navbarLink}>
-                    <Link href="/">HOME ICON</Link>
+                <div className={styles.navbarHomeLink}>
+                    <Link href="/" passHref>
+                        <span>
+                            <AiFillHome />
+                        </span>
+                    </Link>
                 </div>
             </div>
         </div>

@@ -33,5 +33,17 @@
             font-size: 1em;
             text-align: center;
         }
+
+        .navbarHomeLink {
+            display: flex;
+            align-items: center;
+            width: 5vw;
+            max-width: 75px;
+            height: 100%;
+            color: $off-white;
+            font-size: 1em;
+            text-align: center;
+            cursor: pointer;
+        }
     }
 }
