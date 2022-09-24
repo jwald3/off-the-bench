@@ -1,0 +1,78 @@
+@import "colors";
+
+.filterContainer {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+    padding: 0% 8%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-between;
+    align-items: center;
+    height: 8vh;
+
+    .weeksLabel {
+        font-size: 1.2em;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .weekInputs {
+        display: flex;
+
+        .checkboxActive,
+        .checkboxInactive {
+            padding: 0.25em 0.5em;
+            width: 2.5em;
+            text-align: center;
+            cursor: pointer;
+            height: 2em;
+            align-items: center;
+            display: flex;
+            font-size: 1em;
+        }
+
+        .checkboxActive {
+            background-color: $secondary-dark;
+            color: $off-white;
+        }
+
+        .checkboxInctive {
+            background-color: $off-white;
+            color: $secondary-dark;
+        }
+    }
+
+    .controlBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.25em 0.5em;
+        border-radius: 0.5em;
+        width: 7em;
+        height: 2.5em;
+        text-align: center;
+        background-color: $medium-dark;
+        cursor: pointer;
+        font-size: 0.75em;
+        color: $off-white;
+        text-transform: uppercase;
+    }
+
+    .seasonSelector {
+        select {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.25em 0.125em;
+            border-radius: 0.2em;
+            width: 6em;
+            height: 2em;
+            text-align: center;
+            cursor: pointer;
+            font-size: 1em;
+            color: $primary-dark;
+            text-transform: uppercase;
+        }
+    }
+}

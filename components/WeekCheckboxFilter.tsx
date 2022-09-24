@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import wks from "../data/weeks.json";
+import styles from "../styles/WeekCheckboxFilter.module.scss";
 
 interface CheckboxProps {
     handleFilters: Function;
@@ -113,41 +114,39 @@ const Checkbox = (props: CheckboxProps) => {
     };
 
     return (
-        <div className="checkbox-filters">
-            <div
-                style={{
-                    marginRight: "2%",
-                    alignItems: "center",
-                }}
-            >
-                <h1
-                    style={{
-                        fontSize: "1.2em",
-                    }}
-                >
-                    Weeks
-                </h1>
-            </div>
-
-            {wks.map((val, idx) => (
-                <div key={idx}>
-                    <div
-                        className={
-                            checked.includes(val.val)
-                                ? "checkbox active"
-                                : "checkbox inactive"
-                        }
-                        onClick={() => handleToggle(val.val)}
-                    >
-                        {val.val}
+        <div className={styles.filterContainer}>
+            <div className={styles.weeksLabel}>Weeks</div>
+            <div className={styles.weekInputs}>
+                {wks.map((val, idx) => (
+                    <div key={idx}>
+                        <div
+                            className={
+                                checked.includes(val.val)
+                                    ? styles.checkboxActive
+                                    : styles.checkboxInactive
+                            }
+                            onClick={() => handleToggle(val.val)}
+                        >
+                            {val.val}
+                        </div>
                     </div>
-                </div>
-            ))}
-            <div className="control-btn" onClick={() => handleSelectAll()}>
+                ))}
+            </div>
+            <div
+                className={styles.controlBtn}
+                onClick={() => handleSelectAll()}
+            >
                 Select All
             </div>
-            <div className="control-btn" onClick={() => handleClearAll()}>
+            <div className={styles.controlBtn} onClick={() => handleClearAll()}>
                 Clear All
+            </div>
+            <div className={styles.seasonSelector}>
+                <select name="" id="">
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                </select>
             </div>
         </div>
     );
