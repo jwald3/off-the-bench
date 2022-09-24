@@ -15,6 +15,7 @@ const StatTable: React.FunctionComponent<TableProps> = ({ ...props }) => {
             <DataGrid
                 density="compact"
                 autoHeight
+                style={{ color: "#101223", backgroundColor: "#f3f4f8" }}
                 rows={data}
                 getRowId={(row) => row[rowIdCol]}
                 columns={columns}
@@ -27,6 +28,9 @@ const StatTable: React.FunctionComponent<TableProps> = ({ ...props }) => {
                     fontSize: 10,
                     width: "90%",
                     margin: "auto",
+                    marginBottom: "2%",
+                    height: "100%",
+                    color: "#101223",
                 }}
             />
         </div>

@@ -8,11 +8,6 @@ interface CheckboxProps {
     weekFilter: number[];
 }
 
-interface Parameters {
-    weeks: string | string[];
-    phase: string | string[];
-}
-
 const Checkbox = (props: CheckboxProps) => {
     const router = useRouter();
     const path = router.pathname;

@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import styles from "../styles/PlayerTableHeader.module.scss";
 
 const PlayerTableHeader = () => {
     const router = useRouter();
@@ -6,22 +7,13 @@ const PlayerTableHeader = () => {
     const { query } = router;
 
     return (
-        <div
-            style={{
-                display: "flex",
-                gap: "1%",
-                margin: "auto",
-                paddingLeft: "2%",
-                maxWidth: "1400px",
-                alignItems: "center",
-            }}
-        >
+        <div className={styles.tableHeader}>
             <div>
                 <h1
                     className={
                         path.toLocaleString().toLowerCase().includes("offense")
-                            ? "active-item item-selector"
-                            : "item-selector"
+                            ? styles.activeItem
+                            : styles.itemSelector
                     }
                     onClick={() => {
                         if (query.weeks) {
@@ -52,8 +44,8 @@ const PlayerTableHeader = () => {
                 <h1
                     className={
                         path.toLocaleString().toLowerCase().includes("defense")
-                            ? "active-item item-selector"
-                            : "item-selector"
+                            ? styles.activeItem
+                            : styles.itemSelector
                     }
                     onClick={() => {
                         if (query.weeks) {
