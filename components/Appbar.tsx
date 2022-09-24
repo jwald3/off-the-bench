@@ -12,6 +12,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import styles from "../styles/Appbar.module.scss";
+import Link from "next/link";
 
 const drawerWidth = 240;
 const navItems = ["Home", "Team Stats", "Player Stats"];
@@ -43,68 +45,85 @@ export default function DrawerAppBar() {
     );
 
     return (
-        <Box sx={{ display: "flex" }}>
-            <AppBar component="nav">
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: "none" } }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography
-                        variant="h6"
-                        component="a"
-                        href="/"
-                        sx={{
-                            flexGrow: 1,
-                            display: { xs: "none", sm: "block" },
-                        }}
-                    >
-                        OFF THE BENCH
-                    </Typography>
-                    <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                        {navItems.map((item, key) => (
-                            <Button key={item} sx={{ color: "#fff" }}>
-                                <Typography
-                                    variant="h6"
-                                    component="a"
-                                    href={navPaths[key]}
-                                    sx={{
-                                        flexGrow: 1,
-                                        display: { xs: "none", sm: "block" },
-                                        fontSize: ".75rem",
-                                    }}
-                                >
-                                    {item}
-                                </Typography>
-                            </Button>
-                        ))}
-                    </Box>
-                </Toolbar>
-            </AppBar>
-            <Box component="nav">
-                <Drawer
-                    variant="temporary"
-                    open={mobileOpen}
-                    onClose={handleDrawerToggle}
-                    ModalProps={{
-                        keepMounted: true, // Better open performance on mobile.
-                    }}
-                    sx={{
-                        display: { xs: "block", sm: "none" },
-                        "& .MuiDrawer-paper": {
-                            boxSizing: "border-box",
-                            width: drawerWidth,
-                        },
-                    }}
-                >
-                    {drawer}
-                </Drawer>
-            </Box>
-        </Box>
+        <div className={styles.navbar}>
+            <div className={styles.appLogo}>OFF THE BENCH</div>
+            <div className={styles.navbarLinks}>
+                <div className={styles.navbarLink}>
+                    <Link href="/stats/teams?phase=offense">TEAM STATS</Link>
+                </div>
+                <div className={styles.navbarLink}>
+                    <Link href="/stats/players/offense">PLAYER STATS</Link>
+                </div>
+                <div className={styles.navbarLink}>
+                    <Link href="/">HOME ICON</Link>
+                </div>
+            </div>
+        </div>
     );
+
+    // return (
+    //     <Box sx={{ display: "flex" }}>
+    //         <AppBar component="nav">
+    //             <Toolbar>
+    //                 <IconButton
+    //                     color="inherit"
+    //                     aria-label="open drawer"
+    //                     edge="start"
+    //                     onClick={handleDrawerToggle}
+    //                     sx={{ mr: 2, display: { sm: "none" } }}
+    //                 >
+    //                     <MenuIcon />
+    //                 </IconButton>
+    //                 <Typography
+    //                     variant="h6"
+    //                     component="a"
+    //                     href="/"
+    //                     sx={{
+    //                         flexGrow: 1,
+    //                         display: { xs: "none", sm: "block" },
+    //                     }}
+    //                 >
+    //                     OFF THE BENCH
+    //                 </Typography>
+    //                 <Box sx={{ display: { xs: "none", sm: "block" } }}>
+    //                     {navItems.map((item, key) => (
+    //                         <Button key={item} sx={{ color: "#fff" }}>
+    //                             <Typography
+    //                                 variant="h6"
+    //                                 component="a"
+    //                                 href={navPaths[key]}
+    //                                 sx={{
+    //                                     flexGrow: 1,
+    //                                     display: { xs: "none", sm: "block" },
+    //                                     fontSize: ".75rem",
+    //                                 }}
+    //                             >
+    //                                 {item}
+    //                             </Typography>
+    //                         </Button>
+    //                     ))}
+    //                 </Box>
+    //             </Toolbar>
+    //         </AppBar>
+    //         <Box component="nav">
+    //             <Drawer
+    //                 variant="temporary"
+    //                 open={mobileOpen}
+    //                 onClose={handleDrawerToggle}
+    //                 ModalProps={{
+    //                     keepMounted: true, // Better open performance on mobile.
+    //                 }}
+    //                 sx={{
+    //                     display: { xs: "block", sm: "none" },
+    //                     "& .MuiDrawer-paper": {
+    //                         boxSizing: "border-box",
+    //                         width: drawerWidth,
+    //                     },
+    //                 }}
+    //             >
+    //                 {drawer}
+    //             </Drawer>
+    //         </Box>
+    //     </Box>
+    // );
 }
