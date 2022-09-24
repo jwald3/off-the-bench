@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import styles from "../styles/StatTableHeader.module.scss";
 
 const StatTableHeader = () => {
     const router = useRouter();
@@ -8,16 +9,7 @@ const StatTableHeader = () => {
     const { query } = router;
 
     return (
-        <div
-            style={{
-                display: "flex",
-                gap: "1%",
-                margin: "auto",
-                paddingLeft: "2%",
-                maxWidth: "1400px",
-                alignItems: "center",
-            }}
-        >
+        <div className={styles.tableHeader}>
             <Link
                 href={{
                     pathname: path,
@@ -30,8 +22,8 @@ const StatTableHeader = () => {
                 <h1
                     className={
                         phase?.toLocaleString().toLowerCase() == "offense"
-                            ? "active-item item-selector"
-                            : "item-selector"
+                            ? styles.activeItem
+                            : styles.itemSelector
                     }
                     onClick={() => {
                         if (query.weeks) {
@@ -61,7 +53,7 @@ const StatTableHeader = () => {
                     Offense
                 </h1>
             </Link>
-            <h1>|</h1>
+            <h1 className={styles.dividerBar}>|</h1>
             <Link
                 href={{
                     pathname: path,
@@ -74,8 +66,8 @@ const StatTableHeader = () => {
                 <h1
                     className={
                         phase?.toLocaleString().toLowerCase() == "defense"
-                            ? "active-item item-selector"
-                            : "item-selector"
+                            ? styles.activeItem
+                            : styles.itemSelector
                     }
                     onClick={() => {
                         if (query.weeks) {
