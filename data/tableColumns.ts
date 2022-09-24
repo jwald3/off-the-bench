@@ -59,7 +59,7 @@ export const playerDefenseColumns: GridColDef[] = [
     },
     {
         headerName: "Sacks",
-        field: "sack",
+        field: "sacks",
         type: "number",
         valueGetter: getTotalSacks,
     },
@@ -95,7 +95,7 @@ export const playerDefenseColumns: GridColDef[] = [
 ];
 
 function getTotalSacks(params: GridCellParams) {
-    return params.row.sack + params.row.half_sack * 0.5;
+    return params.row.sacks + params.row.half_sack * 0.5;
 }
 
 function getComboTackles(params: GridCellParams) {
@@ -234,13 +234,13 @@ export const teamStatColumns: GridColDef[] = [
     // { headerName: "Week", field: "week", flex: 1 },
     {
         headerName: "Completions",
-        field: "complete_pass",
+        field: "completions",
         flex: 1,
         type: "number",
     },
     {
         headerName: "Pass Attempts",
-        field: "passing_attempts",
+        field: "pass_attempts",
         flex: 1,
         type: "number",
     },
@@ -267,20 +267,14 @@ export const teamStatColumns: GridColDef[] = [
     },
     {
         headerName: "INTs",
-        field: "interception",
+        field: "interceptions",
         flex: 0.5,
         type: "number",
     },
-    { headerName: "Sacks", field: "sack", flex: 0.5, type: "number" },
+    { headerName: "Sacks", field: "sacks", flex: 0.5, type: "number" },
     {
         headerName: "Passing Yards",
-        field: "passing_yds",
-        flex: 1,
-        type: "number",
-    },
-    {
-        headerName: "Passing 1Ds",
-        field: "first_down_pass",
+        field: "passing_yards",
         flex: 1,
         type: "number",
     },
@@ -309,17 +303,11 @@ export const teamStatColumns: GridColDef[] = [
         flex: 1,
         type: "number",
     },
-    {
-        headerName: "Rushing 1Ds",
-        field: "first_down_rush",
-        flex: 1,
-        type: "number",
-    },
 ];
 
 function getCompletionPct(params: GridCellParams) {
     return (
-        ((params.row.complete_pass || 0) / params.row.passing_attempts) *
+        ((params.row.completions || 0) / params.row.pass_attempts) *
         100
     ).toFixed(2);
 }

@@ -10,10 +10,11 @@ import prisma from "../../../lib/prisma";
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: ITeam[];
     let phase = query.phase;
+    let season = Number(query.season) || 2022;
     let teamQueryResponse;
 
     if (phase === "offense") {
-        teamQueryResponse = await prisma.weekly_team_offense_2021.findMany({
+        teamQueryResponse = await prisma.team_offense_stats_basic.findMany({
             where: {
                 week: {
                     in: [
@@ -21,10 +22,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
                         17, 18,
                     ],
                 },
+                season: season,
             },
         });
     } else if (phase === "defense") {
-        teamQueryResponse = await prisma.weekly_team_defense_2021.findMany({
+        teamQueryResponse = await prisma.team_defense_stats_basic.findMany({
             where: {
                 week: {
                     in: [
@@ -32,6 +34,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
                         17, 18,
                     ],
                 },
+                season: season,
             },
         });
     }
@@ -56,18 +59,16 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 interface ITeam {
     posteam: string;
     week: number;
-    passing_attempts: number;
-    complete_pass: number;
+    pass_attempts: number;
+    completions: number;
     pass_touchdown: number;
-    interception: number;
-    sack: number;
-    passing_yds: number;
-    first_down_pass: number;
+    interceptions: number;
+    sacks: number;
+    passing_yards: number;
     rush_attempt: number;
     rushing_yards: number;
     rush_touchdown: number;
-    first_down_rush: number;
-    game_id_db: string;
+    db_id: string;
 }
 
 interface TeamProps {
@@ -105,18 +106,14 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                 let currentObj = teamsMap.get(dataframe[obj].posteam);
                 let newObj = {
                     posteam: currentObj.posteam,
-                    passing_attempts:
+                    pass_attempts:
+                        Number.parseInt(currentObj.pass_attempts.toString()) +
                         Number.parseInt(
-                            currentObj.passing_attempts.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].passing_attempts.toString()
+                            dataframe[obj].pass_attempts.toString()
                         ),
-                    complete_pass:
-                        Number.parseInt(currentObj.complete_pass.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].complete_pass.toString()
-                        ),
+                    completions:
+                        Number.parseInt(currentObj.completions.toString()) +
+                        Number.parseInt(dataframe[obj].completions.toString()),
                     pass_touchdown:
                         Number.parseInt(currentObj.pass_touchdown.toString()) +
                         Number.parseInt(
@@ -127,34 +124,28 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                         Number.parseInt(
                             dataframe[obj].rush_touchdown.toString()
                         ),
-                    interception:
-                        Number.parseInt(currentObj.interception.toString()) +
-                        Number.parseInt(dataframe[obj].interception.toString()),
-                    sack:
-                        Number.parseInt(currentObj.sack.toString()) +
-                        Number.parseInt(dataframe[obj].sack.toString()),
-                    passing_yds:
-                        Number.parseInt(currentObj.passing_yds.toString()) +
-                        Number.parseInt(dataframe[obj].passing_yds.toString()),
+                    interceptions:
+                        Number.parseInt(currentObj.interceptions.toString()) +
+                        Number.parseInt(
+                            dataframe[obj].interceptions.toString()
+                        ),
+                    sacks:
+                        Number.parseInt(currentObj.sacks.toString()) +
+                        Number.parseInt(dataframe[obj].sacks.toString()),
+                    passing_yards:
+                        Number.parseInt(currentObj.passing_yards.toString()) +
+                        Number.parseInt(
+                            dataframe[obj].passing_yards.toString()
+                        ),
                     rushing_yards:
                         Number.parseInt(currentObj.rushing_yards.toString()) +
                         Number.parseInt(
                             dataframe[obj].rushing_yards.toString()
                         ),
-                    first_down_rush:
-                        Number.parseInt(currentObj.first_down_rush.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].first_down_rush.toString()
-                        ),
-                    first_down_pass:
-                        Number.parseInt(currentObj.first_down_pass.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].first_down_pass.toString()
-                        ),
                     rush_attempt:
                         Number.parseInt(currentObj.rush_attempt.toString()) +
                         Number.parseInt(dataframe[obj].rush_attempt.toString()),
-                    game_id_db: currentObj.game_id_db,
+                    db_id: currentObj.db_id,
                 };
                 teamsMap.set(currentObj.posteam, newObj);
             } else {
@@ -188,7 +179,7 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                 <StatTable
                     data={aggTeams}
                     columns={columns}
-                    rowIdCol={"game_id_db"}
+                    rowIdCol={"db_id"}
                     pageSize={32}
                 />
             </div>

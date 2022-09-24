@@ -46,6 +46,7 @@ const Checkbox = (props: CheckboxProps) => {
                 query: {
                     phase: query.phase,
                     weeks: urlNewChecked,
+                    season: query.season,
                 },
             });
         } else {
@@ -53,6 +54,7 @@ const Checkbox = (props: CheckboxProps) => {
                 pathname: path,
                 query: {
                     weeks: urlNewChecked,
+                    season: query.season,
                 },
             });
         }
@@ -69,6 +71,7 @@ const Checkbox = (props: CheckboxProps) => {
                 query: {
                     phase: query.phase,
                     weeks: "none",
+                    season: query.season,
                 },
             });
         } else {
@@ -76,6 +79,7 @@ const Checkbox = (props: CheckboxProps) => {
                 pathname: path,
                 query: {
                     weeks: "none",
+                    season: query.season,
                 },
             });
         }
@@ -96,6 +100,7 @@ const Checkbox = (props: CheckboxProps) => {
                 query: {
                     phase: query.phase,
                     weeks: urlNewChecked,
+                    season: query.season,
                 },
             });
         } else {
@@ -103,6 +108,7 @@ const Checkbox = (props: CheckboxProps) => {
                 pathname: path,
                 query: {
                     weeks: urlNewChecked,
+                    season: query.season,
                 },
             });
         }

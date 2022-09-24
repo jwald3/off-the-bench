@@ -10,15 +10,7 @@ const StatTableHeader = () => {
 
     return (
         <div className={styles.tableHeader}>
-            <Link
-                href={{
-                    pathname: path,
-                    query: {
-                        phase: "offense",
-                        weeks: query.weeks,
-                    },
-                }}
-            >
+            <div>
                 <h1
                     className={
                         phase?.toLocaleString().toLowerCase() == "offense"
@@ -34,6 +26,7 @@ const StatTableHeader = () => {
                                         query: {
                                             phase: "offense",
                                             weeks: query.weeks,
+                                            season: query.season,
                                         },
                                     })
                                     .then(() => router.reload());
@@ -44,6 +37,7 @@ const StatTableHeader = () => {
                                     pathname: path,
                                     query: {
                                         phase: "offense",
+                                        season: query.season,
                                     },
                                 })
                                 .then(() => router.reload());
@@ -52,17 +46,9 @@ const StatTableHeader = () => {
                 >
                     Offense
                 </h1>
-            </Link>
+            </div>
             <h1 className={styles.dividerBar}>|</h1>
-            <Link
-                href={{
-                    pathname: path,
-                    query: {
-                        phase: "offense",
-                        weeks: query.weeks,
-                    },
-                }}
-            >
+            <div>
                 <h1
                     className={
                         phase?.toLocaleString().toLowerCase() == "defense"
@@ -78,6 +64,7 @@ const StatTableHeader = () => {
                                         query: {
                                             phase: "defense",
                                             weeks: query.weeks,
+                                            season: query.season,
                                         },
                                     })
                                     .then(() => router.reload());
@@ -88,6 +75,7 @@ const StatTableHeader = () => {
                                     pathname: path,
                                     query: {
                                         phase: "defense",
+                                        season: query.season,
                                     },
                                 })
                                 .then(() => router.reload());
@@ -96,7 +84,7 @@ const StatTableHeader = () => {
                 >
                     Defense
                 </h1>
-            </Link>
+            </div>
         </div>
     );
 };
