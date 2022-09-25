@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import styles from "../styles/Appbar.module.scss";
 import Link from "next/link";
 import { AiFillHome } from "react-icons/ai";
+import { useRouter } from "next/router";
 
 const drawerWidth = 240;
 const navItems = ["Home", "Team Stats", "Player Stats"];
@@ -45,6 +46,18 @@ export default function DrawerAppBar() {
         </Box>
     );
 
+    const router = useRouter();
+    const { phase } = router.query;
+    const path = router.pathname;
+    const { query } = router;
+    const sznVal = query.season || 2022;
+
+    const allChecked: Array<number> = [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+    ];
+
+    const urlAllChecked = allChecked.map(String).join(",");
+
     return (
         <div className={styles.navbar}>
             <div className={styles.appLogo}>
@@ -52,7 +65,24 @@ export default function DrawerAppBar() {
             </div>
             <div className={styles.navbarLinks}>
                 <div className={styles.navbarLink}>
-                    <Link href="/stats/teams?phase=offense">TEAM STATS</Link>
+                    <div>
+                        <span
+                            onClick={() =>
+                                router
+                                    .replace({
+                                        pathname: "/stats/teams",
+                                        query: {
+                                            phase: "offense",
+                                            weeks: urlAllChecked,
+                                            season: 2022,
+                                        },
+                                    })
+                                    .then(() => router.reload())
+                            }
+                        >
+                            TEAM STATS
+                        </span>
+                    </div>
                 </div>
                 <div className={styles.navbarLink}>
                     <Link href="/stats/players/offense">PLAYER STATS</Link>

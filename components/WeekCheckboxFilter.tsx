@@ -6,6 +6,8 @@ import styles from "../styles/WeekCheckboxFilter.module.scss";
 interface CheckboxProps {
     handleFilters: Function;
     weekFilter: number[];
+    seasonFilter: number;
+    handleSeason: Function;
 }
 
 const Checkbox = (props: CheckboxProps) => {
@@ -14,6 +16,7 @@ const Checkbox = (props: CheckboxProps) => {
     const { query } = router;
 
     const [checked, setChecked] = useState(props.weekFilter);
+    const [selSeason, setSelSeason] = useState(props.seasonFilter);
 
     useEffect(() => {
         if (query.weeks !== undefined) {
@@ -114,6 +117,42 @@ const Checkbox = (props: CheckboxProps) => {
         }
     };
 
+    const handleSeasonChange = (val: number) => {
+        props.handleSeason(val);
+
+        const allChecked: Array<number> = [
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+        ];
+
+        const urlAllChecked = allChecked.map(String).join(",");
+
+        if (query.weeks) {
+            router
+                .push({
+                    pathname: path,
+                    query: {
+                        phase: query.phase,
+                        weeks: query.weeks,
+                        season: val,
+                    },
+                })
+                .then(() => router.reload());
+        } else {
+            router
+                .push({
+                    pathname: path,
+                    query: {
+                        phase: query.phase,
+                        weeks: urlAllChecked,
+                        season: val,
+                    },
+                })
+                .then(() => router.reload());
+        }
+
+        setSelSeason(val);
+    };
+
     return (
         <div className={styles.filterContainer}>
             <div className={styles.weeksLabel}>Weeks</div>
@@ -143,10 +182,13 @@ const Checkbox = (props: CheckboxProps) => {
                 Clear All
             </div>
             <div className={styles.seasonSelector}>
-                <select name="" id="">
-                    <option value="2022">2022</option>
-                    <option value="2021">2021</option>
-                    <option value="2020">2020</option>
+                <select
+                    value={selSeason}
+                    onChange={(e) => handleSeasonChange(Number(e.target.value))}
+                >
+                    <option value={2022}>2022</option>
+                    <option value={2021}>2021</option>
+                    <option value={2020}>2020</option>
                 </select>
             </div>
         </div>

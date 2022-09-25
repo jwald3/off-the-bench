@@ -7,6 +7,7 @@ const StatTableHeader = () => {
     const { phase } = router.query;
     const path = router.pathname;
     const { query } = router;
+    const sznVal = query.season || 2022;
 
     return (
         <div className={styles.tableHeader}>
@@ -26,7 +27,7 @@ const StatTableHeader = () => {
                                         query: {
                                             phase: "offense",
                                             weeks: query.weeks,
-                                            season: query.season,
+                                            season: sznVal,
                                         },
                                     })
                                     .then(() => router.reload());
@@ -37,7 +38,7 @@ const StatTableHeader = () => {
                                     pathname: path,
                                     query: {
                                         phase: "offense",
-                                        season: query.season,
+                                        season: sznVal,
                                     },
                                 })
                                 .then(() => router.reload());

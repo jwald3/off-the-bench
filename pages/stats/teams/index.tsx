@@ -78,9 +78,9 @@ interface TeamProps {
 const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     const router = useRouter();
     const { query } = router;
-
     const columns = teamStatColumns;
 
+    const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
     const [aggTeams, setAggTeams] = useState(props.teams);
     const [weekFilter, setWeekFilter] = useState([
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
@@ -174,7 +174,12 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     return (
         <div className="weekly-team-page">
             <StatTableHeader />
-            <Checkbox handleFilters={setWeekFilter} weekFilter={weekFilter} />
+            <Checkbox
+                handleFilters={setWeekFilter}
+                weekFilter={weekFilter}
+                seasonFilter={Number(selectedSeason)}
+                handleSeason={setSelectedSeason}
+            />
             <div className="weekly-team-stats">
                 <StatTable
                     data={aggTeams}
