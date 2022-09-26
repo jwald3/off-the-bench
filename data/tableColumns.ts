@@ -59,7 +59,7 @@ export const playerDefenseColumns: GridColDef[] = [
     },
     {
         headerName: "Sacks",
-        field: "sacks",
+        field: "sack",
         type: "number",
         valueGetter: getTotalSacks,
     },
@@ -95,7 +95,7 @@ export const playerDefenseColumns: GridColDef[] = [
 ];
 
 function getTotalSacks(params: GridCellParams) {
-    return params.row.sacks + params.row.half_sack * 0.5;
+    return params.row.sack + params.row.half_sack * 0.5;
 }
 
 function getComboTackles(params: GridCellParams) {

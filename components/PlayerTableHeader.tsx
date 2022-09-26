@@ -5,6 +5,7 @@ const PlayerTableHeader = () => {
     const router = useRouter();
     const path = router.pathname;
     const { query } = router;
+    const sznVal = query.season || 2022;
 
     return (
         <div className={styles.tableHeader}>
@@ -23,6 +24,7 @@ const PlayerTableHeader = () => {
                                         pathname: "/stats/players/offense",
                                         query: {
                                             weeks: query.weeks,
+                                            season: sznVal,
                                         },
                                     })
                                     .then(() => router.reload());
@@ -31,6 +33,9 @@ const PlayerTableHeader = () => {
                             router
                                 .replace({
                                     pathname: "/stats/players/offense",
+                                    query: {
+                                        season: sznVal,
+                                    },
                                 })
                                 .then(() => router.reload());
                         }
@@ -55,6 +60,7 @@ const PlayerTableHeader = () => {
                                         pathname: "/stats/players/defense",
                                         query: {
                                             weeks: query.weeks,
+                                            season: sznVal,
                                         },
                                     })
                                     .then(() => router.reload());
@@ -63,6 +69,9 @@ const PlayerTableHeader = () => {
                             router
                                 .replace({
                                     pathname: "/stats/players/defense",
+                                    query: {
+                                        season: sznVal,
+                                    },
                                 })
                                 .then(() => router.reload());
                         }

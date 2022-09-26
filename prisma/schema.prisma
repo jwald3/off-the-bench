@@ -27,14 +27,14 @@ model player_defense_stats_basic {
   team_abbr            String?
   position             String?
   week                 Int?
-  week_count           String?
+  week_count           Int?
   season               BigInt?
 }
 
 model player_offense_stats_basic {
   player_id        String?
   game_id          String?
-  season           String?
+  season           Int?
   pass_attempt     Float?
   completion       Float?
   incompletion     Float?

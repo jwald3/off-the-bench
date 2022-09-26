@@ -9,17 +9,19 @@ import { playerOffenseColumns } from "../../../data/tableColumns";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: IPlayerSeason[];
-    const playerSubRes =
-        await prisma.player_offense_stats_weekly_2021_basic.findMany({
-            where: {
-                week: {
-                    in: [
-                        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-                        17, 18,
-                    ],
-                },
+    let season = Number(query.season) || 2022;
+
+    const playerSubRes = await prisma.player_offense_stats_basic.findMany({
+        where: {
+            week: {
+                in: [
+                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+                    18,
+                ],
             },
-        });
+            season: season,
+        },
+    });
     team = JSON.parse(
         JSON.stringify(playerSubRes, (_, v) =>
             typeof v === "bigint" ? v.toString() : v
@@ -60,6 +62,7 @@ interface IPlayerSeason {
     receiving_TD: number;
     game_id_db: string;
     week_count: number;
+    season: number;
 }
 
 interface PlayerProps {
@@ -72,6 +75,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
 
     const columns = playerOffenseColumns;
 
+    const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
     const [aggTeams, setAggTeams] = useState(props.teams);
     const [weekFilter, setWeekFilter] = useState([
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
@@ -193,7 +197,12 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     return (
         <div className="weekly-team-page">
             <PlayerTableHeader />
-            <Checkbox handleFilters={setWeekFilter} weekFilter={weekFilter} />
+            <Checkbox
+                handleFilters={setWeekFilter}
+                weekFilter={weekFilter}
+                seasonFilter={Number(selectedSeason)}
+                handleSeason={setSelectedSeason}
+            />
             <div className="weekly-team-stats">
                 <StatTable
                     data={aggTeams}
