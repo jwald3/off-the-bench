@@ -85,7 +85,23 @@ export default function DrawerAppBar() {
                     </div>
                 </div>
                 <div className={styles.navbarLink}>
-                    <Link href="/stats/players/offense">PLAYER STATS</Link>
+                    <div>
+                        <span
+                            onClick={() =>
+                                router
+                                    .replace({
+                                        pathname: "/stats/players/offense",
+                                        query: {
+                                            weeks: urlAllChecked,
+                                            season: 2022,
+                                        },
+                                    })
+                                    .then(() => router.reload())
+                            }
+                        >
+                            PLAYER STATS
+                        </span>
+                    </div>
                 </div>
                 <div className={styles.navbarHomeLink}>
                     <Link href="/" passHref>
