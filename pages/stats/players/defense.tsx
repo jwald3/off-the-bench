@@ -6,6 +6,7 @@ import Checkbox from "../../../components/WeekCheckboxFilter";
 import { useRouter } from "next/router";
 import PlayerTableHeader from "../../../components/PlayerTableHeader";
 import { playerDefenseColumns } from "../../../data/tableColumns";
+import Head from "next/head";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: IPlayerSeason[];
@@ -194,21 +195,30 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     }, [weekFilter]);
 
     return (
-        <div className="weekly-team-page">
-            <PlayerTableHeader />
-            <Checkbox
-                handleFilters={setWeekFilter}
-                weekFilter={weekFilter}
-                seasonFilter={Number(selectedSeason)}
-                handleSeason={setSelectedSeason}
-            />
-            <div className="weekly-team-stats">
-                <StatTable
-                    data={aggTeams}
-                    columns={columns}
-                    rowIdCol={"game_id_db"}
-                    pageSize={25}
+        <div>
+            <Head>
+                <title>Player Stats</title>
+                <meta
+                    name="description"
+                    content="Player Stats filterable by week"
                 />
+            </Head>
+            <div className="weekly-team-page">
+                <PlayerTableHeader />
+                <Checkbox
+                    handleFilters={setWeekFilter}
+                    weekFilter={weekFilter}
+                    seasonFilter={Number(selectedSeason)}
+                    handleSeason={setSelectedSeason}
+                />
+                <div className="weekly-team-stats">
+                    <StatTable
+                        data={aggTeams}
+                        columns={columns}
+                        rowIdCol={"game_id_db"}
+                        pageSize={25}
+                    />
+                </div>
             </div>
         </div>
     );

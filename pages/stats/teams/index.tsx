@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import StatTable from "../../../components/StatTable";
@@ -172,21 +173,30 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     }, [weekFilter]);
 
     return (
-        <div className="weekly-team-page">
-            <StatTableHeader />
-            <Checkbox
-                handleFilters={setWeekFilter}
-                weekFilter={weekFilter}
-                seasonFilter={Number(selectedSeason)}
-                handleSeason={setSelectedSeason}
-            />
-            <div className="weekly-team-stats">
-                <StatTable
-                    data={aggTeams}
-                    columns={columns}
-                    rowIdCol={"db_id"}
-                    pageSize={32}
+        <div>
+            <Head>
+                <title>Team Stats</title>
+                <meta
+                    name="description"
+                    content="Team Stats filterable by week"
                 />
+            </Head>
+            <div className="weekly-team-page">
+                <StatTableHeader />
+                <Checkbox
+                    handleFilters={setWeekFilter}
+                    weekFilter={weekFilter}
+                    seasonFilter={Number(selectedSeason)}
+                    handleSeason={setSelectedSeason}
+                />
+                <div className="weekly-team-stats">
+                    <StatTable
+                        data={aggTeams}
+                        columns={columns}
+                        rowIdCol={"db_id"}
+                        pageSize={32}
+                    />
+                </div>
             </div>
         </div>
     );
