@@ -8,79 +8,93 @@ export const playerDefenseColumns: GridColDef[] = [
     {
         headerName: "Player",
         field: "player_id",
-        width: 150,
+        flex: 1.75,
         type: "string",
     },
     {
         headerName: "Position",
         field: "position",
+        flex: 0.5,
         type: "string",
     },
     {
         headerName: "Team",
         field: "team_abbr",
+        flex: 0.5,
         type: "string",
     },
     {
         headerName: "Games",
         field: "week_count",
+        flex: 0.5,
         type: "number",
     },
     {
         headerName: "INTs",
         field: "interception",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "INT Yards",
         field: "int_return_yards",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "INT TDs",
         field: "int_return_touchdown",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "Passes Defended",
         field: "passes_defended",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "Forced Fumbles",
         field: "fumbles_forced",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "Sacks",
         field: "sack",
         type: "number",
+        flex: 1,
         valueGetter: getTotalSacks,
     },
     {
         headerName: "Combined Tackles",
         field: "comb_tackles",
+        flex: 1,
         valueGetter: getComboTackles,
         type: "number",
     },
     {
         headerName: "Solo Tackles",
         field: "solo_tackles",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "Assists on Tackles",
         field: "assist_tackls",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "Tackles For Loss",
         field: "tackles_for_loss",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "QB Hits",
         field: "qb_hits",
+        flex: 1,
         type: "number",
     },
 ];
@@ -101,61 +115,67 @@ export const playerOffenseColumns: GridColDef[] = [
     {
         headerName: "Player",
         field: "player_id",
-        width: 150,
+        flex: 1.5,
         type: "string",
     },
     {
         headerName: "Position",
         field: "position",
+        flex: 1,
         type: "string",
     },
     {
         headerName: "Team",
         field: "team_abbr",
-        width: 50,
+        flex: 1,
         type: "string",
     },
     {
         headerName: "Games",
         field: "week_count",
-        width: 50,
+        flex: 1,
         type: "number",
     },
     {
         headerName: "Pass Attempts",
         field: "pass_attempt",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "Completions",
         field: "completion",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "Incompletions",
         field: "incompletion",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "Passing Yards",
         field: "passing_yards",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "Passing TDs",
         field: "passing_TD",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "INT",
         field: "interception",
-        width: 50,
+        flex: 1,
         type: "number",
     },
     {
         headerName: "Sacks",
         field: "sack",
-        width: 50,
+        flex: 1,
         type: "number",
     },
     {
@@ -167,11 +187,13 @@ export const playerOffenseColumns: GridColDef[] = [
     {
         headerName: "Rushing Yards",
         field: "rushing_yards",
+        flex: 1,
         type: "number",
     },
     {
         headerName: "Rushing TDs",
         field: "rushing_TD",
+        flex: 1,
         type: "number",
     },
     {
@@ -189,29 +211,31 @@ export const playerOffenseColumns: GridColDef[] = [
     {
         headerName: "REC",
         field: "reception",
-        width: 50,
+        flex: 0.75,
         type: "number",
     },
     {
         headerName: "TGT",
         field: "target",
-        width: 50,
+        flex: 0.75,
         type: "number",
     },
     {
-        headerName: "Receiving Yards",
+        headerName: "Rec. Yards",
         field: "receiving_yards",
+        flex: 0.75,
         type: "number",
     },
     {
-        headerName: "Receiving TDs",
+        headerName: "Rec. TDs",
         field: "receiving_TD",
+        flex: 0.75,
         type: "number",
     },
 ];
 
 export const teamStatColumns: GridColDef[] = [
-    { headerName: "Team", field: "posteam", flex: 1 },
+    { headerName: "Team", field: "posteam", flex: 0.5 },
     {
         headerName: "Completions",
         field: "completions",
@@ -248,7 +272,7 @@ export const teamStatColumns: GridColDef[] = [
     {
         headerName: "INTs",
         field: "interceptions",
-        flex: 0.5,
+        flex: 1,
         type: "number",
     },
     { headerName: "Sacks", field: "sacks", flex: 0.5, type: "number" },
