@@ -27,8 +27,8 @@ model player_defense_stats_basic {
   team_abbr            String?
   position             String?
   week                 Int?
-  week_count           Int?
-  season               BigInt?
+  season               Int?
+  week_count           BigInt?
 }
 
 model player_offense_stats_basic {
@@ -97,4 +97,46 @@ model team_offense_stats_basic {
   fumbles        Float?  @db.Real
   week           Int?
   db_id          String  @id
+}
+
+model player_usage_by_team {
+  posteam                 String?
+  game_id                 String?
+  player_id               String?
+  position                String?
+  targets                 BigInt?
+  receptions              BigInt?
+  receiving_yards         BigInt?
+  air_yards               BigInt?
+  yards_after_catch       BigInt?
+  receiving_touchdown     BigInt?
+  redzone_target          BigInt?
+  redzone_catch           BigInt?
+  endzone_target          BigInt?
+  endzone_catch           BigInt?
+  first_down_target       BigInt?
+  second_down_target      BigInt?
+  third_down_target       BigInt?
+  fourth_down_target      BigInt?
+  first_down_catch        BigInt?
+  second_down_catch       BigInt?
+  third_down_catch        BigInt?
+  fourth_down_catch       BigInt?
+  rush_attempt            BigInt?
+  rushing_yards           BigInt?
+  rush_touchdown          BigInt?
+  stacked_box_rush        BigInt?
+  tackled_for_loss        BigInt?
+  fumble                  BigInt?
+  first_down_rush         BigInt?
+  second_down_rush        BigInt?
+  third_down_rush         BigInt?
+  fourth_down_rush        BigInt?
+  redzone_rush            BigInt?
+  goalline_rush           BigInt?
+  redzone_rush_touchdown  BigInt?
+  goalline_rush_touchdown BigInt?
+  gsis_id                 String?
+  db_id                   String  @id
+  season                  Int?
 }

@@ -149,10 +149,19 @@ export const playerOffenseColumns: GridColDef[] = [
         type: "number",
     },
     {
-        headerName: "Incompletions",
-        field: "incompletion",
+        headerName: "Completion %",
+        field: "compPercent",
         flex: 1,
+        valueGetter: getPlayerCompletionPct,
         type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
     },
     {
         headerName: "Passing Yards",
@@ -316,8 +325,118 @@ function getCompletionPct(params: GridCellParams) {
     ).toFixed(2);
 }
 
+function getPlayerCompletionPct(params: GridCellParams) {
+    if (params.row.pass_attempt == 0) {
+        return 0;
+    }
+
+    return (
+        ((params.row.completion || 0) / params.row.pass_attempt) *
+        100
+    ).toFixed(2);
+}
+
 function getYPC(params: GridCellParams) {
     return `${(
         (params.row.rushing_yards || 0) / params.row.rush_attempt
     ).toFixed(2)}`;
 }
+
+export const playerUsageColumns: GridColDef[] = [
+    {
+        headerName: "Player",
+        field: "player_id",
+        flex: 1.5,
+        type: "string",
+    },
+    {
+        headerName: "Position",
+        field: "position",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "TGTs",
+        field: "targets",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "RECs",
+        field: "receptions",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rec. Yards",
+        field: "receiving_yards",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Air Yards",
+        field: "air_yards",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "YAC",
+        field: "yards_after_catch",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rec. TDs",
+        field: "receiving_touchdown",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "RZ TGT",
+        field: "redzone_target",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "RZ REC",
+        field: "redzone_catch",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "EZ TGT",
+        field: "endzone_target",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "EZ REC",
+        field: "endzone_catch",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "3D TGT",
+        field: "third_down_target",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "3D REC",
+        field: "third_down_catch",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "4D TGT",
+        field: "fourth_down_target",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "4D REC",
+        field: "fourth_down_catch",
+        flex: 1,
+        type: "number",
+    },
+];
