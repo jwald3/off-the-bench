@@ -28,9 +28,10 @@ const StatTable: React.FunctionComponent<TableProps> = ({ ...props }) => {
                     fontSize: 10,
                     width: "90%",
                     margin: "auto",
-                    marginBottom: "2%",
+                    marginBottom: "3%",
                     height: "100%",
                     color: "#101223",
+                    boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
                 }}
             />
         </div>

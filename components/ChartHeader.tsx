@@ -20,33 +20,11 @@ const ChartHeader: React.FunctionComponent<ChartHeaderProps> = ({
     };
 
     return (
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "90%",
-                marginLeft: "auto",
-                marginRight: "auto",
-                alignItems: "baseline",
-                textAlign: "end",
-                textTransform: "uppercase",
-                maxWidth: "1800px",
-                paddingLeft: "2%",
-                paddingRight: "2%",
-                backgroundColor: "#f3f4f8",
-            }}
-        >
-            <div style={{ display: "flex", width: "60%" }}>
+        <div className={styles.headerContainer}>
+            <div className={styles.headerTitle}>
                 <h1>{props.headerTitle}</h1>
             </div>
-            <div
-                style={{
-                    display: "flex",
-                    gap: "2%",
-                    width: "40%",
-                    justifyContent: "flex-end",
-                }}
-            >
+            <div className={styles.chartOptions}>
                 <div style={{ cursor: "pointer" }}>
                     <h2
                         className={

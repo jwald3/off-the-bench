@@ -20,7 +20,7 @@ const StatChart: React.FunctionComponent<ChartProps> = ({ ...props }) => {
         <div
             style={{
                 maxWidth: "1800px",
-                width: "90%",
+                width: "100%",
                 marginLeft: "auto",
                 marginRight: "auto",
                 marginBottom: "2%",
