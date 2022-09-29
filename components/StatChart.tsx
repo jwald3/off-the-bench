@@ -38,7 +38,7 @@ const StatChart: React.FunctionComponent<ChartProps> = ({ ...props }) => {
                 >
                     <CartesianGrid strokeDasharray="2 2" />
                     <XAxis dataKey="player_id" angle={-15} textAnchor="end" />
-                    <YAxis />
+                    <YAxis type="number" />
                     <Tooltip />
                     <Bar dataKey={props.barDataOne} fill="#777986" />
                     {props.barDataTwo !== "" && (

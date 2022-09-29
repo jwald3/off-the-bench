@@ -30,8 +30,10 @@ const ChartHeader: React.FunctionComponent<ChartHeaderProps> = ({
                 alignItems: "baseline",
                 textAlign: "end",
                 textTransform: "uppercase",
-                marginBottom: "1%",
                 maxWidth: "1800px",
+                paddingLeft: "4%",
+                paddingRight: "4%",
+                backgroundColor: "#f3f4f8",
             }}
         >
             <div style={{ display: "flex", width: "60%" }}>

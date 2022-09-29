@@ -42,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     };
 };
 
-interface IPlayerUsage {
+export interface IPlayerUsage {
     posteam: string;
     game_id: string;
     player_id: string;
@@ -285,6 +285,11 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             (player) => player.rush_attempt !== "0" && player.rush_attempt !== 0
         );
 
+        targets.forEach((tgt) => (tgt.targets = parseInt(tgt.targets)));
+        rushes.forEach(
+            (tgt) => (tgt.rush_attempt = parseInt(tgt.rush_attempt))
+        );
+
         targets.sort((a, b) => b.targets - a.targets);
         rushes.sort((a, b) => b.rush_attempt - a.rush_attempt);
 
@@ -341,6 +346,11 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
 
         targets.sort((a, b) => b.targets - a.targets);
         rushes.sort((a, b) => b.rush_attempt - a.rush_attempt);
+
+        targets.forEach((tgt) => (tgt.targets = parseInt(tgt.targets)));
+        rushes.forEach(
+            (tgt) => (tgt.rush_attempt = parseInt(tgt.rush_attempt))
+        );
 
         setPlayerTargets(targets);
         setPlayerRushes(rushes);
