@@ -139,4 +139,6 @@ model player_usage_by_team {
   gsis_id                 String?
   db_id                   String  @id
   season                  Int?
+  week                    Int?
+  week_count              BigInt?
 }

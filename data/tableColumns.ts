@@ -440,3 +440,101 @@ export const playerUsageColumns: GridColDef[] = [
         type: "number",
     },
 ];
+
+export const playerRushUsageColumns: GridColDef[] = [
+    {
+        headerName: "Player",
+        field: "player_id",
+        flex: 1.5,
+        type: "string",
+    },
+    {
+        headerName: "Position",
+        field: "position",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "Rushes",
+        field: "rush_attempt",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rush Yards",
+        field: "rushing_yards",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "YPC",
+        field: "yardsPerCarry",
+        flex: 1,
+        valueGetter: getYPC,
+        type: "number",
+    },
+    {
+        headerName: "Rush TDs",
+        field: "rush_touchdown",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Stacked Box Rush",
+        field: "stacked_box_rush",
+        flex: 1,
+        type: "number",
+        valueGetter: getStackedBoxPct,
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "Tackled For Loss",
+        field: "tackled_for_loss",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Fumble",
+        field: "fumble",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "RZ Rush",
+        field: "redzone_rush",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "RZ TD",
+        field: "redzone_rush_touchdown",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "EZ Rush",
+        field: "goalline_rush",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "EZ TD",
+        field: "goalline_rush_touchdown",
+        flex: 1,
+        type: "number",
+    },
+];
+
+function getStackedBoxPct(params: GridCellParams) {
+    return (
+        ((params.row.stacked_box_rush || 0) / params.row.rush_attempt) *
+        100
+    ).toFixed(2);
+}
