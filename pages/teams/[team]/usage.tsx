@@ -259,20 +259,6 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     };
 
     useEffect(() => {
-        // const reducedTeams = aggregateStats(props.players);
-        // const targets = reducedTeams.filter(
-        //     (player) => player.targets !== "0" && player.targets !== 0
-        // );
-        // const rushes = reducedTeams.filter(
-        //     (player) => player.rush_attempt !== "0" && player.rush_attempt !== 0
-        // );
-        // targets.sort((a, b) => b.targets - a.targets);
-        // rushes.sort((a, b) => b.rush_attempt - a.rush_attempt);
-        // setPlayerTargets(targets);
-        // setPlayerRushes(rushes);
-    }, []);
-
-    useEffect(() => {
         if (query.weeks !== undefined && query.weeks !== "") {
             const selectedWeeks = (query.weeks as string)
                 ?.split(",")
