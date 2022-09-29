@@ -31,8 +31,8 @@ const ChartHeader: React.FunctionComponent<ChartHeaderProps> = ({
                 textAlign: "end",
                 textTransform: "uppercase",
                 maxWidth: "1800px",
-                paddingLeft: "4%",
-                paddingRight: "4%",
+                paddingLeft: "2%",
+                paddingRight: "2%",
                 backgroundColor: "#f3f4f8",
             }}
         >
