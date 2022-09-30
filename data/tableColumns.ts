@@ -538,3 +538,76 @@ function getStackedBoxPct(params: GridCellParams) {
         100
     ).toFixed(2);
 }
+
+export const teamPersonnelGroupingColumns: GridColDef[] = [
+    {
+        headerName: "Personnel",
+        field: "offense_grouping",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "Total Snaps",
+        field: "snap_ct",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Personnel Percentage",
+        field: "personnel_pct",
+        flex: 1,
+        type: "number",
+        valueGetter: getPersonnelPct,
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "Pass Snaps",
+        field: "passing_snap",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Pass Yards",
+        field: "passing_yards",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Pass TDs",
+        field: "pass_touchdown",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rush Snaps",
+        field: "rushing_snap",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rush Yards",
+        field: "rushing_yards",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rush TDs",
+        field: "rush_touchdown",
+        flex: 1,
+        type: "number",
+    },
+];
+
+function getPersonnelPct(params: GridCellParams) {
+    return (
+        ((params.row.snap_ct || 0) / params.row.total_game_snaps) *
+        100
+    ).toFixed(2);
+}

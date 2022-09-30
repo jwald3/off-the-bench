@@ -12,6 +12,7 @@ interface UsageProps {
     altOptionTwo: string;
     altOptionThree: string;
     changeView: Function;
+    dataKey: string;
 }
 
 const UsageInfo: React.FunctionComponent<UsageProps> = ({ ...props }) => {
@@ -39,6 +40,7 @@ const UsageInfo: React.FunctionComponent<UsageProps> = ({ ...props }) => {
                         data={props.playerData}
                         barDataOne={props.barDataOne}
                         barDataTwo={props.barDataTwo}
+                        dataKey={props.dataKey}
                     />
                 </div>
 

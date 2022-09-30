@@ -142,3 +142,21 @@ model player_usage_by_team {
   week                    Int?
   week_count              BigInt?
 }
+
+model team_personnel_data {
+  game_id          String?
+  posteam          String?
+  offense_grouping String?
+  snap_ct          BigInt?
+  passing_snap     BigInt?
+  rushing_snap     BigInt?
+  passing_yards    BigInt?
+  pass_touchdown   BigInt?
+  rushing_yards    BigInt?
+  rush_touchdown   BigInt?
+  season           Int?
+  week             Int?
+  week_count       BigInt?
+  db_id            String  @id
+  total_game_snaps BigInt?
+}

@@ -379,6 +379,7 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                     altOptionTwo="Red Zone"
                     altOptionThree="End Zone"
                     changeView={setRecChartView}
+                    dataKey="player_id"
                 />
                 <UsageInfo
                     playerData={playerRushes}
@@ -390,6 +391,7 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                     altOptionTwo="Red Zone"
                     altOptionThree="Goal Line"
                     changeView={setRushChartView}
+                    dataKey="player_id"
                 />
             </div>
         </div>
