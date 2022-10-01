@@ -160,3 +160,34 @@ model team_personnel_data {
   db_id            String  @id
   total_game_snaps BigInt?
 }
+
+model game_logs_basic {
+  game_id               String?
+  posteam               String?
+  posteam_score         Float?  @db.Real
+  defteam_score         Float?  @db.Real
+  yards_gained          Float?  @db.Real
+  turnovers             Int?
+  fumbles               Float?  @db.Real
+  fumbles_lost          Float?  @db.Real
+  completed_passes      Float?  @db.Real
+  incomplete_passes     Float?  @db.Real
+  pass_attempts         Float?  @db.Real
+  receiving_yards       Float?  @db.Real
+  passing_touchdowns    Float?  @db.Real
+  interceptions         Float?  @db.Real
+  sacks                 Float?  @db.Real
+  rush_attempts         Float?  @db.Real
+  rushing_yards         Float?  @db.Real
+  rushing_touchdown     Float?  @db.Real
+  extra_points_made     Int?
+  extra_point_attempts  Float?  @db.Real
+  field_goals_made      Int?
+  field_goals_attempted Float?  @db.Real
+  time_of_possession    String?
+  penalties             Float?  @db.Real
+  penalty_yards         Float?  @db.Real
+  db_id                 String  @id
+  season                Int?
+  week                  Int?
+}
