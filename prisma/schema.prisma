@@ -164,6 +164,7 @@ model team_personnel_data {
 model game_logs_basic {
   game_id               String?
   posteam               String?
+  defteam               String?
   posteam_score         Float?  @db.Real
   defteam_score         Float?  @db.Real
   yards_gained          Float?  @db.Real

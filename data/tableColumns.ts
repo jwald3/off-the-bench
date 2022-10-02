@@ -611,3 +611,165 @@ function getPersonnelPct(params: GridCellParams) {
         100
     ).toFixed(2);
 }
+
+export const teamGameLogColumns: GridColDef[] = [
+    {
+        headerName: "Week",
+        field: "week",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "TM",
+        field: "posteam",
+        flex: 0.75,
+        type: "string",
+    },
+    {
+        headerName: "OPP",
+        field: "defteam",
+        flex: 0.75,
+        type: "string",
+    },
+    {
+        headerName: "TM Score",
+        field: "posteam_score",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "OPP Score",
+        field: "defteam_score",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Result",
+        field: "result",
+        type: "string",
+        flex: 0.5,
+        valueGetter: getGameResult,
+    },
+    {
+        headerName: "Total Yards",
+        field: "yards_gained",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Turnovers",
+        field: "turnovers",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Fumbles",
+        field: "fumbles",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Fumbles Lost",
+        field: "fumbles_lost",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Completions",
+        field: "completed_passes",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Passes",
+        field: "pass_attempts",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Passing Yds",
+        field: "receiving_yards",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "INT",
+        field: "interceptions",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Sacks",
+        field: "sacks",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Carries",
+        field: "rush_attempts",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rush Yds",
+        field: "rushing_yards",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rush TDs",
+        field: "rushing_touchdown",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "XPM",
+        field: "extra_points_made",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "XPA",
+        field: "extra_point_attempts",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "FGM",
+        field: "field_goals_made",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "FGA",
+        field: "field_goals_attempted",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "TOP",
+        field: "time_of_possession",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "Penalties",
+        field: "penalties",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "Penalty Yds",
+        field: "penalty_yards",
+        flex: 1,
+        type: "string",
+    },
+];
+
+function getGameResult(params: GridCellParams) {
+    return params.row.posteam_score > params.row.defteam_score
+        ? "W"
+        : params.row.posteam_score < params.row.defteam_score
+        ? "L"
+        : "T";
+}
