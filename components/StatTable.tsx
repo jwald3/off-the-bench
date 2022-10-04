@@ -26,12 +26,11 @@ const StatTable: React.FunctionComponent<TableProps> = ({ ...props }) => {
                 // hideFooter={true}
                 sx={{
                     fontSize: 10,
-                    width: "90%",
+                    width: "100%",
                     margin: "auto",
                     marginBottom: "3%",
                     height: "100%",
                     color: "#101223",
-                    boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
                 }}
             />
         </div>

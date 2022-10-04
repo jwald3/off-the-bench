@@ -773,3 +773,66 @@ function getGameResult(params: GridCellParams) {
         ? "L"
         : "T";
 }
+
+export const downDataColumns: GridColDef[] = [
+    {
+        headerName: "Down",
+        field: "down",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Carries",
+        field: "rush_attempt",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rushing Yds.",
+        field: "rushing_yards",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rushing TDs.",
+        field: "rush_touchdown",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Completions",
+        field: "complete_pass",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Pass Attempts",
+        field: "pass_attempt",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Passing Yds.",
+        field: "passing_yards",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Passing TDs.",
+        field: "pass_touchdown",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "INTs",
+        field: "interception",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Sacks",
+        field: "sack",
+        flex: 1,
+        type: "number",
+    },
+];

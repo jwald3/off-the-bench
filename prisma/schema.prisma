@@ -192,3 +192,22 @@ model game_logs_basic {
   season                Int?
   week                  Int?
 }
+
+model down_by_down_offense {
+  game_id        String?
+  posteam        String?
+  down           Int?
+  special        Float?
+  rush_attempt   Float?  @db.Real
+  rushing_yards  Float?  @db.Real
+  rush_touchdown Float?  @db.Real
+  complete_pass  Float?  @db.Real
+  pass_attempt   Float?  @db.Real
+  passing_yards  Float?  @db.Real
+  pass_touchdown Float?  @db.Real
+  interception   Float?  @db.Real
+  sack           Float?  @db.Real
+  season         Int?
+  week           Int?
+  db_id          String  @id
+}
