@@ -8,6 +8,7 @@ import UsageInfo from "../../../components/UsageInfo";
 import {
     downDataColumns,
     teamGameLogColumns,
+    teamStatLog,
 } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
 
@@ -19,6 +20,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         where: {
             season: season,
             posteam: team,
+        },
+    });
+
+    let opponentQueryResponse = await prisma.game_logs_basic.findMany({
+        where: {
+            season: season,
+            defteam: team,
         },
     });
 
@@ -41,10 +49,21 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         )
     );
 
+    const opponentGameLogs: ITeamGameLogs[] = JSON.parse(
+        JSON.stringify(opponentQueryResponse, (_, v) =>
+            typeof v === "bigint" ? v.toString() : v
+        )
+    );
+
     return {
         props: {
             game_logs: JSON.parse(
                 JSON.stringify(playerData, (_, v) =>
+                    typeof v === "bigint" ? v.toString() : v
+                )
+            ),
+            opponent_game_logs: JSON.parse(
+                JSON.stringify(opponentGameLogs, (_, v) =>
                     typeof v === "bigint" ? v.toString() : v
                 )
             ),
@@ -111,11 +130,16 @@ interface IStatsByDown {
 interface GameLogProps {
     game_logs: ITeamGameLogs[];
     down_data: IStatsByDown[];
+    opponent_game_logs: ITeamGameLogs[];
 }
 
 const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
     const [gameLogs, setGameLogs] = useState(props.game_logs);
+    const [opponentGameLogs, setOpponentGameLogs] = useState(
+        props.opponent_game_logs
+    );
     const [offenseDownData, setOffenseDownData] = useState(props.down_data);
+    const [aggedTeamGameLogs, setAggedTeamGameLogs] = useState(props.game_logs);
     const [aggDownData, setAggDownData] = useState(props.down_data);
     const [downChartView, setDownChartView] = useState("all");
     const [downChartDataOne, setDownChartDataOne] = useState("rushPercent");
@@ -166,6 +190,7 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
                     sack:
                         Number.parseInt(currentObj.sack.toString()) +
                         Number.parseInt(dataframe[obj].sack.toString()),
+
                     game_id: currentObj.game_id,
                     db_id: currentObj.db_id,
                     down: currentObj.down,
@@ -175,6 +200,272 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
                 teamsMap.set(dataframe[obj].down, { ...dataframe[obj] });
             }
         }
+        return Array.from(teamsMap.values());
+    };
+
+    const aggGameLogs = (dataframe: ITeamGameLogs[], aggCol: string) => {
+        let teamsMap = new Map();
+
+        if (aggCol === "posteam") {
+            for (let obj in dataframe) {
+                if (teamsMap.get(dataframe[obj].posteam)) {
+                    let currentObj = teamsMap.get(dataframe[obj].posteam);
+                    let newObj = {
+                        posteam: currentObj.posteam,
+                        rush_attempts:
+                            Number.parseInt(
+                                currentObj.rush_attempts.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].rush_attempts.toString()
+                            ),
+                        rushing_yards:
+                            Number.parseInt(
+                                currentObj.rushing_yards.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].rushing_yards.toString()
+                            ),
+                        rushing_touchdown:
+                            Number.parseInt(
+                                currentObj.rushing_touchdown.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].rushing_touchdown.toString()
+                            ),
+                        turnovers:
+                            Number.parseInt(currentObj.turnovers.toString()) +
+                            Number.parseInt(
+                                dataframe[obj].turnovers.toString()
+                            ),
+                        completed_passes:
+                            Number.parseInt(
+                                currentObj.completed_passes.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].completed_passes.toString()
+                            ),
+                        pass_attempts:
+                            Number.parseInt(
+                                currentObj.pass_attempts.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].pass_attempts.toString()
+                            ),
+                        receiving_yards:
+                            Number.parseInt(
+                                currentObj.receiving_yards.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].receiving_yards.toString()
+                            ),
+                        passing_touchdowns:
+                            Number.parseInt(
+                                currentObj.passing_touchdowns.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].passing_touchdowns.toString()
+                            ),
+                        interceptions:
+                            Number.parseInt(
+                                currentObj.interceptions.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].interceptions.toString()
+                            ),
+                        sacks:
+                            Number.parseInt(currentObj.sacks.toString()) +
+                            Number.parseInt(dataframe[obj].sacks.toString()),
+                        fumbles:
+                            Number.parseInt(currentObj.fumbles.toString()) +
+                            Number.parseInt(dataframe[obj].fumbles.toString()),
+                        fumbles_lost:
+                            Number.parseInt(
+                                currentObj.fumbles_lost.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].fumbles_lost.toString()
+                            ),
+                        extra_points_made:
+                            Number.parseInt(
+                                currentObj.extra_points_made.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].extra_points_made.toString()
+                            ),
+                        extra_point_attempts:
+                            Number.parseInt(
+                                currentObj.extra_point_attempts.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].extra_point_attempts.toString()
+                            ),
+                        field_goals_made:
+                            Number.parseInt(
+                                currentObj.field_goals_made.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].field_goals_made.toString()
+                            ),
+                        field_goals_attempted:
+                            Number.parseInt(
+                                currentObj.field_goals_attempted.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].field_goals_attempted.toString()
+                            ),
+                        penalties:
+                            Number.parseInt(currentObj.penalties.toString()) +
+                            Number.parseInt(
+                                dataframe[obj].penalties.toString()
+                            ),
+                        penalty_yards:
+                            Number.parseInt(
+                                currentObj.penalty_yards.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].penalty_yards.toString()
+                            ),
+                        game_id: currentObj.game_id,
+                        db_id: currentObj.db_id,
+                        team: "Team",
+                    };
+                    teamsMap.set(currentObj.posteam, newObj);
+                } else {
+                    teamsMap.set(dataframe[obj].posteam, { ...dataframe[obj] });
+                }
+            }
+        } else if (aggCol === "defteam") {
+            for (let obj in dataframe) {
+                if (teamsMap.get(dataframe[obj].defteam)) {
+                    let currentObj = teamsMap.get(dataframe[obj].defteam);
+                    let newObj = {
+                        defteam: currentObj.defteam,
+                        rush_attempts:
+                            Number.parseInt(
+                                currentObj.rush_attempts.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].rush_attempts.toString()
+                            ),
+                        rushing_yards:
+                            Number.parseInt(
+                                currentObj.rushing_yards.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].rushing_yards.toString()
+                            ),
+                        rushing_touchdown:
+                            Number.parseInt(
+                                currentObj.rushing_touchdown?.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].rushing_touchdown.toString()
+                            ),
+                        turnovers:
+                            Number.parseInt(currentObj.turnovers.toString()) +
+                            Number.parseInt(
+                                dataframe[obj].turnovers.toString()
+                            ),
+                        completed_passes:
+                            Number.parseInt(
+                                currentObj.completed_passes.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].completed_passes.toString()
+                            ),
+                        pass_attempts:
+                            Number.parseInt(
+                                currentObj.pass_attempts.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].pass_attempts.toString()
+                            ),
+                        receiving_yards:
+                            Number.parseInt(
+                                currentObj.receiving_yards.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].receiving_yards.toString()
+                            ),
+                        passing_touchdowns:
+                            Number.parseInt(
+                                currentObj.passing_touchdowns.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].passing_touchdowns.toString()
+                            ),
+                        interceptions:
+                            Number.parseInt(
+                                currentObj.interceptions.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].interceptions.toString()
+                            ),
+                        sacks:
+                            Number.parseInt(currentObj.sacks.toString()) +
+                            Number.parseInt(dataframe[obj].sacks.toString()),
+                        fumbles:
+                            Number.parseInt(currentObj.fumbles.toString()) +
+                            Number.parseInt(dataframe[obj].fumbles.toString()),
+                        fumbles_lost:
+                            Number.parseInt(
+                                currentObj.fumbles_lost.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].fumbles_lost.toString()
+                            ),
+                        extra_points_made:
+                            Number.parseInt(
+                                currentObj.extra_points_made.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].extra_points_made.toString()
+                            ),
+                        extra_point_attempts:
+                            Number.parseInt(
+                                currentObj.extra_point_attempts.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].extra_point_attempts.toString()
+                            ),
+                        field_goals_made:
+                            Number.parseInt(
+                                currentObj.field_goals_made.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].field_goals_made.toString()
+                            ),
+                        field_goals_attempted:
+                            Number.parseInt(
+                                currentObj.field_goals_attempted.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].field_goals_attempted.toString()
+                            ),
+                        penalties:
+                            Number.parseInt(currentObj.penalties.toString()) +
+                            Number.parseInt(
+                                dataframe[obj].penalties.toString()
+                            ),
+                        penalty_yards:
+                            Number.parseInt(
+                                currentObj.penalty_yards.toString()
+                            ) +
+                            Number.parseInt(
+                                dataframe[obj].penalty_yards.toString()
+                            ),
+                        game_id: currentObj.game_id,
+                        db_id: currentObj.db_id,
+                        team: "Opponent",
+                    };
+                    teamsMap.set(currentObj.defteam, newObj);
+                } else {
+                    teamsMap.set(dataframe[obj].defteam, { ...dataframe[obj] });
+                }
+            }
+        }
+
         return Array.from(teamsMap.values());
     };
 
@@ -194,16 +485,18 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
         reducedDownData.forEach(
             (data) =>
                 (data["rush_percent"] = (
-                    data.rush_attempt /
-                    (data.rush_attempt + data.pass_attempt)
+                    (data.rush_attempt /
+                        (data.rush_attempt + data.pass_attempt)) *
+                    100
                 ).toFixed(1))
         );
 
         reducedDownData.forEach(
             (data) =>
                 (data["pass_percent"] = (
-                    data.pass_attempt /
-                    (data.rush_attempt + data.pass_attempt)
+                    (data.pass_attempt /
+                        (data.rush_attempt + data.pass_attempt)) *
+                    100
                 ).toFixed(1))
         );
 
@@ -224,6 +517,15 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
         setAggDownData(reducedDownData);
     }, []);
 
+    useEffect(() => {
+        const oppStats = aggGameLogs(opponentGameLogs, "defteam");
+        const teamStats = aggGameLogs(gameLogs, "posteam");
+
+        const aggStatLog = [...teamStats, ...oppStats];
+
+        setAggedTeamGameLogs(aggStatLog);
+    }, []);
+
     return (
         <div
             className="weekly-team-page"
@@ -236,6 +538,23 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
         >
             <TeamHomepageBar />
             <TeamLinkBar />
+            <div
+                style={{
+                    width: "90%",
+                    margin: "auto",
+                    marginBottom: "2%",
+                    backgroundColor: "#f3f4f8",
+                    boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
+                }}
+            >
+                <StatTable
+                    data={aggedTeamGameLogs}
+                    columns={teamStatLog}
+                    rowIdCol={"db_id"}
+                    pageSize={18}
+                />
+            </div>
+
             <GameLog
                 data={gameLogs}
                 columns={teamGameLogColumns}

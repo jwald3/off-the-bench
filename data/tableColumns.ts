@@ -836,3 +836,174 @@ export const downDataColumns: GridColDef[] = [
         type: "number",
     },
 ];
+
+export const teamStatLog: GridColDef[] = [
+    {
+        headerName: "Team",
+        field: "team",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "Total Yards",
+        field: "totalYards",
+        flex: 1,
+        valueGetter: getTotalYards,
+        type: "number",
+    },
+    {
+        headerName: "Total Plays",
+        field: "totalPlays",
+        flex: 1,
+        valueGetter: getTotalPlays,
+        type: "number",
+    },
+    {
+        headerName: "Total Y/P",
+        field: "totalYPP",
+        flex: 1,
+        valueGetter: getTotalYardsPerPlay,
+        type: "number",
+    },
+    {
+        headerName: "Turnovers",
+        field: "turnovers",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Fumbles",
+        field: "fumbles",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Fumbles Lost",
+        field: "fumbles_lost",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Completions",
+        field: "completed_passes",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Passes",
+        field: "pass_attempts",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Passing Yds",
+        field: "receiving_yards",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Passing Y/A",
+        field: "passYPP",
+        flex: 1,
+        valueGetter: getPassYdsPerAtt,
+        type: "number",
+    },
+    {
+        headerName: "INT",
+        field: "interceptions",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Sacks",
+        field: "sacks",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Carries",
+        field: "rush_attempts",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rush Yds",
+        field: "rushing_yards",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Rushing Y/A",
+        field: "rushYPP",
+        flex: 1,
+        valueGetter: getRushYdsPerAtt,
+        type: "number",
+    },
+    {
+        headerName: "Rush TDs",
+        field: "rushing_touchdown",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "XPM",
+        field: "extra_points_made",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "XPA",
+        field: "extra_point_attempts",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "FGM",
+        field: "field_goals_made",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "FGA",
+        field: "field_goals_attempted",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Penalties",
+        field: "penalties",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "Penalty Yds",
+        field: "penalty_yards",
+        flex: 1,
+        type: "string",
+    },
+];
+
+function getTotalYards(params: GridCellParams) {
+    return params.row.rushing_yards + params.row.receiving_yards;
+}
+
+function getTotalPlays(params: GridCellParams) {
+    return (
+        params.row.rush_attempts + params.row.pass_attempts + params.row.sacks
+    );
+}
+
+function getTotalYardsPerPlay(params: GridCellParams) {
+    return (
+        (params.row.rushing_yards + params.row.receiving_yards) /
+        (params.row.rush_attempts + params.row.pass_attempts + params.row.sacks)
+    ).toFixed(1);
+}
+
+function getPassYdsPerAtt(params: GridCellParams) {
+    return (params.row.receiving_yards / params.row.pass_attempts).toFixed(1);
+}
+
+function getRushYdsPerAtt(params: GridCellParams) {
+    return (params.row.rushing_yards / params.row.rush_attempts).toFixed(1);
+}
