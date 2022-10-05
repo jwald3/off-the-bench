@@ -211,12 +211,17 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                     seasonFilter={Number(selectedSeason)}
                     handleSeason={setSelectedSeason}
                 />
-                <div className="weekly-team-stats">
+                <div
+                    className="weekly-team-stats"
+                    style={{ width: "90%", margin: "auto" }}
+                >
                     <StatTable
                         data={aggTeams}
                         columns={columns}
                         rowIdCol={"game_id_db"}
                         pageSize={25}
+                        showToolbar={true}
+                        disableFooter={false}
                     />
                 </div>
             </div>

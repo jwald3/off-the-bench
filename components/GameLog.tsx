@@ -5,6 +5,7 @@ interface TableProps {
     columns: Array<any>;
     rowIdCol: string;
     pageSize: number;
+    tableTitle: string;
 }
 
 const GameLog: React.FunctionComponent<TableProps> = ({ ...props }) => {
@@ -21,6 +22,7 @@ const GameLog: React.FunctionComponent<TableProps> = ({ ...props }) => {
                 height: "100%",
                 alignItems: "center",
                 backgroundColor: "#f3f4f8",
+                marginBottom: "2%",
             }}
         >
             <div
@@ -37,13 +39,15 @@ const GameLog: React.FunctionComponent<TableProps> = ({ ...props }) => {
                     textTransform: "uppercase",
                 }}
             >
-                Game Log
+                {props.tableTitle}
             </div>
             <StatTable
                 data={props.data}
                 columns={props.columns}
                 rowIdCol={props.rowIdCol}
                 pageSize={props.pageSize}
+                disableFooter={true}
+                showToolbar={false}
             />
         </div>
     );

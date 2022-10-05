@@ -1,7 +1,6 @@
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import GameLog from "../../../components/GameLog";
-import StatTable from "../../../components/StatTable";
 import TeamHomepageBar from "../../../components/TeamHomepageBar";
 import TeamLinkBar from "../../../components/TeamLinkBar";
 import UsageInfo from "../../../components/UsageInfo";
@@ -14,7 +13,7 @@ import prisma from "../../../lib/prisma";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
-    let season = Number(query.season) || 2022;
+    let season = Number(query.season) || 2021;
 
     let teamQueryResponse = await prisma.game_logs_basic.findMany({
         where: {
@@ -538,28 +537,19 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
         >
             <TeamHomepageBar />
             <TeamLinkBar />
-            <div
-                style={{
-                    width: "90%",
-                    margin: "auto",
-                    marginBottom: "2%",
-                    backgroundColor: "#f3f4f8",
-                    boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
-                }}
-            >
-                <StatTable
-                    data={aggedTeamGameLogs}
-                    columns={teamStatLog}
-                    rowIdCol={"db_id"}
-                    pageSize={18}
-                />
-            </div>
-
+            <GameLog
+                data={aggedTeamGameLogs}
+                columns={teamStatLog}
+                rowIdCol={"db_id"}
+                pageSize={18}
+                tableTitle="Offense, Team Vs. Opponent"
+            />
             <GameLog
                 data={gameLogs}
                 columns={teamGameLogColumns}
                 rowIdCol={"db_id"}
                 pageSize={21}
+                tableTitle="Game Log"
             />
             <UsageInfo
                 playerData={aggDownData}

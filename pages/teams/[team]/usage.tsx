@@ -362,7 +362,13 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 <title>Team Usage Stats</title>
                 <meta name="description" content="Team Usage Stats" />
             </Head>
-            <div className="weekly-team-page" style={{ paddingTop: "2%" }}>
+            <div
+                className="weekly-team-page"
+                style={{
+                    paddingTop: "2%",
+                    paddingBottom: "2%",
+                }}
+            >
                 <Checkbox
                     handleFilters={setWeekFilter}
                     weekFilter={weekFilter}

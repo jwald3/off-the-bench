@@ -68,6 +68,19 @@ export default function DrawerAppBar() {
                     <div>
                         <span
                             onClick={() =>
+                                router.replace({
+                                    pathname: "/teams",
+                                })
+                            }
+                        >
+                            TEAMS
+                        </span>
+                    </div>
+                </div>
+                <div className={styles.navbarLink}>
+                    <div>
+                        <span
+                            onClick={() =>
                                 router
                                     .replace({
                                         pathname: "/stats/teams",

@@ -5,10 +5,13 @@ interface TableProps {
     columns: Array<any>;
     rowIdCol: string;
     pageSize: number;
+    disableFooter: boolean;
+    showToolbar: boolean;
 }
 
 const StatTable: React.FunctionComponent<TableProps> = ({ ...props }) => {
     const { data, columns, rowIdCol, pageSize } = props;
+    let toolbarVal = props.showToolbar ? GridToolbar : undefined;
 
     return (
         <div className="statTable">
@@ -22,8 +25,8 @@ const StatTable: React.FunctionComponent<TableProps> = ({ ...props }) => {
                 pageSize={pageSize}
                 experimentalFeatures={{ newEditingApi: true }}
                 rowHeight={44}
-                components={{ Toolbar: GridToolbar }}
-                // hideFooter={true}
+                components={{ Toolbar: toolbarVal }}
+                hideFooter={props.disableFooter}
                 sx={{
                     fontSize: 10,
                     width: "100%",
@@ -31,6 +34,9 @@ const StatTable: React.FunctionComponent<TableProps> = ({ ...props }) => {
                     marginBottom: "3%",
                     height: "100%",
                     color: "#101223",
+                    border: "none",
+                    paddingLeft: "1%",
+                    paddingRight: "1%",
                 }}
             />
         </div>
