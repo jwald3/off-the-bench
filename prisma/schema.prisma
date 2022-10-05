@@ -211,3 +211,22 @@ model down_by_down_offense {
   week           Int?
   db_id          String  @id
 }
+
+model team_information {
+  team_abbr            String  @id
+  team_name            String?
+  team_id              BigInt?
+  team_nick            String?
+  team_conf            String?
+  team_division        String?
+  team_color           String?
+  team_color2          String?
+  team_color3          String?
+  team_color4          String?
+  team_logo_wikipedia  String?
+  team_logo_espn       String?
+  team_wordmark        String?
+  team_conference_logo String?
+  team_league_logo     String?
+  team_logo_squared    String?
+}
