@@ -30,10 +30,15 @@ const TeamDivisionGroup: React.FunctionComponent<DivisionProps> = ({
                     gap: "2%",
                     alignItems: "center",
                     justifyContent: "space-between",
+                    color: "#494252",
+                    fontWeight: "bold",
                 }}
             >
                 <span>{props.divisionTitle}</span>
-                <span onClick={() => setShowTeams(!showTeams)}>
+                <span
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setShowTeams(!showTeams)}
+                >
                     {showTeams ? <FiMinimize2 /> : <FiMaximize2 />}
                 </span>
             </div>
@@ -45,6 +50,7 @@ const TeamDivisionGroup: React.FunctionComponent<DivisionProps> = ({
                     paddingLeft: "2%",
                     gap: "1em",
                     width: "fit-content",
+                    color: "#777986",
                 }}
             >
                 {showTeams &&
@@ -52,6 +58,7 @@ const TeamDivisionGroup: React.FunctionComponent<DivisionProps> = ({
                         <Link
                             href={`/teams/${team.team_abbr}`}
                             key={team.team_id}
+                            style={{ color: "#777986" }}
                         >
                             {team.team_name}
                         </Link>

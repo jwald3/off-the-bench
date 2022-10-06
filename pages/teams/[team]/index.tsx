@@ -1,10 +1,12 @@
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import GameLog from "../../../components/GameLog";
+import StatChart from "../../../components/StatChart";
 import TeamHomepageBar from "../../../components/TeamHomepageBar";
 import TeamLinkBar from "../../../components/TeamLinkBar";
 import UsageInfo from "../../../components/UsageInfo";
 import {
+    conversionRateStatCols,
     downDataColumns,
     teamGameLogColumns,
     teamStatLog,
@@ -14,6 +16,19 @@ import prisma from "../../../lib/prisma";
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
     let season = Number(query.season) || 2022;
+
+    let teamInformation: ITeamInformation[];
+
+    const teamDbInfo = await prisma.team_information.findMany({
+        where: {
+            team_abbr: team,
+        },
+    });
+    teamInformation = JSON.parse(
+        JSON.stringify(teamDbInfo, (_, v) =>
+            typeof v === "bigint" ? v.toString() : v
+        )
+    );
 
     let teamQueryResponse = await prisma.game_logs_basic.findMany({
         where: {
@@ -30,6 +45,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     });
 
     let statsByDown = await prisma.down_by_down_offense.findMany({
+        where: {
+            season: season,
+            posteam: team,
+        },
+    });
+
+    let conversionRts = await prisma.conversion_success.findMany({
         where: {
             season: season,
             posteam: team,
@@ -54,6 +76,12 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         )
     );
 
+    const successRates: IConversionRates[] = JSON.parse(
+        JSON.stringify(conversionRts, (_, v) =>
+            typeof v === "bigint" ? v.toString() : v
+        )
+    );
+
     return {
         props: {
             game_logs: JSON.parse(
@@ -68,6 +96,16 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
             ),
             down_data: JSON.parse(
                 JSON.stringify(downData, (_, v) =>
+                    typeof v === "bigint" ? v.toString() : v
+                )
+            ),
+            conversion_success: JSON.parse(
+                JSON.stringify(successRates, (_, v) =>
+                    typeof v === "bigint" ? v.toString() : v
+                )
+            ),
+            team_details: JSON.parse(
+                JSON.stringify(teamInformation, (_, v) =>
                     typeof v === "bigint" ? v.toString() : v
                 )
             ),
@@ -107,6 +145,29 @@ interface ITeamGameLogs {
     week: number;
 }
 
+interface ITeamInformation {
+    team_abbr: string;
+    team_name: string;
+    team_id: number;
+    team_nick: string;
+    team_conf: string;
+    team_division: string;
+    wins: number;
+    losses: number;
+    ties: number;
+    standing: string;
+    team_color: string;
+    team_color2: string;
+    team_color3: string;
+    team_color4: string;
+    team_logo_wikipedia: string;
+    team_logo_espn: string;
+    team_wordmark: string;
+    team_conference_logo: string;
+    team_league_logo: string;
+    team_logo_squared: string;
+}
+
 interface IStatsByDown {
     game_id: string;
     posteam: string;
@@ -126,23 +187,53 @@ interface IStatsByDown {
     db_id: string;
 }
 
+interface IConversionRates {
+    posteam: string;
+    game_id: string;
+    play_type: string;
+    third_down_converted: number;
+    third_down_failed: number;
+    fourth_down_converted: number;
+    fourth_down_failed: number;
+    third_down_attempt: number;
+    fourth_down_attempt: number;
+    week: number;
+    season: number;
+    db_id: string;
+}
+
 interface GameLogProps {
     game_logs: ITeamGameLogs[];
     down_data: IStatsByDown[];
     opponent_game_logs: ITeamGameLogs[];
+    conversion_success: IConversionRates[];
+    team_details: ITeamInformation[];
 }
 
 const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
+    const [teamName, setTeamName] = useState(props.team_details);
     const [gameLogs, setGameLogs] = useState(props.game_logs);
     const [opponentGameLogs, setOpponentGameLogs] = useState(
         props.opponent_game_logs
     );
     const [offenseDownData, setOffenseDownData] = useState(props.down_data);
+    const [convSuccessRates, setConvSuccessRates] = useState(
+        props.conversion_success
+    );
+    const [aggConvSuccessRts, setAggConvSuccessRts] = useState(
+        props.conversion_success
+    );
     const [aggedTeamGameLogs, setAggedTeamGameLogs] = useState(props.game_logs);
     const [aggDownData, setAggDownData] = useState(props.down_data);
     const [downChartView, setDownChartView] = useState("all");
     const [downChartDataOne, setDownChartDataOne] = useState("rushPercent");
     const [downChartDataTwo, setDownChartDataTwo] = useState("passPercent");
+    const [convChartView, setConvChartView] = useState("all");
+    const [convChartDataOne, setConvChartDataOne] = useState(
+        "third_down_converted"
+    );
+    const [convChartDataTwo, setConvChartDataTwo] =
+        useState("third_down_attempt");
 
     const aggregateStats = (dataframe: IStatsByDown[]) => {
         let teamsMap = new Map();
@@ -468,6 +559,53 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
         return Array.from(teamsMap.values());
     };
 
+    const aggregateConvRates = (dataframe: IConversionRates[]) => {
+        let teamsMap = new Map();
+
+        for (let obj in dataframe) {
+            if (teamsMap.get(dataframe[obj].play_type)) {
+                let currentObj = teamsMap.get(dataframe[obj].play_type);
+                let newObj = {
+                    play_type: currentObj.play_type,
+                    posteam: currentObj.posteam,
+                    third_down_converted:
+                        Number.parseInt(
+                            currentObj.third_down_converted.toString()
+                        ) +
+                        Number.parseInt(
+                            dataframe[obj].third_down_converted.toString()
+                        ),
+                    third_down_attempt:
+                        Number.parseInt(
+                            currentObj.third_down_attempt.toString()
+                        ) +
+                        Number.parseInt(
+                            dataframe[obj].third_down_attempt.toString()
+                        ),
+                    fourth_down_converted:
+                        Number.parseInt(
+                            currentObj.fourth_down_converted.toString()
+                        ) +
+                        Number.parseInt(
+                            dataframe[obj].fourth_down_converted.toString()
+                        ),
+                    fourth_down_attempt:
+                        Number.parseInt(
+                            currentObj.fourth_down_attempt.toString()
+                        ) +
+                        Number.parseInt(
+                            dataframe[obj].fourth_down_attempt.toString()
+                        ),
+                    db_id: currentObj.db_id,
+                };
+                teamsMap.set(currentObj.play_type, newObj);
+            } else {
+                teamsMap.set(dataframe[obj].play_type, { ...dataframe[obj] });
+            }
+        }
+        return Array.from(teamsMap.values());
+    };
+
     useEffect(() => {
         if (downChartView === "all") {
             setDownChartDataOne("rush_percent");
@@ -477,6 +615,16 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
             setDownChartDataTwo("yardsPerTarget");
         }
     }, [downChartView]);
+
+    useEffect(() => {
+        if (convChartView === "all") {
+            setConvChartDataOne("third_down_converted");
+            setConvChartDataTwo("third_down_attempt");
+        } else if (convChartView === "rz") {
+            setConvChartDataOne("fourth_down_converted");
+            setConvChartDataTwo("fourth_down_attempt");
+        }
+    }, [convChartView]);
 
     useEffect(() => {
         const reducedDownData = aggregateStats(props.down_data);
@@ -525,6 +673,28 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
         setAggedTeamGameLogs(aggStatLog);
     }, []);
 
+    useEffect(() => {
+        const aggrConvSuccessRates = aggregateConvRates(
+            props.conversion_success
+        );
+
+        setAggConvSuccessRts(aggrConvSuccessRates);
+    }, []);
+
+    const getTeamRecord = () => {
+        if (teamName[0].ties > 0) {
+            return (
+                teamName[0].wins +
+                "-" +
+                teamName[0].losses +
+                "-" +
+                teamName[0].ties
+            );
+        } else {
+            return teamName[0].wins + "-" + teamName[0].losses;
+        }
+    };
+
     return (
         <div
             className="weekly-team-page"
@@ -535,7 +705,12 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
                 flexDirection: "column",
             }}
         >
-            <TeamHomepageBar />
+            <TeamHomepageBar
+                teamName={teamName[0].team_name}
+                divisionStanding={teamName[0].standing}
+                divisionName={teamName[0].team_division}
+                record={getTeamRecord()}
+            />
             <TeamLinkBar />
             <GameLog
                 data={aggedTeamGameLogs}
@@ -562,6 +737,18 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
                 altOptionThree=""
                 changeView={setDownChartView}
                 dataKey="down"
+            />
+            <UsageInfo
+                playerData={aggConvSuccessRts}
+                columns={conversionRateStatCols}
+                barDataOne={convChartDataOne}
+                barDataTwo={convChartDataTwo}
+                headerTitle="Conversion Rates"
+                altOptionOne="3rd Down"
+                altOptionTwo="4th Down"
+                altOptionThree=""
+                changeView={setConvChartView}
+                dataKey="play_type"
             />
         </div>
     );

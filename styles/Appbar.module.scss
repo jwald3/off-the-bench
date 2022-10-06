@@ -7,11 +7,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    //width: 100%;
-    // max-width: 100vw;
+    // width: 100%;
+    width: 100vw;
 
     .appLogo {
-        width: 82vw;
+        width: 75%;
         height: 100%;
         padding: 0% 4%;
         display: flex;
@@ -23,7 +23,7 @@
 
     .navbarLinks {
         display: flex;
-        width: 18vw;
+        width: 25%;
         gap: 5%;
 
         .navbarLink {

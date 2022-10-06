@@ -1,5 +1,4 @@
 import { GetServerSideProps } from "next";
-import Link from "next/link";
 import { useState } from "react";
 import TeamDivisionGroup from "../../components/TeamDivisionGroup";
 import prisma from "../../lib/prisma";
@@ -32,6 +31,10 @@ interface ITeamInformation {
     team_nick: string;
     team_conf: string;
     team_division: string;
+    wins: number;
+    losses: number;
+    ties: number;
+    standing: string;
     team_color: string;
     team_color2: string;
     team_color3: string;
@@ -58,12 +61,31 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                 flexDirection: "column",
                 backgroundColor: "#d9d9d9",
                 paddingLeft: "2%",
-                paddingTop: "5%",
                 height: "100vh",
                 alignItems: "center",
+                paddingTop: "5%",
+                // justifyContent: "center",
                 gap: "3%",
             }}
         >
+            <div
+                style={{
+                    display: "flex",
+                    textTransform: "uppercase",
+                    color: "#282a3a",
+                    fontSize: "2em",
+                    alignItems: "center",
+                    paddingLeft: "2%",
+                    textAlign: "start",
+                    backgroundColor: "#f3f4f8",
+                    boxShadow: "0px 0.15em 0.15em 0.15em rgba(0, 0, 0, 0.25)",
+                    width: "90%",
+                    height: "2em",
+                    fontWeight: "bold",
+                }}
+            >
+                Teams
+            </div>
             <div
                 style={{
                     display: "flex",
@@ -72,6 +94,7 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                     paddingTop: "2%",
                     paddingBottom: "2%",
                     boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
+                    width: "90%",
                 }}
             >
                 <TeamDivisionGroup
@@ -107,6 +130,7 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                     paddingTop: "2%",
                     paddingBottom: "2%",
                     boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
+                    width: "90%",
                 }}
             >
                 <TeamDivisionGroup

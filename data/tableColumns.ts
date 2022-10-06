@@ -1007,3 +1007,69 @@ function getPassYdsPerAtt(params: GridCellParams) {
 function getRushYdsPerAtt(params: GridCellParams) {
     return (params.row.rushing_yards / params.row.rush_attempts).toFixed(1);
 }
+
+export const conversionRateStatCols: GridColDef[] = [
+    {
+        headerName: "Play Type",
+        field: "play_type",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "3rd Downs Converted",
+        field: "third_down_converted",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "3rd Downs Attemped",
+        field: "third_down_attempt",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "3rd Down Conversion %",
+        field: "thirdDownConvPct",
+        flex: 1,
+        valueGetter: getThirdDownConv,
+        type: "number",
+    },
+
+    {
+        headerName: "4th Downs Converted",
+        field: "fourth_down_converted",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "4th Downs Attemped",
+        field: "fourth_down_attempt",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "4th Down Conversion %",
+        field: "fourthDownConvPct",
+        flex: 1,
+        valueGetter: getFourthDownConv,
+        type: "number",
+    },
+];
+
+function getThirdDownConv(params: GridCellParams) {
+    return (
+        (params.row.third_down_converted / params.row.third_down_attempt) *
+        100
+    ).toFixed(1);
+}
+
+function getFourthDownConv(params: GridCellParams) {
+    if (params.row.fourth_down_attempt === 0) {
+        return 0;
+    }
+
+    return (
+        (params.row.fourth_down_converted / params.row.fourth_down_attempt) *
+        100
+    ).toFixed(1);
+}

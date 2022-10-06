@@ -1,6 +1,13 @@
 import { useRouter } from "next/router";
 
-const TeamHomepageBar: React.FunctionComponent = () => {
+interface BarProps {
+    teamName: string;
+    divisionName: string;
+    divisionStanding: string;
+    record: string;
+}
+
+const TeamHomepageBar: React.FunctionComponent<BarProps> = ({ ...props }) => {
     const router = useRouter();
 
     return (
@@ -35,9 +42,12 @@ const TeamHomepageBar: React.FunctionComponent = () => {
                         color: "#282a3a",
                     }}
                 >
-                    Team Name
+                    {props.teamName}
                 </div>
-                <div>3-0, 1st in NFCE</div>
+                <div>
+                    {props.record}, {props.divisionStanding} in{" "}
+                    {props.divisionName}
+                </div>
             </div>
         </div>
     );

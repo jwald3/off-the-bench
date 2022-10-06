@@ -219,6 +219,10 @@ model team_information {
   team_nick            String?
   team_conf            String?
   team_division        String?
+  wins                 BigInt?
+  losses               BigInt?
+  ties                 BigInt?
+  standing             String?
   team_color           String?
   team_color2          String?
   team_color3          String?
@@ -229,4 +233,19 @@ model team_information {
   team_conference_logo String?
   team_league_logo     String?
   team_logo_squared    String?
+}
+
+model conversion_success {
+  posteam               String?
+  game_id               String?
+  play_type             String?
+  third_down_converted  Int?
+  third_down_failed     Int?
+  fourth_down_converted Int?
+  fourth_down_failed    Int?
+  third_down_attempt    Int?
+  fourth_down_attempt   Int?
+  week                  Int?
+  season                Int?
+  db_id                 String  @id
 }
