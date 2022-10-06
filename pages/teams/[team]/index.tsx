@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import GameLog from "../../../components/GameLog";
 import StatChart from "../../../components/StatChart";
@@ -696,60 +697,69 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
     };
 
     return (
-        <div
-            className="weekly-team-page"
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                paddingTop: "2%",
-                flexDirection: "column",
-            }}
-        >
-            <TeamHomepageBar
-                teamName={teamName[0].team_name}
-                divisionStanding={teamName[0].standing}
-                divisionName={teamName[0].team_division}
-                record={getTeamRecord()}
-            />
-            <TeamLinkBar />
-            <GameLog
-                data={aggedTeamGameLogs}
-                columns={teamStatLog}
-                rowIdCol={"db_id"}
-                pageSize={18}
-                tableTitle="Offense, Team Vs. Opponent"
-            />
-            <GameLog
-                data={gameLogs}
-                columns={teamGameLogColumns}
-                rowIdCol={"db_id"}
-                pageSize={21}
-                tableTitle="Game Log"
-            />
-            <UsageInfo
-                playerData={aggDownData}
-                columns={downDataColumns}
-                barDataOne={downChartDataOne}
-                barDataTwo={downChartDataTwo}
-                headerTitle="Rushing vs. Receiving"
-                altOptionOne="Attempts"
-                altOptionTwo="Yards Per Attempt"
-                altOptionThree=""
-                changeView={setDownChartView}
-                dataKey="down"
-            />
-            <UsageInfo
-                playerData={aggConvSuccessRts}
-                columns={conversionRateStatCols}
-                barDataOne={convChartDataOne}
-                barDataTwo={convChartDataTwo}
-                headerTitle="Conversion Rates"
-                altOptionOne="3rd Down"
-                altOptionTwo="4th Down"
-                altOptionThree=""
-                changeView={setConvChartView}
-                dataKey="play_type"
-            />
+        <div>
+            <Head>
+                <title>{teamName[0].team_name}</title>
+                <meta
+                    name="description"
+                    content={`Team Homepage for the ${teamName[0].team_name}`}
+                />
+            </Head>
+            <div
+                className="weekly-team-page"
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingTop: "2%",
+                    flexDirection: "column",
+                }}
+            >
+                <TeamHomepageBar
+                    teamName={teamName[0].team_name}
+                    divisionStanding={teamName[0].standing}
+                    divisionName={teamName[0].team_division}
+                    record={getTeamRecord()}
+                />
+                <TeamLinkBar />
+                <GameLog
+                    data={aggedTeamGameLogs}
+                    columns={teamStatLog}
+                    rowIdCol={"db_id"}
+                    pageSize={18}
+                    tableTitle="Offense, Team Vs. Opponent"
+                />
+                <GameLog
+                    data={gameLogs}
+                    columns={teamGameLogColumns}
+                    rowIdCol={"db_id"}
+                    pageSize={21}
+                    tableTitle="Game Log"
+                />
+                <UsageInfo
+                    playerData={aggDownData}
+                    columns={downDataColumns}
+                    barDataOne={downChartDataOne}
+                    barDataTwo={downChartDataTwo}
+                    headerTitle="Rushing vs. Receiving"
+                    altOptionOne="Attempts"
+                    altOptionTwo="Yards Per Attempt"
+                    altOptionThree=""
+                    changeView={setDownChartView}
+                    dataKey="down"
+                />
+                <UsageInfo
+                    playerData={aggConvSuccessRts}
+                    columns={conversionRateStatCols}
+                    barDataOne={convChartDataOne}
+                    barDataTwo={convChartDataTwo}
+                    headerTitle="Conversion Rates"
+                    altOptionOne="3rd Down"
+                    altOptionTwo="4th Down"
+                    altOptionThree=""
+                    changeView={setConvChartView}
+                    dataKey="play_type"
+                />
+            </div>
         </div>
     );
 };

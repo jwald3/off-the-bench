@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import { useState } from "react";
 import TeamDivisionGroup from "../../components/TeamDivisionGroup";
 import prisma from "../../lib/prisma";
@@ -55,108 +56,118 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     const [teamInfo, setTeamInfo] = useState(props.teams);
 
     return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                backgroundColor: "#d9d9d9",
-                paddingLeft: "2%",
-                height: "100vh",
-                alignItems: "center",
-                paddingTop: "5%",
-                // justifyContent: "center",
-                gap: "3%",
-            }}
-        >
+        <div>
+            <Head>
+                <title>Teams</title>
+                <meta
+                    name="description"
+                    content="Search stats and data by team"
+                />
+            </Head>
             <div
                 style={{
                     display: "flex",
-                    textTransform: "uppercase",
-                    color: "#282a3a",
-                    fontSize: "2em",
+                    flexDirection: "column",
+                    backgroundColor: "#d9d9d9",
+                    paddingLeft: "2%",
+                    height: "100vh",
                     alignItems: "center",
-                    paddingLeft: "2%",
-                    textAlign: "start",
-                    backgroundColor: "#f3f4f8",
-                    boxShadow: "0px 0.15em 0.15em 0.15em rgba(0, 0, 0, 0.25)",
-                    width: "90%",
-                    height: "2em",
-                    fontWeight: "bold",
+                    paddingTop: "5%",
+                    // justifyContent: "center",
+                    gap: "3%",
                 }}
             >
-                Teams
-            </div>
-            <div
-                style={{
-                    display: "flex",
-                    backgroundColor: "#f3f4f8",
-                    paddingLeft: "2%",
-                    paddingTop: "2%",
-                    paddingBottom: "2%",
-                    boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
-                    width: "90%",
-                }}
-            >
-                <TeamDivisionGroup
-                    divisionTitle="AFC East"
-                    teamData={teamInfo.filter(
-                        (team) => team.team_division === "AFC East"
-                    )}
-                />
-                <TeamDivisionGroup
-                    divisionTitle="AFC North"
-                    teamData={teamInfo.filter(
-                        (team) => team.team_division === "AFC North"
-                    )}
-                />
-                <TeamDivisionGroup
-                    divisionTitle="AFC South"
-                    teamData={teamInfo.filter(
-                        (team) => team.team_division === "AFC South"
-                    )}
-                />
-                <TeamDivisionGroup
-                    divisionTitle="AFC West"
-                    teamData={teamInfo.filter(
-                        (team) => team.team_division === "AFC West"
-                    )}
-                />
-            </div>
-            <div
-                style={{
-                    display: "flex",
-                    backgroundColor: "#f3f4f8",
-                    paddingLeft: "2%",
-                    paddingTop: "2%",
-                    paddingBottom: "2%",
-                    boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
-                    width: "90%",
-                }}
-            >
-                <TeamDivisionGroup
-                    divisionTitle="NFC East"
-                    teamData={teamInfo.filter(
-                        (team) => team.team_division === "NFC East"
-                    )}
-                />
-                <TeamDivisionGroup
-                    divisionTitle="NFC North"
-                    teamData={teamInfo.filter(
-                        (team) => team.team_division === "NFC North"
-                    )}
-                />
-                <TeamDivisionGroup
-                    divisionTitle="NFC South"
-                    teamData={teamInfo.filter(
-                        (team) => team.team_division === "NFC South"
-                    )}
-                />
-                <TeamDivisionGroup
-                    divisionTitle="NFC West"
-                    teamData={teamInfo.filter(
-                        (team) => team.team_division === "NFC West"
-                    )}
-                />
+                <div
+                    style={{
+                        display: "flex",
+                        textTransform: "uppercase",
+                        color: "#282a3a",
+                        fontSize: "2em",
+                        alignItems: "center",
+                        paddingLeft: "2%",
+                        textAlign: "start",
+                        backgroundColor: "#f3f4f8",
+                        boxShadow:
+                            "0px 0.15em 0.15em 0.15em rgba(0, 0, 0, 0.25)",
+                        width: "90%",
+                        height: "2em",
+                        fontWeight: "bold",
+                    }}
+                >
+                    Teams
+                </div>
+                <div
+                    style={{
+                        display: "flex",
+                        backgroundColor: "#f3f4f8",
+                        paddingLeft: "2%",
+                        paddingTop: "2%",
+                        paddingBottom: "2%",
+                        boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
+                        width: "90%",
+                    }}
+                >
+                    <TeamDivisionGroup
+                        divisionTitle="AFC East"
+                        teamData={teamInfo.filter(
+                            (team) => team.team_division === "AFC East"
+                        )}
+                    />
+                    <TeamDivisionGroup
+                        divisionTitle="AFC North"
+                        teamData={teamInfo.filter(
+                            (team) => team.team_division === "AFC North"
+                        )}
+                    />
+                    <TeamDivisionGroup
+                        divisionTitle="AFC South"
+                        teamData={teamInfo.filter(
+                            (team) => team.team_division === "AFC South"
+                        )}
+                    />
+                    <TeamDivisionGroup
+                        divisionTitle="AFC West"
+                        teamData={teamInfo.filter(
+                            (team) => team.team_division === "AFC West"
+                        )}
+                    />
+                </div>
+                <div
+                    style={{
+                        display: "flex",
+                        backgroundColor: "#f3f4f8",
+                        paddingLeft: "2%",
+                        paddingTop: "2%",
+                        paddingBottom: "2%",
+                        boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
+                        width: "90%",
+                    }}
+                >
+                    <TeamDivisionGroup
+                        divisionTitle="NFC East"
+                        teamData={teamInfo.filter(
+                            (team) => team.team_division === "NFC East"
+                        )}
+                    />
+                    <TeamDivisionGroup
+                        divisionTitle="NFC North"
+                        teamData={teamInfo.filter(
+                            (team) => team.team_division === "NFC North"
+                        )}
+                    />
+                    <TeamDivisionGroup
+                        divisionTitle="NFC South"
+                        teamData={teamInfo.filter(
+                            (team) => team.team_division === "NFC South"
+                        )}
+                    />
+                    <TeamDivisionGroup
+                        divisionTitle="NFC West"
+                        teamData={teamInfo.filter(
+                            (team) => team.team_division === "NFC West"
+                        )}
+                    />
+                </div>
             </div>
         </div>
     );
