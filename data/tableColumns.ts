@@ -1073,3 +1073,185 @@ function getFourthDownConv(params: GridCellParams) {
         100
     ).toFixed(1);
 }
+
+export const playerSnapCols: GridColDef[] = [
+    {
+        headerName: "Player",
+        field: "player_id",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "Total Snaps",
+        field: "snap_ct",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "Snap %",
+        field: "tot_snap_pct",
+        flex: 1,
+        valueGetter: getTotalSnapPct,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "Rushing Snaps",
+        field: "rush_snap",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "Rush Snap %",
+        field: "rush_snap_pct",
+        flex: 1,
+        valueGetter: getRushSnapPct,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "Carries",
+        field: "carries",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Carry Share",
+        field: "carry_share",
+        flex: 1,
+        valueGetter: getCarryShare,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "Rushing TDs",
+        field: "rushing_touchdown",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Passing Snaps",
+        field: "pass_snap",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Pass %",
+        field: "pass_snap_pct",
+        flex: 1,
+        valueGetter: getPassSnapPct,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "Receptions",
+        field: "reception",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Targets",
+        field: "target",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Target Share",
+        field: "target_share",
+        flex: 1,
+        valueGetter: getTargetShare,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "Receiving TDs",
+        field: "receiving_touchdown",
+        flex: 1,
+        type: "number",
+    },
+];
+
+function getTotalSnapPct(params: GridCellParams) {
+    if (params.row.snap_ct === 0) {
+        return 0;
+    }
+
+    return ((params.row.snap_ct / params.row.team_snaps) * 100).toFixed(1);
+}
+
+function getRushSnapPct(params: GridCellParams) {
+    if (params.row.snap_ct === 0) {
+        return 0;
+    }
+
+    return (
+        (params.row.rush_snap / params.row.team_rushing_plays) *
+        100
+    ).toFixed(1);
+}
+
+function getPassSnapPct(params: GridCellParams) {
+    if (params.row.snap_ct === 0) {
+        return 0;
+    }
+
+    return (
+        (params.row.pass_snap / params.row.team_passing_plays) *
+        100
+    ).toFixed(1);
+}
+
+function getTargetShare(params: GridCellParams) {
+    if (params.row.snap_ct === 0) {
+        return 0;
+    }
+
+    return ((params.row.target / params.row.team_passing_plays) * 100).toFixed(
+        1
+    );
+}
+
+function getCarryShare(params: GridCellParams) {
+    if (params.row.snap_ct === 0) {
+        return 0;
+    }
+
+    return ((params.row.carries / params.row.team_rushing_plays) * 100).toFixed(
+        1
+    );
+}
