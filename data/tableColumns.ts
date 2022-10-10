@@ -1255,3 +1255,75 @@ function getCarryShare(params: GridCellParams) {
         1
     );
 }
+
+export const playerDefenseSnapCols: GridColDef[] = [
+    {
+        headerName: "Player",
+        field: "player_id",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "Total Snaps",
+        field: "snap_ct",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "Snap %",
+        field: "tot_snap_pct",
+        flex: 1,
+        valueGetter: getTotalSnapPct,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "Rushing Snaps",
+        field: "rush_snap",
+        flex: 1,
+        type: "string",
+    },
+    {
+        headerName: "Rush Snap %",
+        field: "rush_snap_pct",
+        flex: 1,
+        valueGetter: getRushSnapPct,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "Passing Snaps",
+        field: "pass_snap",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "Pass %",
+        field: "pass_snap_pct",
+        flex: 1,
+        valueGetter: getPassSnapPct,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+];

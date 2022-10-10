@@ -271,3 +271,20 @@ model offense_player_snaps_by_down {
   db_id               String  @id
   gsis_id             String?
 }
+
+model defense_player_snaps_by_down {
+  defteam            String?
+  game_id            String?
+  down               Float?
+  player_id          String?
+  snap_ct            BigInt?
+  rush_snap          Int?
+  pass_snap          Int?
+  team_snaps         BigInt?
+  team_rushing_plays BigInt?
+  team_passing_plays BigInt?
+  week               Int?
+  season             Int?
+  gsis_id            String?
+  db_id              String  @id
+}

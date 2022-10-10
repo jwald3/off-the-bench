@@ -8,7 +8,7 @@ const TeamLinkBar: React.FunctionComponent = () => {
             className="teamLinkBar"
             style={{
                 width: "90%",
-                maxWidth: "1800px",
+                maxWidth: "2000px",
                 display: "flex",
                 justifyContent: "space-between",
                 marginLeft: "auto",
@@ -43,7 +43,7 @@ const TeamLinkBar: React.FunctionComponent = () => {
                     fontSize: "1em",
                     fontWeight: "bold",
                     width: "35%",
-                    maxWidth: "300px",
+                    maxWidth: "500px",
                     display: "flex",
                     gap: "2%",
                     justifyContent: "space-between",
@@ -92,6 +92,20 @@ const TeamLinkBar: React.FunctionComponent = () => {
                     style={{ cursor: "pointer" }}
                 >
                     Personnel
+                </div>
+                <div
+                    className="teamLink"
+                    onClick={() =>
+                        router.replace({
+                            pathname: "/teams/[team]/snap_counts/offense",
+                            query: {
+                                team: router.query.team,
+                            },
+                        })
+                    }
+                    style={{ cursor: "pointer" }}
+                >
+                    Snap Counts
                 </div>
             </div>
         </div>

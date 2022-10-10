@@ -5,17 +5,20 @@ import { useEffect, useState } from "react";
 import DownFilter from "../../../../components/DownFilter";
 import StatTable from "../../../../components/StatTable";
 import Checkbox from "../../../../components/WeekCheckboxFilterUsage";
-import { playerSnapCols } from "../../../../data/tableColumns";
+import {
+    playerDefenseSnapCols,
+    playerSnapCols,
+} from "../../../../data/tableColumns";
 import prisma from "../../../../lib/prisma";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
     let season = Number(query.season) || 2022;
 
-    let teamQueryResponse = await prisma.offense_player_snaps_by_down.findMany({
+    let teamQueryResponse = await prisma.defense_player_snaps_by_down.findMany({
         where: {
             season: season,
-            posteam: team,
+            defteam: team,
         },
     });
 
@@ -37,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 };
 
 interface IPlayerSnapData {
-    posteam: string;
+    defteam: string;
     game_id: string;
     down: number;
     player_id: string;
@@ -49,7 +52,6 @@ interface IPlayerSnapData {
     team_passing_plays: number;
     week: number;
     season: number;
-    target: number;
     reception: number;
     receiving_touchdown: number;
     carries: number;
@@ -82,7 +84,7 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
                 let currentObj = teamsMap.get(dataframe[obj].player_id);
                 let newObj = {
                     player_id: dataframe[obj].player_id,
-                    posteam: dataframe[obj].posteam,
+                    defteam: dataframe[obj].defteam,
                     down: dataframe[obj].down,
                     snap_ct:
                         Number.parseInt(currentObj.snap_ct.toString()) +
@@ -109,29 +111,6 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
                         ) +
                         Number.parseInt(
                             dataframe[obj].team_passing_plays.toString()
-                        ),
-                    target:
-                        Number.parseInt(currentObj.target.toString()) +
-                        Number.parseInt(dataframe[obj].target.toString()),
-                    reception:
-                        Number.parseInt(currentObj.reception.toString()) +
-                        Number.parseInt(dataframe[obj].reception.toString()),
-                    receiving_touchdown:
-                        Number.parseInt(
-                            currentObj.receiving_touchdown.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].receiving_touchdown.toString()
-                        ),
-                    carries:
-                        Number.parseInt(currentObj.carries.toString()) +
-                        Number.parseInt(dataframe[obj].carries.toString()),
-                    rushing_touchdown:
-                        Number.parseInt(
-                            currentObj.rushing_touchdown.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].rushing_touchdown.toString()
                         ),
                     db_id: currentObj.db_id,
                 };
@@ -232,7 +211,7 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
                     />
                     <StatTable
                         data={aggPlayerSnaps}
-                        columns={playerSnapCols}
+                        columns={playerDefenseSnapCols}
                         rowIdCol={"db_id"}
                         pageSize={32}
                         disableFooter={false}

@@ -1,0 +1,22 @@
+[
+    {
+        "_id": 0,
+        "val": 1,
+        "full": "First Down"
+    },
+    {
+        "_id": 1,
+        "val": 2,
+        "full": "Second Down"
+    },
+    {
+        "_id": 2,
+        "val": 3,
+        "full": "Third Down"
+    },
+    {
+        "_id": 3,
+        "val": 4,
+        "full": "Fourth Down"
+    }
+]
