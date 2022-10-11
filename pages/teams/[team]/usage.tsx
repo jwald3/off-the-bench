@@ -11,6 +11,8 @@ import dynamic from "next/dynamic";
 import UsageInfo from "../../../components/UsageInfo";
 import Checkbox from "../../../components/WeekCheckboxFilterUsage";
 import TeamLinkFooter from "../../../components/TeamFooter";
+import WeekSelector from "../../../components/WeekSelector";
+import SelectorTray from "../../../components/SelectorTray";
 const StatChart = dynamic(import("../../../components/StatChart"), {
     ssr: false,
 });
@@ -370,7 +372,7 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                     paddingBottom: "2%",
                 }}
             >
-                <Checkbox
+                <SelectorTray
                     handleFilters={setWeekFilter}
                     weekFilter={weekFilter}
                     seasonFilter={Number(selectedSeason)}
