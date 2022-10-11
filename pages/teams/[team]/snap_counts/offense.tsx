@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import DownFilter from "../../../../components/DownFilter";
 import StatTable from "../../../../components/StatTable";
+import TeamLinkFooter from "../../../../components/TeamFooter";
 import Checkbox from "../../../../components/WeekCheckboxFilterUsage";
 import { playerSnapCols } from "../../../../data/tableColumns";
 import prisma from "../../../../lib/prisma";
@@ -238,6 +239,7 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
                         disableFooter={false}
                         showToolbar={true}
                     />
+                    <TeamLinkFooter />
                 </div>
             </div>
         </div>

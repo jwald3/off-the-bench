@@ -10,6 +10,7 @@ import {
 import dynamic from "next/dynamic";
 import UsageInfo from "../../../components/UsageInfo";
 import Checkbox from "../../../components/WeekCheckboxFilterUsage";
+import TeamLinkFooter from "../../../components/TeamFooter";
 const StatChart = dynamic(import("../../../components/StatChart"), {
     ssr: false,
 });
@@ -399,6 +400,7 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                     changeView={setRushChartView}
                     dataKey="player_id"
                 />
+                <TeamLinkFooter />
             </div>
         </div>
     );

@@ -2,6 +2,8 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import TeamLinkFooter from "../../../components/TeamFooter";
+import TeamLinkBar from "../../../components/TeamLinkBar";
 import UsageInfo from "../../../components/UsageInfo";
 import Checkbox from "../../../components/WeekCheckboxFilterUsage";
 import { teamPersonnelGroupingColumns } from "../../../data/tableColumns";
@@ -221,6 +223,7 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
                     changeView={setPersonnelChartView}
                     dataKey="offense_grouping"
                 />
+                <TeamLinkFooter />
             </div>
         </div>
     );
