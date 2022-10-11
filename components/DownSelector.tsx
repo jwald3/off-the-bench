@@ -84,16 +84,6 @@ const DownSelector = (props: CheckboxProps) => {
         });
     };
 
-    useEffect(() => {
-        if (query.weeks !== undefined) {
-            const selectedWeeks = (query.weeks as string)
-                ?.split(",")
-                .map(Number);
-
-            setChecked(selectedWeeks);
-        }
-    }, []);
-
     const getConsectiveCount = (arr: any[], index: number) => {
         arr = arr.map(Number);
         let count = 0;

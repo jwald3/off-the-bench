@@ -1,4 +1,5 @@
 import DownSelector from "./DownSelector";
+import SeasonSelector from "./SeasonSelector";
 import WeekSelector from "./WeekSelector";
 
 interface CheckboxProps {
@@ -32,9 +33,7 @@ const SelectorTray = (props: CheckboxProps) => {
                 handleFilters={props.handleDownFilters}
                 downFilter={props.downFilter}
             />
-            <WeekSelector
-                handleFilters={props.handleWeekFilters}
-                weekFilter={props.weekFilter}
+            <SeasonSelector
                 seasonFilter={props.seasonFilter}
                 handleSeason={props.handleSeason}
             />
