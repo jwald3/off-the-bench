@@ -1,23 +1,88 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
-import wks from "../data/weeks.json";
+import downs from "../data/downs.json";
 import styles from "../styles/WeekCheckboxFilterUsage.module.scss";
 
 interface CheckboxProps {
     handleFilters: Function;
-    weekFilter: number[];
-    seasonFilter: number;
-    handleSeason: Function;
+    downFilter: number[];
 }
 
-const WeekSelector = (props: CheckboxProps) => {
+const DownSelector = (props: CheckboxProps) => {
     const router = useRouter();
     const path = router.pathname;
     const { asPath, pathname, query } = router;
     const season = query.season || 2022;
     const [showSelector, setShowSelector] = useState(false);
-    const [checked, setChecked] = useState(props.weekFilter);
-    const [selSeason, setSelSeason] = useState(props.seasonFilter);
+
+    const [checked, setChecked] = useState(props.downFilter);
+
+    useEffect(() => {
+        if (query.downs !== undefined) {
+            const selectedDowns = (query.downs as string)
+                ?.split(",")
+                .map(Number);
+
+            setChecked(selectedDowns);
+        }
+    }, []);
+
+    const handleToggle = (value: number) => {
+        const currentIndex = checked.indexOf(value); // will find index or return -1 if not found
+        const newChecked = [...checked]; // array needs to be changed then assigned via new var
+
+        if (currentIndex === -1) {
+            newChecked.push(value); // if index not found, add it
+        } else {
+            newChecked.splice(currentIndex, 1); // if index is found, remove it
+        }
+
+        setChecked(newChecked);
+        props.handleFilters(newChecked);
+
+        const urlNewChecked = newChecked.map(String).join(",");
+
+        router.push({
+            pathname: pathname,
+            query: {
+                ...router.query,
+                downs: urlNewChecked,
+                season: season,
+            },
+        });
+    };
+
+    const handleClearAll = () => {
+        const newChecked: [] = [];
+        setChecked(newChecked);
+        props.handleFilters(newChecked);
+
+        router.push({
+            pathname: pathname,
+            query: {
+                ...router.query,
+                downs: "none",
+                season: season,
+            },
+        });
+    };
+
+    const handleSelectAll = () => {
+        const newChecked: Array<number> = [1, 2, 3, 4];
+        setChecked(newChecked);
+        props.handleFilters(newChecked);
+
+        const urlNewChecked = newChecked.map(String).join(",");
+
+        router.push({
+            pathname: pathname,
+            query: {
+                ...router.query,
+                downs: urlNewChecked,
+                season: season,
+            },
+        });
+    };
 
     useEffect(() => {
         if (query.weeks !== undefined) {
@@ -61,89 +126,6 @@ const WeekSelector = (props: CheckboxProps) => {
         return arr.map(String);
     };
 
-    const handleToggle = (value: number) => {
-        const currentIndex = checked.indexOf(value); // will find index or return -1 if not found
-        const newChecked = [...checked]; // array needs to be changed then assigned via new var
-
-        if (currentIndex === -1) {
-            newChecked.push(value); // if index not found, add it
-        } else {
-            newChecked.splice(currentIndex, 1); // if index is found, remove it
-        }
-
-        newChecked.sort((a, b) => Number(a) - Number(b));
-
-        setChecked(newChecked);
-        props.handleFilters(newChecked);
-
-        const urlNewChecked = newChecked.map(String).join(",");
-
-        router.push({
-            pathname: pathname,
-            query: {
-                ...router.query,
-                weeks: urlNewChecked,
-                season: season,
-            },
-        });
-    };
-
-    const handleClearAll = () => {
-        const newChecked: [] = [];
-        setChecked(newChecked);
-        props.handleFilters(newChecked);
-
-        router.push({
-            pathname: pathname,
-            query: {
-                ...router.query,
-                weeks: "none",
-                season: season,
-            },
-        });
-    };
-
-    const handleSelectAll = () => {
-        const newChecked: Array<number> = [
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-        ];
-        setChecked(newChecked);
-        props.handleFilters(newChecked);
-
-        const urlNewChecked = newChecked.map(String).join(",");
-
-        router.push({
-            pathname: pathname,
-            query: {
-                ...router.query,
-                weeks: urlNewChecked,
-                season: season,
-            },
-        });
-    };
-
-    const handleSeasonChange = (val: number) => {
-        props.handleSeason(val);
-
-        const allChecked: Array<number> = [
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-        ];
-
-        const urlAllChecked = allChecked.map(String).join(",");
-
-        router
-            .push({
-                pathname: pathname,
-                query: {
-                    ...router.query,
-                    season: val,
-                },
-            })
-            .then(() => router.reload());
-
-        setSelSeason(val);
-    };
-
     return (
         <div
             style={{
@@ -159,7 +141,7 @@ const WeekSelector = (props: CheckboxProps) => {
                 minHeight: "100%",
             }}
         >
-            <div style={{ fontWeight: "bold" }}>Weeks</div>
+            <div style={{ fontWeight: "bold" }}>Downs</div>
             <div
                 onClick={() => setShowSelector(!showSelector)}
                 style={{ padding: "5%", cursor: "pointer" }}
@@ -175,7 +157,7 @@ const WeekSelector = (props: CheckboxProps) => {
                 >
                     <div className={styles.weeksLabel}>Weeks</div>
                     <div style={{ display: "flex" }}>
-                        {wks.map((val, idx) => (
+                        {downs.map((val, idx) => (
                             <div key={idx}>
                                 <div
                                     className={
@@ -196,4 +178,4 @@ const WeekSelector = (props: CheckboxProps) => {
     );
 };
 
-export default WeekSelector;
+export default DownSelector;

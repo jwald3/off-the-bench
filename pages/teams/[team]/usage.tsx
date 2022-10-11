@@ -109,6 +109,7 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     const [weekFilter, setWeekFilter] = useState([
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
     ]);
+    const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
     const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
 
     const aggregateStats = (dataframe: IPlayerUsage[]) => {
@@ -373,10 +374,12 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 }}
             >
                 <SelectorTray
-                    handleFilters={setWeekFilter}
+                    handleWeekFilters={setWeekFilter}
                     weekFilter={weekFilter}
                     seasonFilter={Number(selectedSeason)}
                     handleSeason={setSelectedSeason}
+                    handleDownFilters={setDownFilter}
+                    downFilter={downFilter}
                 />
                 <UsageInfo
                     playerData={playerTargets}

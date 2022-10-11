@@ -1,10 +1,13 @@
+import DownSelector from "./DownSelector";
 import WeekSelector from "./WeekSelector";
 
 interface CheckboxProps {
-    handleFilters: Function;
+    handleWeekFilters: Function;
     weekFilter: number[];
     seasonFilter: number;
     handleSeason: Function;
+    handleDownFilters: Function;
+    downFilter: number[];
 }
 
 const SelectorTray = (props: CheckboxProps) => {
@@ -20,19 +23,17 @@ const SelectorTray = (props: CheckboxProps) => {
             }}
         >
             <WeekSelector
-                handleFilters={props.handleFilters}
+                handleFilters={props.handleWeekFilters}
                 weekFilter={props.weekFilter}
                 seasonFilter={props.seasonFilter}
                 handleSeason={props.handleSeason}
             />
-            <WeekSelector
-                handleFilters={props.handleFilters}
-                weekFilter={props.weekFilter}
-                seasonFilter={props.seasonFilter}
-                handleSeason={props.handleSeason}
+            <DownSelector
+                handleFilters={props.handleDownFilters}
+                downFilter={props.downFilter}
             />
             <WeekSelector
-                handleFilters={props.handleFilters}
+                handleFilters={props.handleWeekFilters}
                 weekFilter={props.weekFilter}
                 seasonFilter={props.seasonFilter}
                 handleSeason={props.handleSeason}
