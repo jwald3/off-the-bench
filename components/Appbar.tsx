@@ -16,6 +16,8 @@ import styles from "../styles/Appbar.module.scss";
 import Link from "next/link";
 import { AiFillHome } from "react-icons/ai";
 import { useRouter } from "next/router";
+import sameLineLogo from "../public/sameLineLogo.png";
+import Image from "next/image";
 
 const drawerWidth = 240;
 const navItems = ["Home", "Team Stats", "Player Stats"];
@@ -61,7 +63,9 @@ export default function DrawerAppBar() {
     return (
         <div className={styles.navbar}>
             <div className={styles.appLogo}>
-                <Link href="/">OFF THE BENCH</Link>
+                <Link href="/">
+                    <Image src="/sameLineLogo.png" height={35} width={350} />
+                </Link>
             </div>
             <div className={styles.navbarLinks}>
                 <div className={styles.navbarLink}>
