@@ -22,7 +22,7 @@ const UsageInfo: React.FunctionComponent<UsageProps> = ({ ...props }) => {
                 style={{
                     boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
                     width: "90%",
-                    maxWidth: "1800px",
+                    maxWidth: "2000px",
                     marginLeft: "auto",
                     marginRight: "auto",
                     marginBottom: "2%",

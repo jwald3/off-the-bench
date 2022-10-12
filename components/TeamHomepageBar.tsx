@@ -15,7 +15,7 @@ const TeamHomepageBar: React.FunctionComponent<BarProps> = ({ ...props }) => {
             className="teamLinkBar"
             style={{
                 width: "90%",
-                maxWidth: "1800px",
+                maxWidth: "2000px",
                 display: "flex",
                 justifyContent: "space-between",
                 marginLeft: "auto",
