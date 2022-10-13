@@ -1,4 +1,5 @@
 import DownSelector from "./DownSelector";
+import PhaseToggle from "./PhaseToggle";
 import SeasonSelector from "./SeasonSelector";
 import WeekSelector from "./WeekSelector";
 
@@ -23,6 +24,7 @@ const SelectorTray = (props: CheckboxProps) => {
                 gap: "2%",
             }}
         >
+            <PhaseToggle />
             <WeekSelector
                 handleFilters={props.handleWeekFilters}
                 weekFilter={props.weekFilter}
