@@ -10,6 +10,7 @@ interface CheckboxProps {
     handleSeason: Function;
     handleDownFilters: Function;
     downFilter: number[];
+    phaseUrl: string;
 }
 
 const SelectorTray = (props: CheckboxProps) => {
@@ -24,7 +25,7 @@ const SelectorTray = (props: CheckboxProps) => {
                 gap: "2%",
             }}
         >
-            <PhaseToggle />
+            <PhaseToggle phaseUrl={props.phaseUrl} />
             <WeekSelector
                 handleFilters={props.handleWeekFilters}
                 weekFilter={props.weekFilter}

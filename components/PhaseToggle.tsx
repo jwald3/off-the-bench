@@ -3,7 +3,11 @@ import React, { useState, useEffect } from "react";
 import wks from "../data/weeks.json";
 import styles from "../styles/WeekCheckboxFilterUsage.module.scss";
 
-const PhaseToggle = () => {
+interface PhaseProps {
+    phaseUrl: string;
+}
+
+const PhaseToggle: React.FunctionComponent<PhaseProps> = ({ ...props }) => {
     const router = useRouter();
     const path = router.pathname;
     const { asPath, pathname, query } = router;
@@ -17,11 +21,9 @@ const PhaseToggle = () => {
 
     const handleToggle = () => {
         router.push({
-            pathname: "/teams/[team]/snap_counts/[phase]",
+            pathname: props.phaseUrl,
             query: {
                 ...router.query,
-                team: query.team,
-                phase: phase == "offense" ? "defense" : "offense",
             },
         });
     };
