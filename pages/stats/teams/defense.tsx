@@ -4,8 +4,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import SelectorTray from "../../../components/SelectorTray";
 import StatTable from "../../../components/StatTable";
-import StatTableHeader from "../../../components/StatTableHeader";
-import Checkbox from "../../../components/WeekCheckboxFilter";
 import { teamStatColumns } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
 
@@ -15,31 +13,17 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let season = Number(query.season) || 2022;
     let teamQueryResponse;
 
-    if (phase === "offense") {
-        teamQueryResponse = await prisma.team_offense_stats_basic.findMany({
-            where: {
-                week: {
-                    in: [
-                        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-                        17, 18,
-                    ],
-                },
-                season: season,
+    teamQueryResponse = await prisma.team_defense_stats_basic.findMany({
+        where: {
+            week: {
+                in: [
+                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+                    18,
+                ],
             },
-        });
-    } else if (phase === "defense") {
-        teamQueryResponse = await prisma.team_defense_stats_basic.findMany({
-            where: {
-                week: {
-                    in: [
-                        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-                        17, 18,
-                    ],
-                },
-                season: season,
-            },
-        });
-    }
+            season: season,
+        },
+    });
 
     team = JSON.parse(
         JSON.stringify(teamQueryResponse, (_, v) =>
