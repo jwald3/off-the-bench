@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import SelectorTray from "../../../components/SelectorTray";
 import StatTable from "../../../components/StatTable";
 import StatTableHeader from "../../../components/StatTableHeader";
 import Checkbox from "../../../components/WeekCheckboxFilter";
@@ -86,6 +87,7 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     const [weekFilter, setWeekFilter] = useState([
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
     ]);
+    const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
 
     useEffect(() => {
         if (query.weeks !== undefined && query.weeks !== "none") {
@@ -182,13 +184,16 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                 />
             </Head>
             <div className="weekly-team-page">
-                <StatTableHeader />
-                <Checkbox
-                    handleFilters={setWeekFilter}
-                    weekFilter={weekFilter}
-                    seasonFilter={Number(selectedSeason)}
-                    handleSeason={setSelectedSeason}
-                />
+                <div style={{ paddingTop: " 2%", paddingBottom: " 2%" }}>
+                    <SelectorTray
+                        handleWeekFilters={setWeekFilter}
+                        weekFilter={weekFilter}
+                        seasonFilter={Number(selectedSeason)}
+                        handleSeason={setSelectedSeason}
+                        handleDownFilters={setDownFilter}
+                        downFilter={downFilter}
+                    />
+                </div>
                 <div
                     className="weekly-team-stats"
                     style={{
