@@ -16,7 +16,7 @@ import prisma from "../../../lib/prisma";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
-    let season = Number(query.season) || 2022;
+    let season = Number(query.season) || 2021;
 
     let teamInformation: ITeamInformation[];
 

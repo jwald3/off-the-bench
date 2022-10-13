@@ -2,8 +2,8 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import SelectorTray from "../../../components/SelectorTray";
 import TeamLinkFooter from "../../../components/TeamFooter";
-import TeamLinkBar from "../../../components/TeamLinkBar";
 import UsageInfo from "../../../components/UsageInfo";
 import Checkbox from "../../../components/WeekCheckboxFilterUsage";
 import { teamPersonnelGroupingColumns } from "../../../data/tableColumns";
@@ -71,6 +71,7 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
     const [weekFilter, setWeekFilter] = useState([
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
     ]);
+    const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
     const [personnelChartView, setPersonnelChartView] = useState("frequency");
     const [personnelChartDataOne, setPersonnelChartDataOne] =
         useState("snap_ct");
@@ -205,11 +206,13 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
                 <meta name="description" content="Team Personnel Stats" />
             </Head>
             <div className="weekly-team-page" style={{ paddingTop: "2%" }}>
-                <Checkbox
-                    handleFilters={setWeekFilter}
+                <SelectorTray
+                    handleWeekFilters={setWeekFilter}
                     weekFilter={weekFilter}
                     seasonFilter={Number(selectedSeason)}
                     handleSeason={setSelectedSeason}
+                    handleDownFilters={setDownFilter}
+                    downFilter={downFilter}
                 />
                 <UsageInfo
                     playerData={aggPersonnel}
