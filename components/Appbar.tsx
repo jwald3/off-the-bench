@@ -85,16 +85,13 @@ export default function DrawerAppBar() {
                     <div>
                         <span
                             onClick={() =>
-                                router
-                                    .replace({
-                                        pathname: "/stats/teams",
-                                        query: {
-                                            phase: "offense",
-                                            weeks: urlAllChecked,
-                                            season: 2022,
-                                        },
-                                    })
-                                    .then(() => router.reload())
+                                router.replace({
+                                    pathname: "/stats/teams/offense",
+                                    query: {
+                                        weeks: urlAllChecked,
+                                        season: 2022,
+                                    },
+                                })
                             }
                         >
                             TEAM STATS
@@ -105,15 +102,13 @@ export default function DrawerAppBar() {
                     <div>
                         <span
                             onClick={() =>
-                                router
-                                    .replace({
-                                        pathname: "/stats/players/offense",
-                                        query: {
-                                            weeks: urlAllChecked,
-                                            season: 2022,
-                                        },
-                                    })
-                                    .then(() => router.reload())
+                                router.replace({
+                                    pathname: "/stats/players/offense",
+                                    query: {
+                                        weeks: urlAllChecked,
+                                        season: 2022,
+                                    },
+                                })
                             }
                         >
                             PLAYER STATS
