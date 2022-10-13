@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import DownFilter from "../../../../components/DownFilter";
+import SelectorTray from "../../../../components/SelectorTray";
 import StatTable from "../../../../components/StatTable";
 import TeamLinkFooter from "../../../../components/TeamFooter";
 import Checkbox from "../../../../components/WeekCheckboxFilterUsage";
@@ -200,16 +201,25 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
                         flexDirection: "column",
                     }}
                 >
-                    <Checkbox
-                        handleFilters={setWeekFilter}
-                        weekFilter={weekFilter}
-                        seasonFilter={Number(selectedSeason)}
-                        handleSeason={setSelectedSeason}
-                    />
-                    <DownFilter
-                        handleFilters={setDownFilter}
-                        downFilter={downFilter}
-                    />
+                    <div
+                        style={{
+                            paddingBottom: "2%",
+                            width: "100%",
+                            maxWidth: "2000px",
+                            margin: "auto",
+                            display: "flex",
+                        }}
+                    >
+                        <SelectorTray
+                            handleWeekFilters={setWeekFilter}
+                            weekFilter={weekFilter}
+                            seasonFilter={Number(selectedSeason)}
+                            handleSeason={setSelectedSeason}
+                            handleDownFilters={setDownFilter}
+                            downFilter={downFilter}
+                        />
+                    </div>
+
                     <StatTable
                         data={aggPlayerSnaps}
                         columns={playerDefenseSnapCols}
