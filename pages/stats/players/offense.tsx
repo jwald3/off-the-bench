@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import PlayerTableHeader from "../../../components/PlayerTableHeader";
 import { playerOffenseColumns } from "../../../data/tableColumns";
 import Head from "next/head";
+import SelectorTray from "../../../components/SelectorTray";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: IPlayerSeason[];
@@ -81,6 +82,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     const [weekFilter, setWeekFilter] = useState([
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
     ]);
+    const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
 
     useEffect(() => {
         if (query.weeks !== undefined && query.weeks !== "") {
@@ -205,13 +207,16 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 />
             </Head>
             <div className="weekly-team-page">
-                <PlayerTableHeader />
-                <Checkbox
-                    handleFilters={setWeekFilter}
-                    weekFilter={weekFilter}
-                    seasonFilter={Number(selectedSeason)}
-                    handleSeason={setSelectedSeason}
-                />
+                <div style={{ paddingTop: " 2%", paddingBottom: " 2%" }}>
+                    <SelectorTray
+                        handleWeekFilters={setWeekFilter}
+                        weekFilter={weekFilter}
+                        seasonFilter={Number(selectedSeason)}
+                        handleSeason={setSelectedSeason}
+                        handleDownFilters={setDownFilter}
+                        downFilter={downFilter}
+                    />
+                </div>
                 <div
                     className="weekly-team-stats"
                     style={{ width: "90%", margin: "auto" }}
