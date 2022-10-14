@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
-import wks from "../data/weeks.json";
 import styles from "../styles/PhaseToggle.module.scss";
 
 interface PhaseProps {
@@ -9,9 +8,7 @@ interface PhaseProps {
 
 const PhaseToggle: React.FunctionComponent<PhaseProps> = ({ ...props }) => {
     const router = useRouter();
-    const path = router.pathname;
-    const { asPath, pathname, query } = router;
-    const season = query.season || 2022;
+    const { pathname } = router;
     const [showSelector, setShowSelector] = useState(false);
     const phase = pathname.includes("offense")
         ? "offense"

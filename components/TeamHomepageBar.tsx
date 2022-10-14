@@ -8,8 +8,6 @@ interface BarProps {
 }
 
 const TeamHomepageBar: React.FunctionComponent<BarProps> = ({ ...props }) => {
-    const router = useRouter();
-
     return (
         <div
             className="teamLinkBar"

@@ -12,12 +12,10 @@ interface CheckboxProps {
 
 const WeekSelector = (props: CheckboxProps) => {
     const router = useRouter();
-    const path = router.pathname;
-    const { asPath, pathname, query } = router;
+    const { pathname, query } = router;
     const season = query.season || 2022;
     const [showSelector, setShowSelector] = useState(false);
     const [checked, setChecked] = useState(props.weekFilter);
-    const [selSeason, setSelSeason] = useState(props.seasonFilter);
 
     useEffect(() => {
         if (query.weeks !== undefined) {

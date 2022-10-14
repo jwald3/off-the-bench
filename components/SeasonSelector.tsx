@@ -9,9 +9,7 @@ interface CheckboxProps {
 
 const SeasonSelector = (props: CheckboxProps) => {
     const router = useRouter();
-    const path = router.pathname;
-    const { asPath, pathname, query } = router;
-    const season = query.season || 2022;
+    const { pathname, query } = router;
     const [showSelector, setShowSelector] = useState(false);
     const [selSeason, setSelSeason] = useState(props.seasonFilter);
 
@@ -25,12 +23,6 @@ const SeasonSelector = (props: CheckboxProps) => {
 
     const handleSeasonChange = (val: number) => {
         props.handleSeason(val);
-
-        const allChecked: Array<number> = [
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-        ];
-
-        const urlAllChecked = allChecked.map(String).join(",");
 
         router
             .push({

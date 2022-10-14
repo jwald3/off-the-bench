@@ -7,10 +7,6 @@ import {
     CartesianGrid,
     Tooltip,
     ResponsiveContainer,
-    PieChart,
-    Pie,
-    Cell,
-    Legend,
 } from "recharts";
 
 interface ChartProps {
@@ -59,19 +55,6 @@ const StatChart: React.FunctionComponent<ChartProps> = ({ ...props }) => {
                         <Bar dataKey={props.barDataTwo} fill="#494252" />
                     )}
                 </BarChart>
-                {/* <PieChart width={1800} height={300}>
-                    <Pie
-                        dataKey={props.barDataOne}
-                        nameKey="offense_grouping"
-                        data={props.data}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={0}
-                        outerRadius={150}
-                        fill="#404252"
-                    ></Pie>
-                    <Legend align="right" layout="horizontal" iconSize={10} />
-                </PieChart> */}
             </ResponsiveContainer>
         </div>
     );
