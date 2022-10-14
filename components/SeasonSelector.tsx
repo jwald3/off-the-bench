@@ -74,7 +74,6 @@ const SeasonSelector = (props: CheckboxProps) => {
                         style={{
                             display: "flex",
                             width: "100%",
-                            gap: "5%",
                             paddingTop: "2%",
                         }}
                     >

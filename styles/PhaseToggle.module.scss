@@ -3,7 +3,7 @@
 .cardArea {
     width: min-content;
 
-    .downCard {
+    .phaseCard {
         display: flex;
         flex-direction: column;
         background-color: #f3f4f8;
@@ -16,13 +16,13 @@
         width: fit-content;
 
         .cardHeader {
-            text-transform: capitalize;
             font-weight: bold;
         }
 
         .cardBody {
             padding: 5%;
             cursor: pointer;
+            text-transform: capitalize;
         }
     }
 
@@ -31,7 +31,7 @@
         display: flex;
         flex-direction: column;
         background-color: #f3f4f8;
-        padding: 2%;
+        padding: 1.5%;
         height: fit-content;
         width: fit-content;
         min-width: 20%;
@@ -40,14 +40,14 @@
         margin-top: 1%;
         z-index: 999;
 
-        .downsLabel {
+        .phasesLabel {
             display: flex;
             font-weight: bold;
-            padding-bottom: 0.4em;
+            padding-bottom: 0em;
             width: 100%;
         }
 
-        .downBoxes {
+        .phaseBoxes {
             display: flex;
             width: 100%;
             padding-left: 2%;
@@ -90,6 +90,23 @@
             text-align: center;
             background-color: $medium-dark;
             cursor: pointer;
+            font-size: 0.75em;
+            color: $off-white;
+            text-transform: uppercase;
+            box-shadow: 1px 2px 5px 1px rgba(201, 201, 201, 0.6);
+        }
+
+        .disabledBtn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.25em 0.5em;
+            border-radius: 0.5em;
+            width: 7em;
+            height: 2.5em;
+            text-align: center;
+            background-color: $medium;
+            cursor: not-allowed;
             font-size: 0.75em;
             color: $off-white;
             text-transform: uppercase;
