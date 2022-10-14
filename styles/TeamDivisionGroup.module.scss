@@ -1,0 +1,34 @@
+@import "colors";
+
+.divisionContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: $off-white;
+    padding: 2%;
+    gap: 1em;
+    text-transform: uppercase;
+    width: 20vw;
+
+    .divisionHeader {
+        display: flex;
+        padding: 2%;
+        align-items: center;
+        justify-content: space-between;
+        color: $secondary-dark;
+        font-weight: bold;
+
+        .sizeButton {
+            cursor: pointer;
+        }
+    }
+
+    .divisionTeams {
+        display: flex;
+        flex-direction: column;
+        padding-left: 2%;
+        background-color: $off-white;
+        gap: 1em;
+        width: fit-content;
+        color: $true-medium;
+    }
+}

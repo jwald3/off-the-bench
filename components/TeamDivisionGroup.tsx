@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { FiMinimize2, FiMaximize2 } from "react-icons/fi";
+import styles from "../styles/TeamDivisionGroup.module.scss";
 
 interface DivisionProps {
     divisionTitle: string;
@@ -13,52 +14,22 @@ const TeamDivisionGroup: React.FunctionComponent<DivisionProps> = ({
     const [showTeams, setShowTeams] = useState(true);
 
     return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                backgroundColor: "#f3f4f8",
-                padding: "2%",
-                gap: "1em",
-                textTransform: "uppercase",
-                width: "20vw",
-            }}
-        >
-            <div
-                style={{
-                    display: "flex",
-                    gap: "2%",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    color: "#494252",
-                    fontWeight: "bold",
-                }}
-            >
+        <div className={styles.divisionContainer}>
+            <div className={styles.divisionHeader}>
                 <span>{props.divisionTitle}</span>
                 <span
-                    style={{ cursor: "pointer" }}
+                    className={styles.sizeButton}
                     onClick={() => setShowTeams(!showTeams)}
                 >
                     {showTeams ? <FiMinimize2 /> : <FiMaximize2 />}
                 </span>
             </div>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    backgroundColor: "#f3f4f8",
-                    paddingLeft: "2%",
-                    gap: "1em",
-                    width: "fit-content",
-                    color: "#777986",
-                }}
-            >
+            <div className={styles.divisionTeams}>
                 {showTeams &&
                     props.teamData.map((team) => (
                         <Link
                             href={`/teams/${team.team_abbr}`}
                             key={team.team_id}
-                            style={{ color: "#777986" }}
                         >
                             {team.team_name}
                         </Link>
