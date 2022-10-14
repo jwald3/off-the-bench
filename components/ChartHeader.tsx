@@ -25,7 +25,7 @@ const ChartHeader: React.FunctionComponent<ChartHeaderProps> = ({
                 <h1>{props.headerTitle}</h1>
             </div>
             <div className={styles.chartOptions}>
-                <div style={{ cursor: "pointer" }}>
+                <div className={styles.headerOption}>
                     <h2
                         className={
                             selectedData == "all" ? styles.activeItem : ""
@@ -35,7 +35,7 @@ const ChartHeader: React.FunctionComponent<ChartHeaderProps> = ({
                         {props.altOptionOne}
                     </h2>
                 </div>
-                <div style={{ cursor: "pointer" }}>
+                <div className={styles.headerOption}>
                     <h2
                         className={
                             selectedData == "rz" ? styles.activeItem : ""
@@ -45,7 +45,7 @@ const ChartHeader: React.FunctionComponent<ChartHeaderProps> = ({
                         {props.altOptionTwo}
                     </h2>
                 </div>
-                <div style={{ cursor: "pointer" }}>
+                <div className={styles.headerOption}>
                     <h2
                         className={
                             selectedData == "ez" ? styles.activeItem : ""
