@@ -62,13 +62,7 @@ const SeasonSelector = (props: CheckboxProps) => {
                             <option value={2020}>2020</option>
                         </select>
                     </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            width: "100%",
-                            paddingTop: "2%",
-                        }}
-                    >
+                    <div className={styles.buttonContainer}>
                         <div
                             className={styles.closeBtn}
                             onClick={() => setShowSelector(!showSelector)}

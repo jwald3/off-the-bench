@@ -40,13 +40,6 @@
         margin-top: 1%;
         z-index: 999;
 
-        .seasonsLabel {
-            display: flex;
-            font-weight: bold;
-            padding-bottom: 0.4em;
-            width: 100%;
-        }
-
         .seasonSelector {
             select {
                 width: 100%;
@@ -57,40 +50,30 @@
             margin-bottom: 8%;
         }
 
-        .controlBtn {
+        .buttonContainer {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.25em 0.5em;
-            border-radius: 0.5em;
-            width: 7em;
-            height: 2.5em;
-            text-align: center;
-            background-color: $medium-dark;
-            cursor: pointer;
-            font-size: 0.75em;
-            color: $off-white;
-            text-transform: uppercase;
-            box-shadow: 1px 2px 5px 1px rgba(201, 201, 201, 0.6);
-        }
+            width: 100%;
+            gap: 5%;
+            padding-top: 2%;
 
-        .closeBtn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.25em 0.5em;
-            border-radius: 0.5em;
-            width: 7em;
-            height: 2.5em;
-            text-align: center;
-            background-color: $light-text;
-            cursor: pointer;
-            border: 2px solid $medium-dark;
-            font-size: 0.75em;
-            color: $medium-dark;
-            font-weight: bold;
-            text-transform: uppercase;
-            box-shadow: 1px 2px 5px 1px rgba(201, 201, 201, 0.6);
+            .closeBtn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.25em 0.5em;
+                border-radius: 0.5em;
+                width: 7em;
+                height: 2.5em;
+                text-align: center;
+                background-color: $light-text;
+                cursor: pointer;
+                border: 2px solid $medium-dark;
+                font-size: 0.75em;
+                color: $medium-dark;
+                font-weight: bold;
+                text-transform: uppercase;
+                box-shadow: 1px 2px 5px 1px rgba(201, 201, 201, 0.6);
+            }
         }
     }
 }
