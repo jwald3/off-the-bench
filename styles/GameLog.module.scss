@@ -1,0 +1,28 @@
+@import "colors";
+
+.gamelogContainer {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 2000px;
+    height: 100%;
+    align-items: center;
+    background-color: $off-white;
+    margin-bottom: 2%;
+    box-shadow: 0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25);
+
+    .titleContainer {
+        font-size: 1.5em;
+        font-weight: bold;
+        padding-left: 2%;
+        width: 100%;
+        height: 6vh;
+        display: flex;
+        color: $off-black-text;
+        align-items: center;
+        text-transform: uppercase;
+        font-family: "Sarabun", sans-serif;
+    }
+}

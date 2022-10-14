@@ -1,4 +1,5 @@
 import StatTable from "./StatTable";
+import styles from "../styles/GameLog.module.scss";
 
 interface TableProps {
     data: Array<any>;
@@ -10,37 +11,8 @@ interface TableProps {
 
 const GameLog: React.FunctionComponent<TableProps> = ({ ...props }) => {
     return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
-                width: "90%",
-                marginLeft: "auto",
-                marginRight: "auto",
-                maxWidth: "2000px",
-                height: "100%",
-                alignItems: "center",
-                backgroundColor: "#f3f4f8",
-                marginBottom: "2%",
-            }}
-        >
-            <div
-                style={{
-                    fontSize: "1.5em",
-                    fontWeight: "bold",
-                    color: "#282a3a",
-                    width: "100%",
-                    paddingLeft: "2%",
-                    height: "6vh",
-                    display: "flex",
-                    fontFamily: "Sarabun",
-                    alignItems: "center",
-                    textTransform: "uppercase",
-                }}
-            >
-                {props.tableTitle}
-            </div>
+        <div className={styles.gamelogContainer}>
+            <div className={styles.titleContainer}>{props.tableTitle}</div>
             <StatTable
                 data={props.data}
                 columns={props.columns}
