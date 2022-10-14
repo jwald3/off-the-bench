@@ -10,8 +10,7 @@ interface CheckboxProps {
 
 const DownSelector = (props: CheckboxProps) => {
     const router = useRouter();
-    const path = router.pathname;
-    const { asPath, pathname, query } = router;
+    const { pathname, query } = router;
     const season = query.season || 2022;
     const [showSelector, setShowSelector] = useState(false);
 
@@ -149,14 +148,7 @@ const DownSelector = (props: CheckboxProps) => {
                             </div>
                         ))}
                     </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            width: "100%",
-                            gap: "5%",
-                            paddingTop: "2%",
-                        }}
-                    >
+                    <div className={styles.buttonContainer}>
                         <div
                             className={styles.controlBtn}
                             onClick={() => handleSelectAll()}
