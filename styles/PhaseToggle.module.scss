@@ -34,7 +34,6 @@
         padding: 1.5%;
         height: fit-content;
         width: fit-content;
-        // min-width: 20%;
         max-width: 30em;
         box-shadow: 0px 0.15em 0.15em 0.15em rgba(0, 0, 0, 0.25);
         border-radius: 0.5em;
@@ -48,36 +47,12 @@
             width: 100%;
         }
 
-        .phaseBoxes {
+        .phaseButtons {
             display: flex;
-            width: 100%;
-            padding-left: 2%;
-            padding-right: 2%;
-            padding-top: 2%;
-            padding-bottom: 2%;
-
-            .checkboxActive,
-            .checkboxInactive {
-                width: 100%;
-                text-align: center;
-                cursor: pointer;
-                height: 100%;
-                align-items: center;
-                display: flex;
-                font-size: 1em;
-                justify-content: center;
-                padding: 0.2em 0.4em;
-            }
-
-            .checkboxActive {
-                background-color: $secondary-dark;
-                color: $off-white;
-            }
-
-            .checkboxInactive {
-                background-color: $off-white;
-                color: $secondary-dark;
-            }
+            gap: 2%;
+            margin-top: 8%;
+            margin-bottom: 8%;
+            justify-content: center;
         }
 
         .controlBtn {
@@ -114,23 +89,30 @@
             box-shadow: 1px 2px 5px 1px rgba(201, 201, 201, 0.6);
         }
 
-        .closeBtn {
+        .buttonContainer {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.25em 0.5em;
-            border-radius: 0.5em;
-            width: 7em;
-            height: 2.5em;
-            text-align: center;
-            background-color: $light-text;
-            cursor: pointer;
-            border: 2px solid $medium-dark;
-            font-size: 0.75em;
-            color: $medium-dark;
-            font-weight: bold;
-            text-transform: uppercase;
-            box-shadow: 1px 2px 5px 1px rgba(201, 201, 201, 0.6);
+            width: 100%;
+            gap: 5%;
+            padding-top: 2%;
+
+            .closeBtn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.25em 0.5em;
+                border-radius: 0.5em;
+                width: 7em;
+                height: 2.5em;
+                text-align: center;
+                background-color: $light-text;
+                cursor: pointer;
+                border: 2px solid $medium-dark;
+                font-size: 0.75em;
+                color: $medium-dark;
+                font-weight: bold;
+                text-transform: uppercase;
+                box-shadow: 1px 2px 5px 1px rgba(201, 201, 201, 0.6);
+            }
         }
     }
 }

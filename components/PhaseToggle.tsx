@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "../styles/PhaseToggle.module.scss";
 
 interface PhaseProps {
@@ -42,15 +42,7 @@ const PhaseToggle: React.FunctionComponent<PhaseProps> = ({ ...props }) => {
             {showSelector && (
                 <div className={styles.expandedBody}>
                     <div className={styles.phasesLabel}>Phases</div>
-                    <div
-                        style={{
-                            display: "flex",
-                            gap: "2%",
-                            marginTop: "8%",
-                            marginBottom: "8%",
-                            justifyContent: "center",
-                        }}
-                    >
+                    <div className={styles.phaseButtons}>
                         <div
                             className={
                                 pathname.includes("defense")
@@ -72,14 +64,7 @@ const PhaseToggle: React.FunctionComponent<PhaseProps> = ({ ...props }) => {
                             Defense
                         </div>
                     </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            width: "100%",
-                            gap: "5%",
-                            paddingTop: "2%",
-                        }}
-                    >
+                    <div className={styles.buttonContainer}>
                         <div
                             className={styles.closeBtn}
                             onClick={() => setShowSelector(!showSelector)}
