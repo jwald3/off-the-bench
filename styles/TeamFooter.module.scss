@@ -1,0 +1,15 @@
+@import "colors";
+
+.footerContainer {
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+    gap: 2%;
+    padding-bottom: 2%;
+
+    .teamLink {
+        color: $primary-dark;
+        cursor: pointer;
+    }
+}

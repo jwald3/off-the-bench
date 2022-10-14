@@ -1,21 +1,13 @@
 import { useRouter } from "next/router";
+import styles from "../styles/TeamFooter.module.scss";
 
 const TeamLinkFooter: React.FunctionComponent = () => {
     const router = useRouter();
 
     return (
-        <div
-            style={{
-                paddingBottom: "2%",
-                display: "flex",
-                gap: "2%",
-                width: "90%",
-                alignItems: "center",
-                justifyContent: "center",
-            }}
-        >
+        <div className={styles.footerContainer}>
             <div
-                className="teamLink"
+                className={styles.teamLink}
                 onClick={() =>
                     router.replace({
                         pathname: "/teams/[team]",
@@ -24,12 +16,11 @@ const TeamLinkFooter: React.FunctionComponent = () => {
                         },
                     })
                 }
-                style={{ cursor: "pointer" }}
             >
                 Team Home
             </div>
             <div
-                className="teamLink"
+                className={styles.teamLink}
                 onClick={() =>
                     router.replace({
                         pathname: "/teams/[team]/usage",
@@ -38,12 +29,11 @@ const TeamLinkFooter: React.FunctionComponent = () => {
                         },
                     })
                 }
-                style={{ cursor: "pointer" }}
             >
                 Usage Rates
             </div>
             <div
-                className="teamLink"
+                className={styles.teamLink}
                 onClick={() =>
                     router.replace({
                         pathname: "/teams/[team]/personnel",
@@ -52,12 +42,11 @@ const TeamLinkFooter: React.FunctionComponent = () => {
                         },
                     })
                 }
-                style={{ cursor: "pointer" }}
             >
                 Personnel
             </div>
             <div
-                className="teamLink"
+                className={styles.teamLink}
                 onClick={() =>
                     router.replace({
                         pathname: "/teams/[team]/snap_counts/offense",
@@ -66,18 +55,16 @@ const TeamLinkFooter: React.FunctionComponent = () => {
                         },
                     })
                 }
-                style={{ cursor: "pointer" }}
             >
                 Snap Counts
             </div>
             <div
-                className="teamLink"
+                className={styles.teamLink}
                 onClick={() =>
                     router.replace({
                         pathname: "/teams/",
                     })
                 }
-                style={{ cursor: "pointer" }}
             >
                 All Teams
             </div>
