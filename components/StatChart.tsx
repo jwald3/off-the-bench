@@ -8,6 +8,7 @@ import {
     Tooltip,
     ResponsiveContainer,
 } from "recharts";
+import styles from "../styles/StatChart.module.scss";
 
 interface ChartProps {
     data: Array<any>;
@@ -18,25 +19,12 @@ interface ChartProps {
 
 const StatChart: React.FunctionComponent<ChartProps> = ({ ...props }) => {
     return (
-        <div
-            style={{
-                maxWidth: "2000px",
-                width: "100%",
-                marginLeft: "auto",
-                marginRight: "auto",
-                marginBottom: "2%",
-                backgroundColor: "#f3f4f8",
-            }}
-        >
+        <div className={styles.chartBody}>
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart
                     data={props.data}
                     margin={{ top: 40, right: 40, left: 0, bottom: 20 }}
-                    style={{
-                        width: "100%",
-                        backgroundColor: "#f3f4f8",
-                        fontSize: ".7em",
-                    }}
+                    className={styles.barChart}
                 >
                     <CartesianGrid strokeDasharray="2 2" />
                     <XAxis
