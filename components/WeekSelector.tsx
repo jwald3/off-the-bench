@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import wks from "../data/weeks.json";
-import styles from "../styles/WeekCheckboxFilterUsage.module.scss";
+import styles from "../styles/WeekSelector.module.scss";
 
 interface CheckboxProps {
     handleFilters: Function;
@@ -122,59 +122,21 @@ const WeekSelector = (props: CheckboxProps) => {
         });
     };
 
-    const handleSeasonChange = (val: number) => {
-        props.handleSeason(val);
-
-        const allChecked: Array<number> = [
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-        ];
-
-        const urlAllChecked = allChecked.map(String).join(",");
-
-        router
-            .push({
-                pathname: pathname,
-                query: {
-                    ...router.query,
-                    season: val,
-                },
-            })
-            .then(() => router.reload());
-
-        setSelSeason(val);
-    };
-
     return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                backgroundColor: "#f3f4f8",
-                height: "100%",
-                padding: "1%",
-                borderRadius: ".5em",
-                boxShadow: "0px 0.15em 0.15em 0.15em rgba(0, 0, 0, 0.25)",
-                color: "#282a3a",
-                minWidth: "10em",
-                minHeight: "100%",
-            }}
-        >
-            <div style={{ fontWeight: "bold" }}>Weeks</div>
-            <div
-                onClick={() => setShowSelector(!showSelector)}
-                style={{ padding: "5%", cursor: "pointer" }}
-            >
-                {replaceAllConsectives(checked).join(", ")}
+        <div className={styles.cardArea}>
+            <div className={styles.weekCard}>
+                <div className={styles.cardHeader}>Weeks</div>
+                <div
+                    className={styles.cardBody}
+                    onClick={() => setShowSelector(!showSelector)}
+                >
+                    {replaceAllConsectives(checked).join(", ")}
+                </div>
             </div>
             {showSelector && (
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                    }}
-                >
+                <div className={styles.expandedBody}>
                     <div className={styles.weeksLabel}>Weeks</div>
-                    <div style={{ display: "flex" }}>
+                    <div className={styles.weekBoxes}>
                         {wks.map((val, idx) => (
                             <div key={idx}>
                                 <div
@@ -189,6 +151,33 @@ const WeekSelector = (props: CheckboxProps) => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            width: "100%",
+                            gap: "5%",
+                            paddingTop: "2%",
+                        }}
+                    >
+                        <div
+                            className={styles.controlBtn}
+                            onClick={() => handleSelectAll()}
+                        >
+                            Select All
+                        </div>
+                        <div
+                            className={styles.controlBtn}
+                            onClick={() => handleClearAll()}
+                        >
+                            Clear All
+                        </div>
+                        <div
+                            className={styles.closeBtn}
+                            onClick={() => setShowSelector(!showSelector)}
+                        >
+                            Close
+                        </div>
                     </div>
                 </div>
             )}
