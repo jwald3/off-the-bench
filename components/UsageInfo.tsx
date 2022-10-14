@@ -1,6 +1,7 @@
 import ChartHeader from "./ChartHeader";
 import StatChart from "./StatChart";
 import StatTable from "./StatTable";
+import styles from "../styles/UsageInfo.module.scss";
 
 interface UsageProps {
     playerData: Array<any>;
@@ -17,20 +18,8 @@ interface UsageProps {
 
 const UsageInfo: React.FunctionComponent<UsageProps> = ({ ...props }) => {
     return (
-        <div>
-            <div
-                style={{
-                    boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
-                    width: "90%",
-                    maxWidth: "2000px",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                    marginBottom: "2%",
-                    marginTop: "2%",
-                    backgroundColor: "#f3f4f8",
-                    paddingBottom: "1%",
-                }}
-            >
+        <div className={styles.usageContainer}>
+            <div className={styles.usageInfo}>
                 <ChartHeader
                     headerTitle={props.headerTitle}
                     altOptionOne={props.altOptionOne}
