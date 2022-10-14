@@ -150,14 +150,7 @@ const WeekSelector = (props: CheckboxProps) => {
                             </div>
                         ))}
                     </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            width: "100%",
-                            gap: "5%",
-                            paddingTop: "2%",
-                        }}
-                    >
+                    <div className={styles.buttonContainer}>
                         <div
                             className={styles.controlBtn}
                             onClick={() => handleSelectAll()}
