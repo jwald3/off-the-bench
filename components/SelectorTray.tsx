@@ -2,6 +2,7 @@ import DownSelector from "./DownSelector";
 import PhaseToggle from "./PhaseToggle";
 import SeasonSelector from "./SeasonSelector";
 import WeekSelector from "./WeekSelector";
+import styles from "../styles/SelectorTray.module.scss";
 
 interface CheckboxProps {
     handleWeekFilters: Function;
@@ -15,16 +16,7 @@ interface CheckboxProps {
 
 const SelectorTray = (props: CheckboxProps) => {
     return (
-        <div
-            style={{
-                width: "90%",
-                maxWidth: "2000px",
-                marginLeft: "auto",
-                marginRight: "auto",
-                display: "flex",
-                gap: "2%",
-            }}
-        >
+        <div className={styles.trayContainer}>
             <PhaseToggle phaseUrl={props.phaseUrl} />
             <WeekSelector
                 handleFilters={props.handleWeekFilters}
