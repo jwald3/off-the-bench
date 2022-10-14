@@ -17,7 +17,7 @@ const SelectorTray = (props: CheckboxProps) => {
     return (
         <div
             style={{
-                width: "90%",
+                width: "100%",
                 maxWidth: "2000px",
                 marginLeft: "auto",
                 marginRight: "auto",
