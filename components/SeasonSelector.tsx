@@ -40,17 +40,14 @@ const SeasonSelector = (props: CheckboxProps) => {
 
     const options = [
         {
-            id: 0,
             label: "2022",
             value: 2022,
         },
         {
-            id: 1,
             label: "2021",
             value: 2021,
         },
         {
-            id: 2,
             label: "2020",
             value: 2020,
         },
@@ -67,7 +64,6 @@ const SeasonSelector = (props: CheckboxProps) => {
                     <Select
                         values={[
                             {
-                                id: 0,
                                 label: selSeason.toString(),
                                 value: selSeason,
                             },
@@ -80,27 +76,6 @@ const SeasonSelector = (props: CheckboxProps) => {
                     />
                 </div>
             </div>
-            {/* {showSelector && (
-                <div className={styles.expandedBody}>
-                    <div className={styles.seasonSelector}>
-                        <Select
-                            values={[]}
-                            labelField="label"
-                            valueField="value"
-                            options={options}
-                            onChange={(val) => handleSeasonChange(val[0].value)}
-                        />
-                    </div>
-                    <div className={styles.buttonContainer}>
-                        <div
-                            className={styles.closeBtn}
-                            onClick={() => setShowSelector(!showSelector)}
-                        >
-                            Close
-                        </div>
-                    </div>
-                </div>
-            )} */}
         </div>
     );
 };
