@@ -21,8 +21,12 @@
         }
 
         .cardBody {
-            padding: 5%;
+            padding: 0%;
             cursor: pointer;
+
+            .selector {
+                border: none;
+            }
         }
     }
 

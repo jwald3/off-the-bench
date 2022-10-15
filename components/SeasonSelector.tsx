@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
+import Select from "react-dropdown-select";
 import styles from "../styles/SeasonSelector.module.scss";
 
 interface CheckboxProps {
@@ -37,6 +38,24 @@ const SeasonSelector = (props: CheckboxProps) => {
         setSelSeason(val);
     };
 
+    const options = [
+        {
+            id: 0,
+            label: "2022",
+            value: 2022,
+        },
+        {
+            id: 1,
+            label: "2021",
+            value: 2021,
+        },
+        {
+            id: 2,
+            label: "2020",
+            value: 2020,
+        },
+    ];
+
     return (
         <div className={styles.cardArea}>
             <div className={styles.seasonCard}>
@@ -45,22 +64,32 @@ const SeasonSelector = (props: CheckboxProps) => {
                     className={styles.cardBody}
                     onClick={() => setShowSelector(!showSelector)}
                 >
-                    {selSeason}
+                    <Select
+                        values={[
+                            {
+                                id: 0,
+                                label: selSeason.toString(),
+                                value: selSeason,
+                            },
+                        ]}
+                        labelField="label"
+                        valueField="value"
+                        options={options}
+                        onChange={(val) => handleSeasonChange(val[0].value)}
+                        className={styles.selector}
+                    />
                 </div>
             </div>
-            {showSelector && (
+            {/* {showSelector && (
                 <div className={styles.expandedBody}>
                     <div className={styles.seasonSelector}>
-                        <select
-                            value={selSeason}
-                            onChange={(e) =>
-                                handleSeasonChange(Number(e.target.value))
-                            }
-                        >
-                            <option value={2022}>2022</option>
-                            <option value={2021}>2021</option>
-                            <option value={2020}>2020</option>
-                        </select>
+                        <Select
+                            values={[]}
+                            labelField="label"
+                            valueField="value"
+                            options={options}
+                            onChange={(val) => handleSeasonChange(val[0].value)}
+                        />
                     </div>
                     <div className={styles.buttonContainer}>
                         <div
@@ -71,7 +100,7 @@ const SeasonSelector = (props: CheckboxProps) => {
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
         </div>
     );
 };
