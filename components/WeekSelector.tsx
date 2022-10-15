@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import wks from "../data/weeks.json";
 import styles from "../styles/WeekSelector.module.scss";
 
@@ -16,6 +16,7 @@ const WeekSelector = (props: CheckboxProps) => {
     const season = query.season || 2022;
     const [showSelector, setShowSelector] = useState(false);
     const [checked, setChecked] = useState(props.weekFilter);
+    let menuRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
     useEffect(() => {
         if (query.weeks !== undefined) {
@@ -25,6 +26,21 @@ const WeekSelector = (props: CheckboxProps) => {
 
             setChecked(selectedWeeks);
         }
+    }, []);
+
+    useEffect(() => {
+        let handler = (e: any) => {
+            if (!menuRef.current.contains(e.target)) {
+                setShowSelector(false);
+                console.log(menuRef.current);
+            }
+        };
+
+        document.addEventListener("mousedown", handler);
+
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        };
     }, []);
 
     const getConsectiveCount = (arr: any[], index: number) => {
@@ -121,7 +137,7 @@ const WeekSelector = (props: CheckboxProps) => {
     };
 
     return (
-        <div className={styles.cardArea}>
+        <div className={styles.cardArea} ref={menuRef}>
             <div className={styles.weekCard}>
                 <div className={styles.cardHeader}>Weeks</div>
                 <div

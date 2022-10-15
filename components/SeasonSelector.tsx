@@ -73,6 +73,7 @@ const SeasonSelector = (props: CheckboxProps) => {
                         options={options}
                         onChange={(val) => handleSeasonChange(val[0].value)}
                         className={styles.selector}
+                        color={"#939691"}
                     />
                 </div>
             </div>

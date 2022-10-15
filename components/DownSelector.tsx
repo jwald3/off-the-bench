@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import downs from "../data/downs.json";
 import styles from "../styles/DownSelector.module.scss";
 
@@ -12,6 +12,7 @@ const DownSelector = (props: CheckboxProps) => {
     const router = useRouter();
     const { pathname, query } = router;
     const season = query.season || 2022;
+    let menuRef = useRef() as React.MutableRefObject<HTMLInputElement>;
     const [showSelector, setShowSelector] = useState(false);
 
     const [checked, setChecked] = useState(props.downFilter);
@@ -24,6 +25,21 @@ const DownSelector = (props: CheckboxProps) => {
 
             setChecked(selectedDowns);
         }
+    }, []);
+
+    useEffect(() => {
+        let handler = (e: any) => {
+            if (!menuRef.current.contains(e.target)) {
+                setShowSelector(false);
+                console.log(menuRef.current);
+            }
+        };
+
+        document.addEventListener("mousedown", handler);
+
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        };
     }, []);
 
     const handleToggle = (value: number) => {
@@ -119,7 +135,7 @@ const DownSelector = (props: CheckboxProps) => {
     };
 
     return (
-        <div className={styles.cardArea}>
+        <div className={styles.cardArea} ref={menuRef}>
             <div className={styles.downCard}>
                 <div className={styles.cardHeader}>downs</div>
                 <div
