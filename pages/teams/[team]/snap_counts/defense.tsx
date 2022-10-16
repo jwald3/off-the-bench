@@ -2,11 +2,9 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import DownFilter from "../../../../components/DownFilter";
 import SelectorTray from "../../../../components/SelectorTray";
 import StatTable from "../../../../components/StatTable";
 import TeamLinkFooter from "../../../../components/TeamFooter";
-import Checkbox from "../../../../components/WeekCheckboxFilterUsage";
 import {
     playerDefenseSnapCols,
     playerSnapCols,
@@ -220,15 +218,29 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
                             phaseUrl={"/teams/[team]/snap_counts/offense"}
                         />
                     </div>
-
-                    <StatTable
-                        data={aggPlayerSnaps}
-                        columns={playerDefenseSnapCols}
-                        rowIdCol={"db_id"}
-                        pageSize={32}
-                        disableFooter={false}
-                        showToolbar={true}
-                    />
+                    <div
+                        style={{
+                            width: "100%",
+                            maxWidth: "2000px",
+                            height: "auto",
+                            boxShadow:
+                                "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
+                            backgroundColor: "#f3f4f8",
+                            marginBottom: "3%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <StatTable
+                            data={aggPlayerSnaps}
+                            columns={playerDefenseSnapCols}
+                            rowIdCol={"db_id"}
+                            pageSize={32}
+                            disableFooter={false}
+                            showToolbar={true}
+                        />
+                    </div>
                     <TeamLinkFooter />
                 </div>
             </div>

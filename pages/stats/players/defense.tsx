@@ -2,9 +2,7 @@ import { GetServerSideProps } from "next";
 import prisma from "../../../lib/prisma";
 import StatTable from "../../../components/StatTable";
 import { useEffect, useState } from "react";
-import Checkbox from "../../../components/WeekCheckboxFilter";
 import { useRouter } from "next/router";
-import PlayerTableHeader from "../../../components/PlayerTableHeader";
 import { playerDefenseColumns } from "../../../data/tableColumns";
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
@@ -206,29 +204,59 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 />
             </Head>
             <div className="weekly-team-page">
-                <div style={{ paddingTop: " 2%", paddingBottom: " 2%" }}>
-                    <SelectorTray
-                        handleWeekFilters={setWeekFilter}
-                        weekFilter={weekFilter}
-                        seasonFilter={Number(selectedSeason)}
-                        handleSeason={setSelectedSeason}
-                        handleDownFilters={setDownFilter}
-                        downFilter={downFilter}
-                        phaseUrl={"/stats/players/offense"}
-                    />
-                </div>
                 <div
                     className="weekly-team-stats"
-                    style={{ width: "90%", margin: "auto" }}
+                    style={{
+                        paddingTop: "2%",
+                        width: "90%",
+                        margin: "auto",
+                        display: "flex",
+                        flexDirection: "column",
+                    }}
                 >
-                    <StatTable
-                        data={aggTeams}
-                        columns={columns}
-                        rowIdCol={"game_id_db"}
-                        pageSize={25}
-                        showToolbar={true}
-                        disableFooter={false}
-                    />
+                    <div
+                        style={{
+                            paddingBottom: "2%",
+                            width: "100%",
+                            maxWidth: "2000px",
+                            margin: "auto",
+                            display: "flex",
+                        }}
+                    >
+                        <SelectorTray
+                            handleWeekFilters={setWeekFilter}
+                            weekFilter={weekFilter}
+                            seasonFilter={Number(selectedSeason)}
+                            handleSeason={setSelectedSeason}
+                            handleDownFilters={setDownFilter}
+                            downFilter={downFilter}
+                            phaseUrl={"/stats/players/offense"}
+                        />
+                    </div>
+                    <div
+                        className="weekly-team-stats"
+                        style={{
+                            width: "100%",
+                            maxWidth: "2000px",
+                            height: "auto",
+                            boxShadow:
+                                "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
+                            backgroundColor: "#f3f4f8",
+                            marginBottom: "3%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <StatTable
+                            data={aggTeams}
+                            columns={columns}
+                            rowIdCol={"game_id_db"}
+                            pageSize={25}
+                            showToolbar={true}
+                            disableFooter={false}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

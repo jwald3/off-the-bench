@@ -31,7 +31,6 @@ const StatTable: React.FunctionComponent<TableProps> = ({ ...props }) => {
                     fontSize: 10,
                     width: "100%",
                     margin: "auto",
-                    marginBottom: "3%",
                     height: "100%",
                     color: "#101223",
                     border: "none",

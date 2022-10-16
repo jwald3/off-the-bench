@@ -168,32 +168,59 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                 />
             </Head>
             <div className="weekly-team-page">
-                <div style={{ paddingTop: " 2%", paddingBottom: " 2%" }}>
-                    <SelectorTray
-                        handleWeekFilters={setWeekFilter}
-                        weekFilter={weekFilter}
-                        seasonFilter={Number(selectedSeason)}
-                        handleSeason={setSelectedSeason}
-                        handleDownFilters={setDownFilter}
-                        downFilter={downFilter}
-                        phaseUrl={"/stats/teams/defense"}
-                    />
-                </div>
                 <div
                     className="weekly-team-stats"
                     style={{
+                        paddingTop: "2%",
                         width: "90%",
                         margin: "auto",
+                        display: "flex",
+                        flexDirection: "column",
                     }}
                 >
-                    <StatTable
-                        data={aggTeams}
-                        columns={columns}
-                        rowIdCol={"db_id"}
-                        pageSize={32}
-                        disableFooter={false}
-                        showToolbar={true}
-                    />
+                    <div
+                        style={{
+                            paddingBottom: "2%",
+                            width: "100%",
+                            maxWidth: "2000px",
+                            margin: "auto",
+                            display: "flex",
+                        }}
+                    >
+                        <SelectorTray
+                            handleWeekFilters={setWeekFilter}
+                            weekFilter={weekFilter}
+                            seasonFilter={Number(selectedSeason)}
+                            handleSeason={setSelectedSeason}
+                            handleDownFilters={setDownFilter}
+                            downFilter={downFilter}
+                            phaseUrl={"/stats/teams/defense"}
+                        />
+                    </div>
+                    <div
+                        className="weekly-team-stats"
+                        style={{
+                            width: "100%",
+                            maxWidth: "2000px",
+                            height: "auto",
+                            boxShadow:
+                                "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
+                            backgroundColor: "#f3f4f8",
+                            marginBottom: "3%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <StatTable
+                            data={aggTeams}
+                            columns={columns}
+                            rowIdCol={"db_id"}
+                            pageSize={32}
+                            disableFooter={false}
+                            showToolbar={true}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
