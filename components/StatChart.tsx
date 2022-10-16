@@ -7,7 +7,12 @@ import {
     CartesianGrid,
     Tooltip,
     ResponsiveContainer,
+    TooltipProps,
 } from "recharts";
+import {
+    ValueType,
+    NameType,
+} from "recharts/src/component/DefaultTooltipContent";
 import styles from "../styles/StatChart.module.scss";
 
 interface ChartProps {
@@ -18,6 +23,37 @@ interface ChartProps {
 }
 
 const StatChart: React.FunctionComponent<ChartProps> = ({ ...props }) => {
+    const CustomTooltip = ({
+        active,
+        payload,
+        label,
+    }: TooltipProps<ValueType, NameType>) => {
+        if (active && payload && payload.length) {
+            return (
+                <div
+                    className="custom-tooltip"
+                    style={{
+                        backgroundColor: "white",
+                        padding: "1em 1.5em",
+                        boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
+                        fontSize: "1.2em",
+                        textTransform: "capitalize",
+                    }}
+                >
+                    <div>
+                        <p>{`${label}`}</p>
+                        <p className="label">{`${payload[0].dataKey} : ${payload[0].value}`}</p>
+                        {payload[1] && (
+                            <p className="label">{`${payload[1].dataKey} : ${payload[1].value}`}</p>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        return null;
+    };
+
     return (
         <div className={styles.chartBody}>
             <ResponsiveContainer width="100%" height={300}>
@@ -37,10 +73,10 @@ const StatChart: React.FunctionComponent<ChartProps> = ({ ...props }) => {
                         domain={[0, "auto"]}
                         allowDataOverflow={true}
                     />
-                    <Tooltip />
-                    <Bar dataKey={props.barDataOne} fill="#777986" />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Bar dataKey={props.barDataOne} fill="#494252" />
                     {props.barDataTwo !== "" && (
-                        <Bar dataKey={props.barDataTwo} fill="#494252" />
+                        <Bar dataKey={props.barDataTwo} fill="#939691" />
                     )}
                 </BarChart>
             </ResponsiveContainer>
