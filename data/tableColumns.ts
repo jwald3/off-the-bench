@@ -1326,3 +1326,161 @@ export const playerDefenseSnapCols: GridColDef[] = [
         },
     },
 ];
+
+export const playerAdvRecCols: GridColDef[] = [
+    {
+        headerName: "Player",
+        field: "player_id",
+        type: "string",
+        width: 175,
+    },
+    {
+        headerName: "REC",
+        field: "complete_pass",
+        type: "number",
+    },
+    {
+        headerName: "TGT",
+        field: "pass_attempt",
+        type: "number",
+    },
+    {
+        headerName: "CATCH %",
+        field: "catch_pct",
+        flex: 1,
+        valueGetter: getCatchPct,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "REC YDS",
+        field: "passing_yards",
+        type: "number",
+    },
+    {
+        headerName: "REC TDS",
+        field: "pass_touchdown",
+        type: "number",
+    },
+    {
+        headerName: "TGT SHARE",
+        field: "tgr_pct",
+        flex: 1,
+        valueGetter: getTgtPct,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "AIR YDS",
+        field: "air_yards",
+        type: "number",
+    },
+    {
+        headerName: "aDOT",
+        field: "adot",
+        flex: 1,
+        valueGetter: getAdot,
+        type: "number",
+    },
+    {
+        headerName: "AIR YDS %",
+        field: "adot_pct",
+        flex: 1,
+        valueGetter: getAirYdsPct,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "RACR",
+        field: "racr",
+        flex: 1,
+        valueGetter: getRacr,
+        type: "number",
+    },
+    {
+        headerName: "WOPR",
+        field: "wopr",
+        flex: 1,
+        valueGetter: getWopr,
+        type: "number",
+    },
+];
+
+function getCatchPct(params: GridCellParams) {
+    if (params.row.pass_attempt === 0) {
+        return 0;
+    }
+
+    return ((params.row.complete_pass / params.row.pass_attempt) * 100).toFixed(
+        1
+    );
+}
+
+function getTgtPct(params: GridCellParams) {
+    if (params.row.team_pass_attempt === 0) {
+        return 0;
+    }
+
+    return (
+        (params.row.pass_attempt / params.row.team_pass_attempt) *
+        100
+    ).toFixed(1);
+}
+
+function getAdot(params: GridCellParams) {
+    if (params.row.pass_attempt === 0) {
+        return 0;
+    }
+
+    return (params.row.air_yards / params.row.pass_attempt).toFixed(1);
+}
+
+function getRacr(params: GridCellParams) {
+    if (params.row.air_yards === 0) {
+        return 0;
+    }
+
+    return (params.row.passing_yards / params.row.air_yards).toFixed(2);
+}
+
+function getAirYdsPct(params: GridCellParams) {
+    if (params.row.team_air_yards === 0) {
+        return 0;
+    }
+
+    return ((params.row.air_yards / params.row.team_air_yards) * 100).toFixed(
+        2
+    );
+}
+
+function getWopr(params: GridCellParams) {
+    if (params.row.adot_pct === 0) {
+        return 0;
+    }
+
+    return (
+        (params.row.pass_attempt / params.row.team_pass_attempt) * 1.5 +
+        (params.row.air_yards / params.row.team_air_yards) * 0.7
+    ).toFixed(2);
+}

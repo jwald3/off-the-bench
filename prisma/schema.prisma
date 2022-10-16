@@ -251,16 +251,16 @@ model conversion_success {
 }
 
 model offense_player_snaps_by_down {
-  posteam             String?
-  game_id             String?
-  down                Int?
   player_id           String?
+  game_id             String?
+  posteam             String?
+  down                Int?
   snap_ct             BigInt?
-  rush_snap           Int?
-  pass_snap           Int?
-  team_snaps          BigInt?
-  team_rushing_plays  BigInt?
-  team_passing_plays  BigInt?
+  rush_snap           Float?
+  pass_snap           Float?
+  team_snaps          Float?
+  team_rushing_plays  Float?
+  team_passing_plays  Float?
   week                Int?
   season              Int?
   target              Float?
@@ -273,18 +273,43 @@ model offense_player_snaps_by_down {
 }
 
 model defense_player_snaps_by_down {
-  defteam            String?
-  game_id            String?
-  down               Float?
   player_id          String?
+  game_id            String?
+  defteam            String?
+  key                BigInt?
+  down               Float?
   snap_ct            BigInt?
-  rush_snap          Int?
-  pass_snap          Int?
-  team_snaps         BigInt?
-  team_rushing_plays BigInt?
-  team_passing_plays BigInt?
+  rush_snap          Float?
+  pass_snap          Float?
+  team_snaps         Float?
+  team_rushing_plays Float?
+  team_passing_plays Float?
   week               Int?
   season             Int?
   gsis_id            String?
   db_id              String  @id
+}
+
+model advanced_receiving_stats {
+  game_id                String?
+  posteam                String?
+  player_id              String?
+  passing_yards          BigInt?
+  air_yards              BigInt?
+  yards_after_catch      BigInt?
+  complete_pass          BigInt?
+  pass_attempt           BigInt?
+  interception           BigInt?
+  pass_touchdown         BigInt?
+  team_passing_yards     BigInt?
+  team_air_yards         BigInt?
+  team_yards_after_catch BigInt?
+  team_complete_pass     BigInt?
+  team_pass_attempt      BigInt?
+  team_interception      BigInt?
+  team_pass_touchdown    BigInt?
+  gsis_id                String?
+  week                   Int?
+  season                 Int?
+  db_id                  String  @id
 }
