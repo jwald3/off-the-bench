@@ -28,7 +28,7 @@ const StatTable: React.FunctionComponent<TableProps> = ({ ...props }) => {
                 components={{ Toolbar: toolbarVal }}
                 hideFooter={props.disableFooter}
                 sx={{
-                    fontSize: 10,
+                    fontSize: 12,
                     width: "100%",
                     margin: "auto",
                     height: "100%",

@@ -2,7 +2,6 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import GameLog from "../../../components/GameLog";
-import StatChart from "../../../components/StatChart";
 import TeamHomepageBar from "../../../components/TeamHomepageBar";
 import TeamLinkBar from "../../../components/TeamLinkBar";
 import UsageInfo from "../../../components/UsageInfo";
@@ -16,7 +15,7 @@ import prisma from "../../../lib/prisma";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
-    let season = Number(query.season) || 2021;
+    let season = Number(query.season) || 2022;
 
     let teamInformation: ITeamInformation[];
 

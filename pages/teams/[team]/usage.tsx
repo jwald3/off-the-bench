@@ -371,14 +371,24 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                     paddingBottom: "2%",
                 }}
             >
-                <SelectorTray
-                    handleWeekFilters={setWeekFilter}
-                    weekFilter={weekFilter}
-                    seasonFilter={Number(selectedSeason)}
-                    handleSeason={setSelectedSeason}
-                    handleDownFilters={setDownFilter}
-                    downFilter={downFilter}
-                />
+                <div
+                    style={{
+                        width: "90%",
+                        maxWidth: "2000px",
+                        margin: "auto",
+                        display: "flex",
+                    }}
+                >
+                    <SelectorTray
+                        handleWeekFilters={setWeekFilter}
+                        weekFilter={weekFilter}
+                        seasonFilter={Number(selectedSeason)}
+                        handleSeason={setSelectedSeason}
+                        handleDownFilters={setDownFilter}
+                        downFilter={downFilter}
+                        phaseUrl={""}
+                    />
+                </div>
                 <UsageInfo
                     playerData={playerTargets}
                     columns={playerUsageColumns}

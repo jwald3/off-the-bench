@@ -69,12 +69,10 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                     display: "flex",
                     flexDirection: "column",
                     backgroundColor: "#d9d9d9",
-                    paddingLeft: "2%",
                     height: "100vh",
                     alignItems: "center",
-                    paddingTop: "5%",
-                    // justifyContent: "center",
-                    gap: "3%",
+                    paddingTop: "3%",
+                    gap: "2.5%",
                 }}
             >
                 <div
@@ -92,6 +90,8 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                         width: "90%",
                         height: "2em",
                         fontWeight: "bold",
+                        minHeight: "12%",
+                        maxWidth: "2000px",
                     }}
                 >
                     Teams
@@ -99,12 +99,14 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                 <div
                     style={{
                         display: "flex",
+                        justifyContent: "space-around",
                         backgroundColor: "#f3f4f8",
                         paddingLeft: "2%",
                         paddingTop: "2%",
                         paddingBottom: "2%",
                         boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
                         width: "90%",
+                        maxWidth: "2000px",
                     }}
                 >
                     <TeamDivisionGroup
@@ -135,12 +137,14 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                 <div
                     style={{
                         display: "flex",
+                        justifyContent: "space-around",
                         backgroundColor: "#f3f4f8",
                         paddingLeft: "2%",
                         paddingTop: "2%",
                         paddingBottom: "2%",
                         boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
                         width: "90%",
+                        maxWidth: "2000px",
                     }}
                 >
                     <TeamDivisionGroup
