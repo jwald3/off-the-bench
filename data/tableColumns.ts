@@ -7,36 +7,42 @@ import {
 export const playerDefenseColumns: GridColDef[] = [
     {
         headerName: "Player",
+        headerClassName: "grid-header",
         field: "player_id",
         flex: 1.75,
         type: "string",
     },
     {
         headerName: "Position",
+        headerClassName: "grid-header",
         field: "position",
         flex: 0.5,
         type: "string",
     },
     {
         headerName: "Team",
+        headerClassName: "grid-header",
         field: "team_abbr",
         flex: 0.5,
         type: "string",
     },
     {
         headerName: "Games",
+        headerClassName: "grid-header",
         field: "week_count",
         flex: 0.5,
         type: "number",
     },
     {
         headerName: "INTs",
+        headerClassName: "grid-header",
         field: "interception",
         flex: 1,
         type: "number",
     },
     {
         headerName: "INT Yards",
+        headerClassName: "grid-header",
         field: "int_return_yards",
         flex: 1,
         type: "number",
@@ -114,44 +120,45 @@ function getComboTackles(params: GridCellParams) {
 export const playerOffenseColumns: GridColDef[] = [
     {
         headerName: "Player",
+        headerClassName: "grid-header",
+        width: 150,
         field: "player_id",
-        flex: 1.5,
         type: "string",
     },
     {
         headerName: "Position",
+        headerClassName: "grid-header",
         field: "position",
-        flex: 1,
         type: "string",
     },
     {
         headerName: "Team",
+        headerClassName: "grid-header",
         field: "team_abbr",
-        flex: 1,
         type: "string",
     },
     {
         headerName: "Games",
+        headerClassName: "grid-header",
         field: "week_count",
-        flex: 1,
         type: "number",
     },
     {
         headerName: "Pass Attempts",
+        headerClassName: "grid-header",
         field: "pass_attempt",
-        flex: 1,
         type: "number",
     },
     {
         headerName: "Completions",
+        headerClassName: "grid-header",
         field: "completion",
-        flex: 1,
         type: "number",
     },
     {
         headerName: "Completion %",
+        headerClassName: "grid-header",
         field: "compPercent",
-        flex: 1,
         valueGetter: getPlayerCompletionPct,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -165,80 +172,80 @@ export const playerOffenseColumns: GridColDef[] = [
     },
     {
         headerName: "Passing Yards",
+        headerClassName: "grid-header",
         field: "passing_yards",
-        flex: 1,
         type: "number",
     },
     {
         headerName: "Passing TDs",
+        headerClassName: "grid-header",
         field: "passing_TD",
-        flex: 1,
         type: "number",
     },
     {
         headerName: "INT",
+        headerClassName: "grid-header",
         field: "interception",
-        flex: 1,
         type: "number",
     },
     {
         headerName: "Sacks",
+        headerClassName: "grid-header",
         field: "sack",
-        flex: 1,
         type: "number",
     },
     {
         headerName: "Carries",
+        headerClassName: "grid-header",
         field: "rush_attempt",
-        width: 75,
         type: "number",
     },
     {
         headerName: "Rushing Yards",
+        headerClassName: "grid-header",
         field: "rushing_yards",
-        flex: 1,
         type: "number",
     },
     {
         headerName: "Rushing TDs",
+        headerClassName: "grid-header",
         field: "rushing_TD",
-        flex: 1,
         type: "number",
     },
     {
         headerName: "TFL",
+        headerClassName: "grid-header",
         field: "tackled_for_loss",
-        width: 75,
         type: "number",
     },
     {
         headerName: "FUM",
+        headerClassName: "grid-header",
         field: "fumble",
-        width: 75,
         type: "number",
     },
     {
         headerName: "REC",
+        headerClassName: "grid-header",
         field: "reception",
-        flex: 0.75,
         type: "number",
     },
     {
         headerName: "TGT",
+        headerClassName: "grid-header",
         field: "target",
-        flex: 0.75,
         type: "number",
     },
     {
         headerName: "Rec. Yards",
+        headerClassName: "grid-header",
         field: "receiving_yards",
-        flex: 0.75,
         type: "number",
     },
     {
         headerName: "Rec. TDs",
+        headerClassName: "grid-header",
         field: "receiving_TD",
-        flex: 0.75,
         type: "number",
     },
 ];
@@ -1078,19 +1085,18 @@ export const playerSnapCols: GridColDef[] = [
     {
         headerName: "Player",
         field: "player_id",
-        flex: 1,
+        width: 175,
         type: "string",
     },
     {
         headerName: "Total Snaps",
         field: "snap_ct",
-        flex: 1,
         type: "string",
     },
     {
         headerName: "Snap %",
         field: "tot_snap_pct",
-        flex: 1,
+
         valueGetter: getTotalSnapPct,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1103,15 +1109,15 @@ export const playerSnapCols: GridColDef[] = [
         },
     },
     {
-        headerName: "Rushing Snaps",
+        headerName: "Rush Snaps",
         field: "rush_snap",
-        flex: 1,
+
         type: "string",
     },
     {
         headerName: "Rush Snap %",
         field: "rush_snap_pct",
-        flex: 1,
+
         valueGetter: getRushSnapPct,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1126,13 +1132,13 @@ export const playerSnapCols: GridColDef[] = [
     {
         headerName: "Carries",
         field: "carries",
-        flex: 1,
+
         type: "number",
     },
     {
         headerName: "Carry Share",
         field: "carry_share",
-        flex: 1,
+
         valueGetter: getCarryShare,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1145,21 +1151,18 @@ export const playerSnapCols: GridColDef[] = [
         },
     },
     {
-        headerName: "Rushing TDs",
+        headerName: "Rush TDs",
         field: "rushing_touchdown",
-        flex: 1,
         type: "number",
     },
     {
-        headerName: "Passing Snaps",
+        headerName: "Pass Snaps",
         field: "pass_snap",
-        flex: 1,
         type: "number",
     },
     {
         headerName: "Pass %",
         field: "pass_snap_pct",
-        flex: 1,
         valueGetter: getPassSnapPct,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1174,19 +1177,16 @@ export const playerSnapCols: GridColDef[] = [
     {
         headerName: "Receptions",
         field: "reception",
-        flex: 1,
         type: "number",
     },
     {
         headerName: "Targets",
         field: "target",
-        flex: 1,
         type: "number",
     },
     {
         headerName: "Target Share",
         field: "target_share",
-        flex: 1,
         valueGetter: getTargetShare,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1201,7 +1201,6 @@ export const playerSnapCols: GridColDef[] = [
     {
         headerName: "Receiving TDs",
         field: "receiving_touchdown",
-        flex: 1,
         type: "number",
     },
 ];

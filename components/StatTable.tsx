@@ -27,6 +27,7 @@ const StatTable: React.FunctionComponent<TableProps> = ({ ...props }) => {
                 rowHeight={44}
                 components={{ Toolbar: toolbarVal }}
                 hideFooter={props.disableFooter}
+                headerHeight={80}
                 sx={{
                     fontSize: 12,
                     width: "100%",
@@ -36,6 +37,7 @@ const StatTable: React.FunctionComponent<TableProps> = ({ ...props }) => {
                     border: "none",
                     paddingLeft: "1%",
                     paddingRight: "1%",
+                    flexShrink: 1,
                 }}
             />
         </div>
