@@ -1365,6 +1365,20 @@ export const playerAdvRecCols: GridColDef[] = [
         type: "number",
     },
     {
+        headerName: "YDS/REC",
+        field: "yards_per_rec",
+        flex: 1,
+        valueGetter: getYardsReception,
+        type: "number",
+    },
+    {
+        headerName: "YDS/TGT",
+        field: "yards_per_tgt",
+        flex: 1,
+        valueGetter: getYardsTarget,
+        type: "number",
+    },
+    {
         headerName: "REC TDS",
         field: "pass_touchdown",
         type: "number",
@@ -1483,4 +1497,20 @@ function getWopr(params: GridCellParams) {
         (params.row.pass_attempt / params.row.team_pass_attempt) * 1.5 +
         (params.row.air_yards / params.row.team_air_yards) * 0.7
     ).toFixed(2);
+}
+
+function getYardsTarget(params: GridCellParams) {
+    if (params.row.pass_attempt === 0) {
+        return 0;
+    }
+
+    return (params.row.passing_yards / params.row.pass_attempt).toFixed(2);
+}
+
+function getYardsReception(params: GridCellParams) {
+    if (params.row.complete_pass === 0) {
+        return 0;
+    }
+
+    return (params.row.passing_yards / params.row.complete_pass).toFixed(2);
 }

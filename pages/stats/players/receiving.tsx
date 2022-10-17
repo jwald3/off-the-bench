@@ -45,6 +45,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 interface IPlayerReceiving {
     game_id: string;
     posteam: string;
+    down: number;
     player_id: string;
     passing_yards: number;
     air_yards: number;
@@ -212,6 +213,20 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
 
         setAggTeams(reducedTeams);
     }, [weekFilter]);
+
+    useEffect(() => {
+        const filteredPlayers = props.teams
+            .filter((player) =>
+                downFilter.includes(Number.parseInt(player.down.toString()))
+            )
+            .filter((player) =>
+                weekFilter.includes(Number.parseInt(player.week.toString()))
+            );
+
+        const reducedPlayers = aggregateStats(filteredPlayers);
+
+        setAggTeams(reducedPlayers);
+    }, [downFilter]);
 
     return (
         <div>
