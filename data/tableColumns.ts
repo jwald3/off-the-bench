@@ -1335,6 +1335,11 @@ export const playerAdvRecCols: GridColDef[] = [
         width: 175,
     },
     {
+        headerName: "Team",
+        field: "posteam",
+        type: "string",
+    },
+    {
         headerName: "REC",
         field: "complete_pass",
         type: "number",

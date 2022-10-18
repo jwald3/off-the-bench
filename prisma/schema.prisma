@@ -102,6 +102,7 @@ model team_offense_stats_basic {
 model player_usage_by_team {
   posteam                 String?
   game_id                 String?
+  down                    BigInt?
   player_id               String?
   position                String?
   targets                 BigInt?
