@@ -63,6 +63,7 @@ interface IPlayerSeason {
     game_id_db: string;
     week_count: number;
     season: number;
+    down: number;
 }
 
 interface PlayerProps {
@@ -186,14 +187,32 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     }, []);
 
     useEffect(() => {
-        const filteredTeams = props.teams.filter((team) =>
-            weekFilter.includes(Number.parseInt(team.week.toString()))
-        );
+        const filteredTeams = props.teams
+            .filter((team) =>
+                weekFilter.includes(Number.parseInt(team.week.toString()))
+            )
+            .filter((team) =>
+                downFilter.includes(Number.parseInt(team.down.toString()))
+            );
 
         const reducedTeams = aggregateStats(filteredTeams);
 
         setAggTeams(reducedTeams);
     }, [weekFilter]);
+
+    useEffect(() => {
+        const filteredTeams = props.teams
+            .filter((team) =>
+                weekFilter.includes(Number.parseInt(team.week.toString()))
+            )
+            .filter((team) =>
+                downFilter.includes(Number.parseInt(team.down.toString()))
+            );
+
+        const reducedTeams = aggregateStats(filteredTeams);
+
+        setAggTeams(reducedTeams);
+    }, [downFilter]);
 
     return (
         <div>

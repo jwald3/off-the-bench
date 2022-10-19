@@ -10,6 +10,7 @@ datasource db {
 model player_defense_stats_basic {
   player_id            String?
   game_id              String?
+  down                 BigInt?
   passes_defended      Float?
   interception         Float?
   int_return_yards     Float?
@@ -34,6 +35,7 @@ model player_defense_stats_basic {
 model player_offense_stats_basic {
   player_id        String?
   game_id          String?
+  down             BigInt?
   season           Int?
   pass_attempt     Float?
   completion       Float?
@@ -63,8 +65,9 @@ model team_defense_stats_basic {
   season         BigInt?
   posteam        String?
   game_id        String?
-  points_allowed Float?  @db.Real
-  points_for     Float?  @db.Real
+  down           BigInt?
+  points_for     Float?
+  points_allowed Int?
   completions    Float?  @db.Real
   pass_attempts  Float?  @db.Real
   interceptions  Float?  @db.Real
@@ -83,8 +86,9 @@ model team_offense_stats_basic {
   season         BigInt?
   posteam        String?
   game_id        String?
-  points_for     Float?  @db.Real
-  points_against Float?  @db.Real
+  down           BigInt?
+  points_for     Int?
+  points_allowed Float?
   completions    Float?  @db.Real
   pass_attempts  Float?  @db.Real
   interceptions  Float?  @db.Real

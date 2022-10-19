@@ -138,12 +138,6 @@ export const playerOffenseColumns: GridColDef[] = [
         type: "string",
     },
     {
-        headerName: "Games",
-        headerClassName: "grid-header",
-        field: "week_count",
-        type: "number",
-    },
-    {
         headerName: "Pass Attempts",
         headerClassName: "grid-header",
         field: "pass_attempt",
@@ -253,11 +247,24 @@ export const playerOffenseColumns: GridColDef[] = [
 export const teamStatColumns: GridColDef[] = [
     { headerName: "Team", field: "posteam", flex: 0.5 },
     {
+        headerName: "PF",
+        field: "points_for",
+        flex: 1,
+        type: "number",
+    },
+    {
+        headerName: "PA",
+        field: "points_allowed",
+        flex: 1,
+        type: "number",
+    },
+    {
         headerName: "Completions",
         field: "completions",
         flex: 1,
         type: "number",
     },
+
     {
         headerName: "Pass Attempts",
         field: "pass_attempts",

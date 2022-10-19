@@ -54,6 +54,9 @@ interface ITeam {
     rush_attempt: number;
     rushing_yards: number;
     rush_touchdown: number;
+    points_for: number;
+    points_allowed: number;
+    down: number;
     db_id: string;
 }
 
@@ -132,6 +135,14 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                     rush_attempt:
                         Number.parseInt(currentObj.rush_attempt.toString()) +
                         Number.parseInt(dataframe[obj].rush_attempt.toString()),
+                    points_for:
+                        Number.parseInt(currentObj.points_for.toString()) +
+                        Number.parseInt(dataframe[obj].points_for.toString()),
+                    points_allowed:
+                        Number.parseInt(currentObj.points_allowed.toString()) +
+                        Number.parseInt(
+                            dataframe[obj].points_allowed.toString()
+                        ),
                     db_id: currentObj.db_id,
                 };
                 teamsMap.set(currentObj.posteam, newObj);
@@ -149,14 +160,32 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     }, []);
 
     useEffect(() => {
-        const filteredTeams = props.teams.filter((team) =>
-            weekFilter.includes(Number.parseInt(team.week.toString()))
-        );
+        const filteredTeams = props.teams
+            .filter((team) =>
+                weekFilter.includes(Number.parseInt(team.week.toString()))
+            )
+            .filter((team) =>
+                downFilter.includes(Number.parseInt(team.down.toString()))
+            );
 
         const reducedTeams = aggregateStats(filteredTeams);
 
         setAggTeams(reducedTeams);
     }, [weekFilter]);
+
+    useEffect(() => {
+        const filteredTeams = props.teams
+            .filter((team) =>
+                weekFilter.includes(Number.parseInt(team.week.toString()))
+            )
+            .filter((team) =>
+                downFilter.includes(Number.parseInt(team.down.toString()))
+            );
+
+        const reducedTeams = aggregateStats(filteredTeams);
+
+        setAggTeams(reducedTeams);
+    }, [downFilter]);
 
     return (
         <div>
