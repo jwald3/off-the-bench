@@ -93,3 +93,19 @@ a {
 .MuiButton-text {
     color: $primary-dark !important;
 }
+
+.front-page-img-container {
+    width: 100%;
+    height: 50% !important;
+    max-height: 50% !important;
+
+    span {
+        height: 100% !important;
+    }
+}
+
+.front-page-img {
+    min-height: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+}

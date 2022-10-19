@@ -128,15 +128,20 @@ const Home: NextPage = () => {
                                     height: "100%",
                                 }}
                             >
-                                <div style={{ height: "50%" }}>
+                                <div
+                                    className="front-page-img-container"
+                                    style={{ height: "50%", display: "block" }}
+                                >
                                     <Image
+                                        className="front-page-img"
+                                        quality={100}
                                         src="/filters.png"
-                                        height={175}
+                                        layout="responsive"
                                         width={400}
+                                        height={175}
                                         alt="Team Page Screenshot"
                                         style={{
                                             borderRadius: "1em 1em 0 0",
-                                            height: "100%",
                                         }}
                                     />
                                 </div>
@@ -181,15 +186,20 @@ const Home: NextPage = () => {
                                     height: "100%",
                                 }}
                             >
-                                <div style={{ height: "50%" }}>
+                                <div
+                                    className="front-page-img-container"
+                                    style={{ height: "50%", display: "block" }}
+                                >
                                     <Image
+                                        className="front-page-img"
+                                        quality={100}
                                         src="/personnel.png"
+                                        layout="responsive"
                                         height={175}
                                         width={400}
                                         alt="Team Page Screenshot"
                                         style={{
                                             borderRadius: "1em 1em 0 0",
-                                            height: "100%",
                                         }}
                                     />
                                 </div>
@@ -234,15 +244,22 @@ const Home: NextPage = () => {
                                     height: "100%",
                                 }}
                             >
-                                <div style={{ height: "50%" }}>
+                                <div
+                                    className="front-page-img-container"
+                                    style={{
+                                        display: "block",
+                                    }}
+                                >
                                     <Image
+                                        className="front-page-img"
+                                        quality={100}
                                         src="/receiving.png"
-                                        height={175}
+                                        layout="responsive"
+                                        height={"100%"}
                                         width={400}
                                         alt="Team Page Screenshot"
                                         style={{
                                             borderRadius: "1em 1em 0 0",
-                                            height: "100%",
                                         }}
                                     />
                                 </div>

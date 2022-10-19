@@ -147,6 +147,7 @@ model player_usage_by_team {
 model team_personnel_data {
   game_id          String?
   posteam          String?
+  down             BigInt?
   offense_grouping String?
   snap_ct          BigInt?
   passing_snap     BigInt?

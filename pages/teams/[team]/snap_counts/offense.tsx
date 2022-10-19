@@ -163,9 +163,25 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
             setWeekFilter([]);
         }
 
-        const currWeekData = props.players.filter((player) =>
-            weekFilter.includes(Number.parseInt(player.week.toString()))
-        );
+        if (query.downs !== undefined && query.downs !== "") {
+            const selecteddowns = (query.downs as string)
+                ?.split(",")
+                .map(Number);
+
+            console.log(query.downs);
+            setDownFilter(selecteddowns);
+        } else if (query.downs === "") {
+            console.log(query.downs);
+            setDownFilter([]);
+        }
+
+        const currWeekData = props.players
+            .filter((player) =>
+                weekFilter.includes(Number.parseInt(player.week.toString()))
+            )
+            .filter((player) =>
+                downFilter.includes(Number.parseInt(player.down.toString()))
+            );
 
         const aggPlayers = aggregateStatsByPlayer(currWeekData);
 

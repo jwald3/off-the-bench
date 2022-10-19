@@ -5,10 +5,7 @@ import { useEffect, useState } from "react";
 import SelectorTray from "../../../../components/SelectorTray";
 import StatTable from "../../../../components/StatTable";
 import TeamLinkFooter from "../../../../components/TeamFooter";
-import {
-    playerDefenseSnapCols,
-    playerSnapCols,
-} from "../../../../data/tableColumns";
+import { playerDefenseSnapCols } from "../../../../data/tableColumns";
 import prisma from "../../../../lib/prisma";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
@@ -142,9 +139,25 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
             setWeekFilter([]);
         }
 
-        const currWeekData = props.players.filter((player) =>
-            weekFilter.includes(Number.parseInt(player.week.toString()))
-        );
+        if (query.downs !== undefined && query.downs !== "") {
+            const selecteddowns = (query.downs as string)
+                ?.split(",")
+                .map(Number);
+
+            console.log(query.downs);
+            setDownFilter(selecteddowns);
+        } else if (query.downs === "") {
+            console.log(query.downs);
+            setDownFilter([]);
+        }
+
+        const currWeekData = props.players
+            .filter((player) =>
+                weekFilter.includes(Number.parseInt(player.week.toString()))
+            )
+            .filter((player) =>
+                downFilter.includes(Number.parseInt(player.down.toString()))
+            );
 
         const aggPlayers = aggregateStatsByPlayer(currWeekData);
 
@@ -159,7 +172,7 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
             .filter((player) =>
                 weekFilter.includes(Number.parseInt(player.week.toString()))
             );
-
+        5;
         const reducedPlayers = aggregateStatsByPlayer(filteredPlayers);
 
         setAggPlayerSnaps(reducedPlayers);

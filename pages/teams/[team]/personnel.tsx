@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import SelectorTray from "../../../components/SelectorTray";
 import TeamLinkFooter from "../../../components/TeamFooter";
 import UsageInfo from "../../../components/UsageInfo";
-import Checkbox from "../../../components/WeekCheckboxFilterUsage";
 import { teamPersonnelGroupingColumns } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
 
@@ -53,6 +52,7 @@ interface IPersonnelData {
     week_count: number;
     db_id: string;
     total_game_snaps: number;
+    down: number;
 }
 
 interface PersonnelProps {
@@ -156,6 +156,18 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
             setWeekFilter([]);
         }
 
+        if (query.downs !== undefined && query.downs !== "") {
+            const selecteddowns = (query.downs as string)
+                ?.split(",")
+                .map(Number);
+
+            console.log(query.downs);
+            setDownFilter(selecteddowns);
+        } else if (query.downs === "") {
+            console.log(query.downs);
+            setDownFilter([]);
+        }
+
         const currWeekData = props.players.filter((player) =>
             weekFilter.includes(Number.parseInt(player.week.toString()))
         );
@@ -182,7 +194,7 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
                 weekFilter.includes(Number.parseInt(player.week.toString()))
             )
             .filter((player) =>
-                weekFilter.includes(Number.parseInt(player.week.toString()))
+                downFilter.includes(Number.parseInt(player.down.toString()))
             );
 
         const reducedPlayers = aggregateStats(filteredPlayers);
@@ -199,6 +211,29 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
         setAggPersonnel(reducedPlayers);
     }, [weekFilter]);
 
+    useEffect(() => {
+        const filteredPlayers = props.players
+            .filter((player) =>
+                weekFilter.includes(Number.parseInt(player.week.toString()))
+            )
+            .filter((player) =>
+                downFilter.includes(Number.parseInt(player.down.toString()))
+            );
+
+        const reducedPlayers = aggregateStats(filteredPlayers);
+        reducedPlayers.sort((a, b) => b.snap_ct - a.snap_ct);
+
+        reducedPlayers.forEach(
+            (tgt) => (tgt.passing_yards = parseInt(tgt.passing_yards))
+        );
+        reducedPlayers.forEach(
+            (tgt) => (tgt.rushing_yards = parseInt(tgt.rushing_yards))
+        );
+        reducedPlayers.forEach((tgt) => (tgt.snap_ct = parseInt(tgt.snap_ct)));
+
+        setAggPersonnel(reducedPlayers);
+    }, [downFilter]);
+
     return (
         <div>
             <Head>
@@ -206,14 +241,26 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
                 <meta name="description" content="Team Personnel Stats" />
             </Head>
             <div className="weekly-team-page" style={{ paddingTop: "2%" }}>
-                <SelectorTray
-                    handleWeekFilters={setWeekFilter}
-                    weekFilter={weekFilter}
-                    seasonFilter={Number(selectedSeason)}
-                    handleSeason={setSelectedSeason}
-                    handleDownFilters={setDownFilter}
-                    downFilter={downFilter}
-                />
+                <div
+                    style={{
+                        paddingBottom: "2%",
+                        width: "90%",
+                        maxWidth: "2000px",
+                        margin: "auto",
+                        display: "flex",
+                    }}
+                >
+                    <SelectorTray
+                        handleWeekFilters={setWeekFilter}
+                        weekFilter={weekFilter}
+                        seasonFilter={Number(selectedSeason)}
+                        handleSeason={setSelectedSeason}
+                        handleDownFilters={setDownFilter}
+                        downFilter={downFilter}
+                        phaseUrl=""
+                    />
+                </div>
+
                 <UsageInfo
                     playerData={aggPersonnel}
                     columns={columns}

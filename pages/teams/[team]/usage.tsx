@@ -274,9 +274,25 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             setWeekFilter([]);
         }
 
-        const currWeekData = props.players.filter((player) =>
-            weekFilter.includes(Number.parseInt(player.week.toString()))
-        );
+        if (query.downs !== undefined && query.downs !== "") {
+            const selectedDowns = (query.downs as string)
+                ?.split(",")
+                .map(Number);
+
+            console.log(query.downs);
+            setDownFilter(selectedDowns);
+        } else if (query.downs === "") {
+            console.log(query.downs);
+            setDownFilter([]);
+        }
+
+        const currWeekData = props.players
+            .filter((player) =>
+                weekFilter.includes(Number.parseInt(player.week.toString()))
+            )
+            .filter((player) =>
+                downFilter.includes(Number.parseInt(player.down.toString()))
+            );
 
         const reducedTeams = aggregateStats(currWeekData);
 
@@ -332,7 +348,7 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 weekFilter.includes(Number.parseInt(player.week.toString()))
             )
             .filter((player) =>
-                weekFilter.includes(Number.parseInt(player.week.toString()))
+                downFilter.includes(Number.parseInt(player.down.toString()))
             );
 
         const reducedPlayers = aggregateStats(filteredPlayers);
