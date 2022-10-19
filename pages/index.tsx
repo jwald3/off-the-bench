@@ -55,13 +55,14 @@ const Home: NextPage = () => {
                                         width: "100%",
                                         display: "flex",
                                         justifyContent: "center",
+                                        paddingBottom: "2%",
                                     }}
                                 >
                                     <Image
-                                        src="/logo1.png"
+                                        src="/Logo-Purple-No-Background.png"
                                         alt="logo"
-                                        width={250}
-                                        height={250}
+                                        width={400}
+                                        height={130}
                                     />
                                 </div>
                                 <div
