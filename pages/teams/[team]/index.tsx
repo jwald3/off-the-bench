@@ -709,8 +709,9 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
                 style={{
                     display: "flex",
                     justifyContent: "center",
-                    paddingTop: "2%",
+                    paddingTop: "4%",
                     flexDirection: "column",
+                    paddingBottom: "4%",
                 }}
             >
                 <TeamHomepageBar
@@ -739,7 +740,7 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
                     columns={downDataColumns}
                     barDataOne={downChartDataOne}
                     barDataTwo={downChartDataTwo}
-                    headerTitle="Rushing vs. Receiving"
+                    headerTitle="Rushing vs. Receiving by Down"
                     altOptionOne="Attempts"
                     altOptionTwo="Yards Per Attempt"
                     altOptionThree=""
