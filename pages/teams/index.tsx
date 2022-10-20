@@ -69,7 +69,7 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                     display: "flex",
                     flexDirection: "column",
                     backgroundColor: "#d9d9d9",
-                    height: "100vh",
+                    height: "100%",
                     alignItems: "center",
                     paddingTop: "3%",
                     gap: "2.5%",
@@ -92,6 +92,7 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                         fontWeight: "bold",
                         minHeight: "12%",
                         maxWidth: "2000px",
+                        marginBottom: "2%",
                     }}
                 >
                     Teams
@@ -107,6 +108,7 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                         boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
                         width: "90%",
                         maxWidth: "2000px",
+                        marginBottom: "2%",
                     }}
                 >
                     <TeamDivisionGroup
@@ -145,6 +147,7 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                         boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
                         width: "90%",
                         maxWidth: "2000px",
+                        marginBottom: "4%",
                     }}
                 >
                     <TeamDivisionGroup

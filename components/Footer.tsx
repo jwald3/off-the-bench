@@ -10,6 +10,7 @@ const Footer = () => {
                 backgroundColor: "#494252",
                 alignItems: "center",
                 display: "flex",
+                boxShadow: " 0.5em 0.5em 0.5em .5em rgba(0, 0, 0, 0.25)",
             }}
         >
             <div
