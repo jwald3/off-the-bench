@@ -1,0 +1,12 @@
+@import "colors";
+@import "variables";
+
+.allTeamsHomeContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: $app-bg;
+    height: 100%;
+    align-items: center;
+    padding: $pageMainPadding;
+    gap: $pageCardGaps;
+}

@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useState } from "react";
 import TeamDivisionGroup from "../../components/TeamDivisionGroup";
 import prisma from "../../lib/prisma";
+import styles from "../../styles/allTeamsHome.module.scss";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: ITeamInformation[];
@@ -64,17 +65,7 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                     content="Search stats and data by team"
                 />
             </Head>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    backgroundColor: "#d9d9d9",
-                    height: "100%",
-                    alignItems: "center",
-                    paddingTop: "3%",
-                    gap: "2.5%",
-                }}
-            >
+            <div className={styles.allTeamsHomeContainer}>
                 <div
                     style={{
                         display: "flex",
