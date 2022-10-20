@@ -258,6 +258,8 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
                         handleDownFilters={setDownFilter}
                         downFilter={downFilter}
                         phaseUrl=""
+                        showStatSel={false}
+                        statOption={""}
                     />
                 </div>
 

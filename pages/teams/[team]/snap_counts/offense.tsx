@@ -253,6 +253,8 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
                             handleDownFilters={setDownFilter}
                             downFilter={downFilter}
                             phaseUrl={"/teams/[team]/snap_counts/defense"}
+                            showStatSel={false}
+                            statOption={""}
                         />
                     </div>
                     <div

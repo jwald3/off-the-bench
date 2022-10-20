@@ -437,6 +437,8 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                         handleDownFilters={setDownFilter}
                         downFilter={downFilter}
                         phaseUrl={""}
+                        showStatSel={false}
+                        statOption={""}
                     />
                 </div>
                 <UsageInfo
