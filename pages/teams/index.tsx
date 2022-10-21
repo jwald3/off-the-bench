@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useState } from "react";
 import TeamDivisionGroup from "../../components/TeamDivisionGroup";
 import prisma from "../../lib/prisma";
-import styles from "../../styles/allTeamsHome.module.scss";
+import styles from "../../styles/AllTeamsHome.module.scss";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: ITeamInformation[];
