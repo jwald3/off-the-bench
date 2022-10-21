@@ -1,0 +1,133 @@
+@import "colors";
+@import "variables";
+
+.homeContainer {
+    padding: 0 2rem;
+    height: 100%;
+    width: 100%;
+    background-color: $app-bg;
+
+    .homeBodyContainer {
+        background-color: $app-bg;
+        padding-top: 1%;
+
+        .banner {
+            position: relative;
+            background-image: url(https://images.pexels.com/photos/264300/pexels-photo-264300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+            background-size: auto;
+            background-position: right;
+            max-width: 1800px;
+            max-height: 450px;
+            height: 50vh;
+            margin: 0 auto;
+            margin-top: 2%;
+            border-radius: 1em;
+            background-color: $app-bg;
+            box-shadow: $containerBoxShadow;
+            width: 90%;
+
+            .clipped {
+                width: 60%;
+                height: 100%;
+                background-color: $off-white;
+                clip-path: polygon(0 0, 100% 0%, 80% 100%, 0% 100%);
+                border-radius: 1em 0 0 1em;
+                display: flex;
+                align-items: center;
+
+                .clippedInner {
+                    .logo {
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        padding-bottom: 2%;
+                    }
+
+                    .textBlurb {
+                        display: flex;
+                        width: 60%;
+                        max-width: 800px;
+                        text-align: center;
+                        margin: auto;
+                        color: $off-black-text;
+                    }
+                }
+            }
+        }
+
+        .featuresHeader {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            height: 20vh;
+            font-size: 2em;
+            color: $off-black-text;
+            font-weight: bold;
+        }
+
+        .featuresArea {
+            padding-bottom: 10%;
+
+            .featuresContainer {
+                display: flex;
+                width: 90%;
+                max-width: 1800px;
+                justify-content: space-around;
+                height: 40vh;
+                padding: 2%;
+                margin: auto;
+                border-radius: 1em;
+                background-color: $off-white;
+                box-shadow: $containerBoxShadow;
+                align-items: center;
+
+                .singleFeature {
+                    display: flex;
+                    flex-direction: column;
+                    border-radius: 1em;
+                    background-color: $off-white;
+                    box-shadow: $containerBoxShadow;
+                    max-width: 400px;
+                    width: 25%;
+                    height: 100%;
+
+                    .frontPageImgContainer {
+                        height: 50%;
+                        display: block;
+
+                        .frontPageImg {
+                            border-radius: 1em 1em 0 0;
+                        }
+
+                        span {
+                            height: 100% !important;
+                        }
+                    }
+
+                    .featureText {
+                        height: 50%;
+                        min-height: 50%;
+                        background-color: $off-white;
+                        width: 100%;
+                        max-width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        border-radius: inherit;
+                        overflow-y: hidden;
+                        overflow-x: hidden;
+
+                        span {
+                            width: 75%;
+                            font-size: 1em;
+                            text-align: center;
+                            color: $true-medium;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
