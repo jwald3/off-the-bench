@@ -5,8 +5,7 @@
     .teamHomepage {
         display: flex;
         justify-content: center;
-        padding-top: 4%;
-        padding-bottom: 4%;
+        padding: $pageTopBottomPadding;
         flex-direction: column;
         background-color: $app-bg;
         min-height: 100%; // 100vh;

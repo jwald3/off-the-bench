@@ -5,8 +5,7 @@
     .usagePage {
         display: flex;
         justify-content: center;
-        padding-top: 4%;
-        padding-bottom: 4%;
+        padding: $pageTopBottomPadding;
         flex-direction: column;
         background-color: $app-bg;
         min-height: 100%; // 100vh;
@@ -14,7 +13,7 @@
 
         .selectorTrayContainer {
             width: 90%;
-            max-width: 2000px;
+            max-width: $maxContainerSize;
             margin: auto;
             display: flex;
         }
