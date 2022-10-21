@@ -66,42 +66,8 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                 />
             </Head>
             <div className={styles.allTeamsHomeContainer}>
-                <div
-                    style={{
-                        display: "flex",
-                        textTransform: "uppercase",
-                        color: "#282a3a",
-                        fontSize: "2em",
-                        alignItems: "center",
-                        paddingLeft: "2%",
-                        textAlign: "start",
-                        backgroundColor: "#f3f4f8",
-                        boxShadow:
-                            "0px 0.15em 0.15em 0.15em rgba(0, 0, 0, 0.25)",
-                        width: "90%",
-                        height: "2em",
-                        fontWeight: "bold",
-                        minHeight: "12%",
-                        maxWidth: "2000px",
-                        marginBottom: "2%",
-                    }}
-                >
-                    Teams
-                </div>
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "space-around",
-                        backgroundColor: "#f3f4f8",
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
-                        paddingBottom: "2%",
-                        boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
-                        width: "90%",
-                        maxWidth: "2000px",
-                        marginBottom: "2%",
-                    }}
-                >
+                <div className={styles.teamsHeaderBar}>Teams</div>
+                <div className={styles.divisionContainer}>
                     <TeamDivisionGroup
                         divisionTitle="AFC East"
                         teamData={teamInfo.filter(
@@ -127,20 +93,7 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                         )}
                     />
                 </div>
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "space-around",
-                        backgroundColor: "#f3f4f8",
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
-                        paddingBottom: "2%",
-                        boxShadow: "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
-                        width: "90%",
-                        maxWidth: "2000px",
-                        marginBottom: "4%",
-                    }}
-                >
+                <div className={styles.divisionContainer}>
                     <TeamDivisionGroup
                         divisionTitle="NFC East"
                         teamData={teamInfo.filter(

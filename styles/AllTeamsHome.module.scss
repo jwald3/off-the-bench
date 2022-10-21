@@ -9,4 +9,35 @@
     align-items: center;
     padding: $pageMainPadding;
     gap: $pageCardGaps;
+
+    .teamsHeaderBar {
+        display: flex;
+        text-transform: uppercase;
+        color: $off-black-text;
+        font-size: 2em;
+        align-items: center;
+        padding-left: $cardInteriorPadding;
+        text-align: start;
+        background-color: $off-white;
+        box-shadow: $containerBoxShadow;
+        width: 90%;
+        height: 10%;
+        font-weight: bold;
+        min-height: 10vh;
+        max-width: $maxContainerSize;
+        margin-bottom: 2%;
+    }
+
+    .divisionContainer {
+        display: flex;
+        justify-content: space-around;
+        background-color: $off-white;
+        padding-left: $cardInteriorPadding;
+        padding-top: $cardInteriorPadding;
+        padding-bottom: $cardInteriorPadding;
+        box-shadow: $containerBoxShadow;
+        width: 90%;
+        max-width: $maxContainerSize;
+        margin-bottom: 2%;
+    }
 }
