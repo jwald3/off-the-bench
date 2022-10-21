@@ -7,6 +7,7 @@ import StatTable from "../../../../components/StatTable";
 import TeamLinkFooter from "../../../../components/TeamFooter";
 import { playerDefenseSnapCols } from "../../../../data/tableColumns";
 import prisma from "../../../../lib/prisma";
+import styles from "../../../../styles/TeamSnaps.module.scss";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
@@ -193,34 +194,17 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
     }, [weekFilter]);
 
     return (
-        <div>
+        <div className={styles.snapSharePageContainer}>
             <Head>
                 <title>Player Snaps Offense</title>
                 <meta
                     name="description"
-                    content="Player Offensive Snaps by Week and Down"
+                    content="Player Defensive Snaps by Week and Down"
                 />
             </Head>
-            <div className="weekly-team-page">
-                <div
-                    className="weekly-team-stats"
-                    style={{
-                        paddingTop: "2%",
-                        width: "90%",
-                        margin: "auto",
-                        display: "flex",
-                        flexDirection: "column",
-                    }}
-                >
-                    <div
-                        style={{
-                            paddingBottom: "2%",
-                            width: "100%",
-                            maxWidth: "2000px",
-                            margin: "auto",
-                            display: "flex",
-                        }}
-                    >
+            <div className={styles.pageArea}>
+                <div className={styles.snapsMainContainer}>
+                    <div className={styles.selectorTrayContainer}>
                         <SelectorTray
                             handleWeekFilters={setWeekFilter}
                             weekFilter={weekFilter}
@@ -233,20 +217,7 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
                             statOption={""}
                         />
                     </div>
-                    <div
-                        style={{
-                            width: "100%",
-                            maxWidth: "2000px",
-                            height: "auto",
-                            boxShadow:
-                                "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
-                            backgroundColor: "#f3f4f8",
-                            marginBottom: "3%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
-                    >
+                    <div className={styles.snapTableContainer}>
                         <StatTable
                             data={aggPlayerSnaps}
                             columns={playerDefenseSnapCols}
