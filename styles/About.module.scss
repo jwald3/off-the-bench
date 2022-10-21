@@ -1,0 +1,35 @@
+@import "colors";
+@import "variables";
+
+.aboutContainer {
+    display: flex;
+    min-height: 80vh;
+    background-color: $app-bg;
+    align-items: center;
+    justify-content: center;
+
+    h2 {
+        color: $off-black-text;
+    }
+
+    .aboutCard {
+        display: flex;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        height: 40vh;
+        background-color: $off-white;
+        box-shadow: $containerBoxShadow;
+        padding: 4% 8%;
+        flex-direction: column;
+        overflow: hidden;
+        max-width: $maxContainerSize;
+
+        .cardText {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+    }
+}
