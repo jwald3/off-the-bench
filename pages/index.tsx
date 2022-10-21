@@ -11,7 +11,10 @@ const Home: NextPage = () => {
                     <title>Off The Bench</title>
                     <meta
                         name="description"
-                        content="Over the Bench Homepage"
+                        content="Off The Bench provides player and team
+                                        stats for the NFL to help you gain an
+                                        edge in sports gambling and fantasy
+                                        sports"
                     />
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
