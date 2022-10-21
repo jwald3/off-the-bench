@@ -14,6 +14,7 @@ import SelectorTray from "../../../components/SelectorTray";
 const StatChart = dynamic(import("../../../components/StatChart"), {
     ssr: false,
 });
+import styles from "../../../styles/UsagePage.module.scss";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
@@ -409,26 +410,13 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     }, [downFilter]);
 
     return (
-        <div>
+        <div className={styles.usagePageContainer}>
             <Head>
                 <title>Team Usage Stats</title>
                 <meta name="description" content="Team Usage Stats" />
             </Head>
-            <div
-                className="weekly-team-page"
-                style={{
-                    paddingTop: "2%",
-                    paddingBottom: "2%",
-                }}
-            >
-                <div
-                    style={{
-                        width: "90%",
-                        maxWidth: "2000px",
-                        margin: "auto",
-                        display: "flex",
-                    }}
-                >
+            <div className={styles.usagePage}>
+                <div className={styles.selectorTrayContainer}>
                     <SelectorTray
                         handleWeekFilters={setWeekFilter}
                         weekFilter={weekFilter}
