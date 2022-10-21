@@ -1,0 +1,21 @@
+@import "colors";
+@import "variables";
+
+.personnelPageContainer {
+    .personnelPage {
+        display: flex;
+        justify-content: center;
+        padding: $pageTopBottomPadding;
+        flex-direction: column;
+        background-color: $app-bg;
+        min-height: 100%; // 100vh;
+        width: 100%;
+
+        .selectorTrayContainer {
+            width: 90%;
+            max-width: $maxContainerSize;
+            margin: auto;
+            display: flex;
+        }
+    }
+}

@@ -7,6 +7,7 @@ import TeamLinkFooter from "../../../components/TeamFooter";
 import UsageInfo from "../../../components/UsageInfo";
 import { teamPersonnelGroupingColumns } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
+import styles from "../../../styles/PersonnelPage.module.scss";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
@@ -235,21 +236,13 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
     }, [downFilter]);
 
     return (
-        <div>
+        <div className={styles.personnelPageContainer}>
             <Head>
                 <title>Team Personnel Stats</title>
                 <meta name="description" content="Team Personnel Stats" />
             </Head>
-            <div className="weekly-team-page" style={{ paddingTop: "2%" }}>
-                <div
-                    style={{
-                        paddingBottom: "2%",
-                        width: "90%",
-                        maxWidth: "2000px",
-                        margin: "auto",
-                        display: "flex",
-                    }}
-                >
+            <div className={styles.personnelPage}>
+                <div className={styles.selectorTrayContainer}>
                     <SelectorTray
                         handleWeekFilters={setWeekFilter}
                         weekFilter={weekFilter}
