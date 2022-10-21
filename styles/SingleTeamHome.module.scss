@@ -1,0 +1,15 @@
+@import "colors";
+@import "variables";
+
+.teamHomepageContainer {
+    .teamHomepage {
+        display: flex;
+        justify-content: center;
+        padding-top: 4%;
+        padding-bottom: 4%;
+        flex-direction: column;
+        background-color: $app-bg;
+        min-height: 100%; // 100vh;
+        width: 100%;
+    }
+}

@@ -12,6 +12,7 @@ import {
     teamStatLog,
 } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
+import styles from "../../../styles/SingleTeamHome.module.scss";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
@@ -696,7 +697,7 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
     };
 
     return (
-        <div>
+        <div className={styles.teamHomepageContainer}>
             <Head>
                 <title>{teamName[0].team_name}</title>
                 <meta
@@ -704,16 +705,7 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
                     content={`Team Homepage for the ${teamName[0].team_name}`}
                 />
             </Head>
-            <div
-                className="weekly-team-page"
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    paddingTop: "4%",
-                    flexDirection: "column",
-                    paddingBottom: "4%",
-                }}
-            >
+            <div className={styles.teamHomepage}>
                 <TeamHomepageBar
                     teamName={teamName[0].team_name}
                     divisionStanding={teamName[0].standing}
