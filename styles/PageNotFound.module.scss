@@ -1,0 +1,32 @@
+@import "colors";
+@import "variables";
+
+.pageNotFoundContainer {
+    min-height: 65vh;
+    background-color: $app-bg;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: $off-black-text;
+
+    .header {
+        font-size: 3em;
+        font-weight: bold;
+        padding-bottom: 0%;
+    }
+
+    .errorText {
+        color: $true-medium;
+        font-size: 1.5em;
+        padding-bottom: 2%;
+    }
+
+    .linkHome {
+        padding: 1% 2%;
+        background-color: $secondary-dark;
+        color: $off-white;
+        border-radius: 1em;
+        box-shadow: $containerBoxShadow;
+    }
+}
