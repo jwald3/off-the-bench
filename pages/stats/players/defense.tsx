@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { playerDefenseColumns } from "../../../data/tableColumns";
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
+import styles from "../../../styles/PlayerStats.module.scss";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: IPlayerSeason[];
@@ -214,7 +215,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     }, [downFilter]);
 
     return (
-        <div>
+        <div className={styles.playerStatsPageContainer}>
             <Head>
                 <title>Player Stats</title>
                 <meta
@@ -222,26 +223,9 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                     content="Player Stats filterable by week"
                 />
             </Head>
-            <div className="weekly-team-page">
-                <div
-                    className="weekly-team-stats"
-                    style={{
-                        paddingTop: "2%",
-                        width: "90%",
-                        margin: "auto",
-                        display: "flex",
-                        flexDirection: "column",
-                    }}
-                >
-                    <div
-                        style={{
-                            paddingBottom: "2%",
-                            width: "100%",
-                            maxWidth: "2000px",
-                            margin: "auto",
-                            display: "flex",
-                        }}
-                    >
+            <div className={styles.statPageArea}>
+                <div className={styles.statsMainContainer}>
+                    <div className={styles.selectorTrayContainer}>
                         <SelectorTray
                             handleWeekFilters={setWeekFilter}
                             weekFilter={weekFilter}
@@ -254,21 +238,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                             statOption={"Basic"}
                         />
                     </div>
-                    <div
-                        className="weekly-team-stats"
-                        style={{
-                            width: "100%",
-                            maxWidth: "2000px",
-                            height: "auto",
-                            boxShadow:
-                                "0px 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.25)",
-                            backgroundColor: "#f3f4f8",
-                            marginBottom: "3%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
-                    >
+                    <div className={styles.statTableContainer}>
                         <StatTable
                             data={aggTeams}
                             columns={columns}
