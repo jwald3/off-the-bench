@@ -100,7 +100,9 @@ const Footer = () => {
                     <Link href="/">Home</Link>
                     <Link href="/about">About</Link>
                     <Link href="https://twitter.com/chimp_otb">Contact Us</Link>
-                    <div>—</div>
+                    <Link href="https://www.buymeacoffee.com/offthebench">
+                        Support Us
+                    </Link>
                 </div>
             </div>
         </div>
