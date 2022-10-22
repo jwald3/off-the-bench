@@ -1,34 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<img src="https://user-images.githubusercontent.com/59290280/197330213-202726bc-49d4-4b44-82ab-c3e7b522df7b.png"/>
 
-## Getting Started
+Off The Bench is an NFL stat website that provides users with a research tool to make granularly-defined queries for player and team stats. In addition to basic player and team stats, the web app supports breakdowns for personnel usage, team tendencies, target and backfield shares, and snap counts. OTB is designed by and for football fans looking to gain an edge in fantasy sports, betting, and debates. 
 
-First, run the development server:
+<img src="https://user-images.githubusercontent.com/59290280/197330275-c18e001f-70b8-4a57-9b53-203260d19caa.png" />
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+The R package "NFLverse" provides stats for Off The Bench's tables and charts. Before being uploaded to the PostgreSQL database, the stats are sanitized and aggregated in Python using the Pandas library. Prisma connects the app with the database as the project's ORM.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Third-party libraries, including MaterialUI and Recharts, enhance the project's storytelling capabilities with powerful and interactive visualizations. MaterialUI's Datagrid component delivers tables with native support for sorting, filtering, and exporting data, while Recharts' BarChart component gives clear summaries based on data. 
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+<img src="https://user-images.githubusercontent.com/59290280/197330589-44c8a74f-8514-40a6-9bab-4b0d1137b16d.png" />
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Additional features are coming soon, but feel free to suggest any ideas you may have!
