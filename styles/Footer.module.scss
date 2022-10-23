@@ -1,0 +1,45 @@
+@import "colors";
+@import "variables";
+
+.footerContainer {
+    width: 100%;
+    height: 30vh;
+    background-color: $secondary-dark;
+    align-items: center;
+    display: flex;
+    box-shadow: $containerBoxShadow;
+
+    .leftFooter {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 5%;
+        padding-right: 5%;
+        padding-top: 1%;
+        border-right: 1px solid $app-bg;
+        color: $off-white;
+        flex-direction: column;
+    }
+
+    .rightFooter {
+        flex: 5;
+        display: flex;
+        justify-content: space-around;
+        padding: 2% 5%;
+        height: 90%;
+
+        .linkColumn {
+            display: flex;
+            flex-direction: column;
+            color: $light-text;
+            height: 100%;
+            justify-content: space-between;
+
+            .linkHeader {
+                font-weight: bold;
+                color: $app-bg;
+            }
+        }
+    }
+}
