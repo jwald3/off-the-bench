@@ -1558,3 +1558,415 @@ function getYardsReception(params: GridCellParams) {
 
     return (params.row.passing_yards / params.row.complete_pass).toFixed(2);
 }
+
+export const teamPersonnelGoupingColumns: GridColDef[] = [
+    { headerName: "Team", field: "posteam", flex: 1 },
+    {
+        headerName: "Total Snaps",
+        field: "team_total_snaps",
+        width: 75,
+        type: "number",
+    },
+    {
+        headerName: "1-1 (3 WR)",
+        field: "personnel_11",
+        flex: 1,
+        valueGetter: getElevenPersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<Number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted}%`;
+        },
+    },
+    {
+        headerName: "1-2 (2 WR)",
+        field: "personnel_12",
+        flex: 1,
+        valueGetter: getTwelvePersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "2-1 (2 WR)",
+        field: "personnel_21",
+        flex: 1,
+        valueGetter: getTwentyOnePersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+
+    {
+        headerName: "1-3 (1 WR)",
+        field: "personnel_13",
+        flex: 1,
+        valueGetter: getThirteenPersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "2-2 (1 WR)",
+        field: "personnel_22",
+        flex: 1,
+        valueGetter: getTwentyTwoPersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "1-0 (4 WR)",
+        field: "personnel_10",
+        flex: 1,
+        valueGetter: getTenPersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "2-0 (3 WR)",
+        field: "personnel_20",
+        flex: 1,
+        valueGetter: getTwentyPersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "0-1 (4 WR)",
+        field: "personnel_01",
+        flex: 1,
+        valueGetter: getOnePersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "2-3 (0 WR)",
+        field: "personnel_23",
+        flex: 1,
+        valueGetter: getTwentyThreePersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} % (${params.value})`;
+        },
+    },
+    {
+        headerName: "0-0 (5 WR)",
+        field: "personnel_00",
+        flex: 1,
+        valueGetter: getZeroPersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "Jumbo (6+ OL)",
+        field: "personnel_jumbo",
+        flex: 1,
+        valueGetter: getJumboPersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "Other",
+        field: "personnel_other",
+        flex: 1,
+        valueGetter: getOtherPersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "2 RB",
+        field: "personnel_2RB",
+        flex: 1,
+        valueGetter: getTwoRBPersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "2 TE",
+        field: "personnel_2TE",
+        flex: 1,
+        valueGetter: getTwoTEPersonnelSnaps,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+];
+
+function getZeroPersonnelSnaps(params: GridCellParams) {
+    if (params.row.snap_ct_personnel_00 === undefined) {
+        return undefined;
+    }
+
+    return (
+        (params.row.snap_ct_personnel_00 / params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
+
+function getOnePersonnelSnaps(params: GridCellParams) {
+    if (params.row.snap_ct_personnel_01 === undefined) {
+        return undefined;
+    }
+
+    return (
+        (params.row.snap_ct_personnel_01 / params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
+
+function getTenPersonnelSnaps(params: GridCellParams) {
+    if (params.row.snap_ct_personnel_10 === undefined) {
+        return undefined;
+    }
+
+    return (
+        (params.row.snap_ct_personnel_10 / params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
+
+function getElevenPersonnelSnaps(params: GridCellParams) {
+    if (params.row.snap_ct_personnel_11 === undefined) {
+        return undefined;
+    }
+
+    return (
+        (params.row.snap_ct_personnel_11 / params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
+
+function getTwelvePersonnelSnaps(params: GridCellParams) {
+    if (params.row.snap_ct_personnel_12 === undefined) {
+        return undefined;
+    }
+
+    return (
+        (params.row.snap_ct_personnel_12 / params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
+
+function getThirteenPersonnelSnaps(params: GridCellParams) {
+    if (params.row.snap_ct_personnel_13 === undefined) {
+        return undefined;
+    }
+
+    return (
+        (params.row.snap_ct_personnel_13 / params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
+
+function getTwentyPersonnelSnaps(params: GridCellParams) {
+    if (params.row.snap_ct_personnel_20 === undefined) {
+        return undefined;
+    }
+
+    return (
+        (params.row.snap_ct_personnel_20 / params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
+
+function getTwentyOnePersonnelSnaps(params: GridCellParams) {
+    if (params.row.snap_ct_personnel_21 === undefined) {
+        return undefined;
+    }
+
+    return (
+        (params.row.snap_ct_personnel_21 / params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
+
+function getTwentyTwoPersonnelSnaps(params: GridCellParams) {
+    if (params.row.snap_ct_personnel_22 === undefined) {
+        return undefined;
+    }
+
+    return (
+        (params.row.snap_ct_personnel_22 / params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
+
+function getTwentyThreePersonnelSnaps(params: GridCellParams) {
+    if (params.row.snap_ct_personnel_23 === undefined) {
+        return undefined;
+    }
+
+    return (
+        (params.row.snap_ct_personnel_23 / params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
+
+function getJumboPersonnelSnaps(params: GridCellParams) {
+    if (params.row.snap_ct_personnel_jumbo === undefined) {
+        return undefined;
+    }
+
+    return (
+        (params.row.snap_ct_personnel_jumbo / params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
+
+function getTwoRBPersonnelSnaps(params: GridCellParams) {
+    if (
+        params.row.snap_ct_personnel_20 === undefined &&
+        params.row.snap_ct_personnel_21 === undefined &&
+        params.row.snap_ct_personnel_22 === undefined &&
+        params.row.snap_ct_personnel_23 === undefined &&
+        params.row.snap_ct_personnel_32 === undefined
+    ) {
+        return undefined;
+    }
+
+    return (
+        (((params.row.snap_ct_personnel_20 || 0) +
+            (params.row.snap_ct_personnel_21 || 0) +
+            (params.row.snap_ct_personnel_22 || 0) +
+            (params.row.snap_ct_personnel_23 || 0) +
+            (params.row.snap_ct_personnel_32 || 0)) /
+            params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
+
+function getTwoTEPersonnelSnaps(params: GridCellParams) {
+    if (
+        params.row.snap_ct_personnel_02 === undefined &&
+        params.row.snap_ct_personnel_12 === undefined &&
+        params.row.snap_ct_personnel_22 === undefined &&
+        params.row.snap_ct_personnel_23 === undefined &&
+        params.row.snap_ct_personnel_32 === undefined
+    ) {
+        return undefined;
+    }
+
+    return (
+        (((params.row.snap_ct_personnel_02 || 0) +
+            (params.row.snap_ct_personnel_12 || 0) +
+            (params.row.snap_ct_personnel_22 || 0) +
+            (params.row.snap_ct_personnel_23 || 0) +
+            (params.row.snap_ct_personnel_32 || 0)) /
+            params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
+
+function getOtherPersonnelSnaps(params: GridCellParams) {
+    if (
+        params.row.snap_ct_personnel_02 === undefined ||
+        params.row.snap_ct_personnel_31 === undefined ||
+        params.row.snap_ct_personnel_32 === undefined ||
+        params.row.snap_ct_personnel_03 === undefined ||
+        params.row.snap_ct_personnel_14 === undefined ||
+        params.row.snap_ct_personnel_30 === undefined ||
+        params.row.snap_ct_personnel_04 === undefined
+    ) {
+        return 0;
+    }
+
+    return (
+        ((params.row.snap_ct_personnel_02 +
+            params.row.snap_ct_personnel_31 +
+            params.row.snap_ct_personnel_32 +
+            params.row.snap_ct_personnel_03 +
+            params.row.snap_ct_personnel_14 +
+            params.row.snap_ct_personnel_30 +
+            params.row.snap_ct_personnel_04) /
+            params.row.team_total_snaps) *
+        100
+    ).toFixed(2);
+}
