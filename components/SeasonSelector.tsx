@@ -68,6 +68,8 @@ const SeasonSelector = (props: CheckboxProps) => {
                                 value: selSeason,
                             },
                         ]}
+                        searchable={false}
+                        backspaceDelete={false}
                         labelField="label"
                         valueField="value"
                         options={options}

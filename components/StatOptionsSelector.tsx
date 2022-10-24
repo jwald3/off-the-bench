@@ -62,6 +62,8 @@ const StatOptionSelector = (props: CheckboxProps) => {
                                 value: selStat,
                             },
                         ]}
+                        searchable={false}
+                        backspaceDelete={false}
                         labelField="label"
                         valueField="value"
                         options={options}
