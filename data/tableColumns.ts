@@ -1700,7 +1700,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
             }
 
             const valueFormatted = Number(params.value).toLocaleString();
-            return `${valueFormatted} % (${params.value})`;
+            return `${valueFormatted} % `;
         },
     },
     {
