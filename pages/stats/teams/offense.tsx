@@ -208,8 +208,8 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                             handleDownFilters={setDownFilter}
                             downFilter={downFilter}
                             phaseUrl={"/stats/teams/defense"}
-                            statOption=""
-                            showStatSel={false}
+                            showStatSel={true}
+                            statOption={"Offense"}
                         />
                     </div>
                     <div className={styles.statTableContainer}>
