@@ -41,6 +41,10 @@ const StatOptionSelector = (props: CheckboxProps) => {
             value: "/stats/players/receiving",
         },
         {
+            label: "Rushing",
+            value: "/stats/players/rushing",
+        },
+        {
             label: "Personnel",
             value: "/stats/teams/personnel",
         },
