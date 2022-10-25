@@ -13,7 +13,6 @@ import styles from "../../../styles/TeamStats.module.scss";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: ITeam[];
-    let phase = query.phase;
     let season = Number(query.season) || 2022;
     let teamQueryResponse;
 

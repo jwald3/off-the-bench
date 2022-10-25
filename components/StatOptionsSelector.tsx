@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Select from "react-dropdown-select";
 import styles from "../styles/SeasonSelector.module.scss";
 
@@ -9,7 +9,6 @@ interface CheckboxProps {
 
 const StatOptionSelector = (props: CheckboxProps) => {
     const router = useRouter();
-    const { pathname, query } = router;
     const [showSelector, setShowSelector] = useState(false);
     const [selStat, setSelStat] = useState(props.statOption);
 
