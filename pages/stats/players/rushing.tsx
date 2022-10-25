@@ -193,7 +193,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                             currentObj.team_rushing_yards.toString()
                         ) +
                         Number.parseInt(
-                            dataframe[obj].rushing_yards.toString()
+                            dataframe[obj].team_rushing_yards.toString()
                         ),
                     team_rush_touchdown:
                         Number.parseInt(
@@ -214,7 +214,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                             currentObj.team_red_zone_rush.toString()
                         ) +
                         Number.parseInt(
-                            dataframe[obj].red_zone_rush.toString()
+                            dataframe[obj].team_red_zone_rush.toString()
                         ),
                     team_red_zone_td:
                         Number.parseInt(
