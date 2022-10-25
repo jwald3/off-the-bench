@@ -11,6 +11,7 @@
             padding: $pageTopBottomPadding;
             padding-top: 2%;
             width: 100%;
+            min-height: 70vh;
             margin: auto;
             display: flex;
             flex-direction: column;
@@ -20,7 +21,6 @@
             .selectorTrayContainer {
                 width: 90%;
                 max-width: $maxContainerSize;
-                margin: auto;
                 display: flex;
                 padding: $pageMainPadding;
             }
