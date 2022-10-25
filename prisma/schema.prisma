@@ -387,3 +387,41 @@ model personnel_usage_and_success_by_team {
   week                                        Int?
   week_count                                  BigInt?
 }
+
+model advanced_rushing_stats {
+  player_id             String?
+  game_id               String?
+  posteam               String?
+  key                   BigInt?
+  down                  Int?
+  rush_attempt          Float?
+  rushing_yards         Float?
+  rush_touchdown        Float?
+  first_down_rush       Float?
+  red_zone_rush         Float?
+  red_zone_td           Float?
+  red_zone_yards        Float?
+  goal_to_go_rush       Float?
+  goal_to_go_td         Float?
+  goal_to_go_yards      Float?
+  goalline_rush         Float?
+  goalline_td           Float?
+  goalline_yards        Float?
+  team_rush_attempt     Float?
+  team_rushing_yards    Float?
+  team_rush_touchdown   Float?
+  team_first_down_rush  Float?
+  team_red_zone_rush    Float?
+  team_red_zone_td      Float?
+  team_red_zone_yards   Float?
+  team_goal_to_go_rush  Float?
+  team_goal_to_go_td    Float?
+  team_goal_to_go_yards Float?
+  team_goalline_rush    Float?
+  team_goalline_td      Float?
+  team_goalline_yards   Float?
+  gsis_id               String?
+  week                  Int?
+  season                Int?
+  db_id                 String  @id
+}

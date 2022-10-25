@@ -1970,3 +1970,202 @@ function getOtherPersonnelSnaps(params: GridCellParams) {
         100
     ).toFixed(2);
 }
+
+export const playerAdvRushCols: GridColDef[] = [
+    {
+        headerName: "Player",
+        field: "player_id",
+        type: "string",
+        width: 175,
+    },
+    {
+        headerName: "Team",
+        field: "posteam",
+        type: "string",
+        width: 100,
+    },
+    {
+        headerName: "Carries",
+        field: "rush_attempt",
+        type: "number",
+        width: 100,
+        flex: 1,
+    },
+    {
+        headerName: "% Carries",
+        field: "carry_share",
+        flex: 1,
+        valueGetter: getCarryPercent,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "Rush Yds",
+        field: "rushing_yards",
+        type: "number",
+        width: 100,
+        flex: 1,
+    },
+    {
+        headerName: "% Rush Yds",
+        field: "yard_share",
+        flex: 1,
+        valueGetter: getRushYardsPercent,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "YPC",
+        field: "yards_per_carry",
+        flex: 1,
+        valueGetter: getRushYdsPerCarry,
+        type: "number",
+    },
+    {
+        headerName: "Rush TDs",
+        field: "rush_touchdown",
+        type: "number",
+        width: 100,
+        flex: 1,
+    },
+    {
+        headerName: "Rush 1D",
+        field: "first_down_rush",
+        type: "number",
+        width: 100,
+        flex: 1,
+    },
+    {
+        headerName: "RZ Carries",
+        field: "red_zone_rush",
+        type: "number",
+        width: 100,
+        flex: 1,
+    },
+    {
+        headerName: "RZ TD",
+        field: "red_zone_td",
+        type: "number",
+        width: 100,
+        flex: 1,
+    },
+    {
+        headerName: "RZ Share",
+        field: "rz_share",
+        flex: 1,
+        valueGetter: getRedZoneShare,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+    {
+        headerName: "GL Carries",
+        field: "goalline_rush",
+        type: "number",
+        width: 100,
+        flex: 1,
+    },
+    {
+        headerName: "GL TD",
+        field: "goalline_td",
+        type: "number",
+        width: 100,
+        flex: 1,
+    },
+    {
+        headerName: "GL Share",
+        field: "gl_share",
+        flex: 1,
+        valueGetter: getGoalLineShare,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
+    },
+];
+
+function getCarryPercent(params: GridCellParams) {
+    if (params.row.rush_attempt === undefined) {
+        return 0;
+    }
+
+    return (
+        (params.row.rush_attempt / params.row.team_rush_attempt) *
+        100
+    ).toFixed(2);
+}
+
+function getRushYardsPercent(params: GridCellParams) {
+    if (params.row.rushing_yards === undefined) {
+        return 0;
+    }
+
+    return (
+        (params.row.rushing_yards / params.row.team_rushing_yards) *
+        100
+    ).toFixed(2);
+}
+
+function getRushYdsPerCarry(params: GridCellParams) {
+    if (
+        params.row.rush_attempt === undefined ||
+        params.row.rush_attempt === 0
+    ) {
+        return 0;
+    }
+
+    return (params.row.rushing_yards / params.row.rush_attempt).toFixed(2);
+}
+
+function getRedZoneShare(params: GridCellParams) {
+    if (
+        params.row.red_zone_rush === undefined ||
+        params.row.red_zone_rush === 0
+    ) {
+        return 0;
+    }
+
+    return (
+        (params.row.red_zone_rush / params.row.team_red_zone_rush) *
+        100
+    ).toFixed(2);
+}
+
+function getGoalLineShare(params: GridCellParams) {
+    if (
+        params.row.goalline_rush === undefined ||
+        params.row.goalline_rush === 0
+    ) {
+        return 0;
+    }
+
+    return (
+        (params.row.goalline_rush / params.row.team_goalline_rush) *
+        100
+    ).toFixed(2);
+}
