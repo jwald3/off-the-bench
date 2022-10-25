@@ -253,6 +253,7 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
                         phaseUrl=""
                         showStatSel={false}
                         statOption={""}
+                        categories={""}
                     />
                 </div>
 

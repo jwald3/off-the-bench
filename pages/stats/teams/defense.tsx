@@ -209,6 +209,7 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                             phaseUrl={"/stats/teams/offense"}
                             showStatSel={true}
                             statOption={"Defense"}
+                            categories={"teams"}
                         />
                     </div>
                     <div className={styles.statTableContainer}>

@@ -1,16 +1,25 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-dropdown-select";
 import styles from "../styles/SeasonSelector.module.scss";
 
 interface CheckboxProps {
     statOption: string;
+    categories: string;
+}
+
+interface SelectorOption {
+    label: string;
+    value: string;
 }
 
 const StatOptionSelector = (props: CheckboxProps) => {
     const router = useRouter();
     const [showSelector, setShowSelector] = useState(false);
     const [selStat, setSelStat] = useState(props.statOption);
+    const [selectorOptions, setSelectorOptions] = useState<
+        SelectorOption | any
+    >([]);
 
     const handleStatChange = (val: string) => {
         router.push({
@@ -23,18 +32,21 @@ const StatOptionSelector = (props: CheckboxProps) => {
         setSelStat(val);
     };
 
-    const options = [
+    const teamOptions: Array<SelectorOption> = [
         {
             label: "Basic",
-            value: "/stats/players/offense",
-        },
-        {
-            label: "Offense",
             value: "/stats/teams/offense",
         },
         {
-            label: "Defense",
-            value: "/stats/teams/defense",
+            label: "Personnel",
+            value: "/stats/teams/personnel",
+        },
+    ];
+
+    const playerOptions: Array<SelectorOption> = [
+        {
+            label: "Basic",
+            value: "/stats/players/offense",
         },
         {
             label: "Receiving",
@@ -44,11 +56,15 @@ const StatOptionSelector = (props: CheckboxProps) => {
             label: "Rushing",
             value: "/stats/players/rushing",
         },
-        {
-            label: "Personnel",
-            value: "/stats/teams/personnel",
-        },
     ];
+
+    useEffect(() => {
+        if (props.categories === "teams") {
+            setSelectorOptions([...teamOptions]);
+        } else if (props.categories === "players") {
+            setSelectorOptions([...playerOptions]);
+        }
+    }, []);
 
     return (
         <div className={styles.cardArea}>
@@ -69,7 +85,7 @@ const StatOptionSelector = (props: CheckboxProps) => {
                         backspaceDelete={false}
                         labelField="label"
                         valueField="value"
-                        options={options}
+                        options={selectorOptions}
                         onChange={(val) => handleStatChange(val[0].value)}
                         className={styles.selector}
                         color={"#939691"}

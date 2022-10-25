@@ -15,6 +15,7 @@ interface CheckboxProps {
     phaseUrl: string;
     statOption: string;
     showStatSel: boolean;
+    categories: string;
 }
 
 const SelectorTray = (props: CheckboxProps) => {
@@ -44,7 +45,10 @@ const SelectorTray = (props: CheckboxProps) => {
                 }}
             >
                 {props.showStatSel && (
-                    <StatOptionSelector statOption={props.statOption} />
+                    <StatOptionSelector
+                        statOption={props.statOption}
+                        categories={props.categories}
+                    />
                 )}
 
                 <SeasonSelector

@@ -215,6 +215,7 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
                             phaseUrl={"/teams/[team]/snap_counts/offense"}
                             showStatSel={false}
                             statOption={""}
+                            categories={""}
                         />
                     </div>
                     <div className={styles.snapTableContainer}>

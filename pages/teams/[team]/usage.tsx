@@ -427,6 +427,7 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                         phaseUrl={""}
                         showStatSel={false}
                         statOption={""}
+                        categories={""}
                     />
                 </div>
                 <UsageInfo
