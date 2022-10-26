@@ -43,13 +43,9 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     const router = useRouter();
     const { query } = router;
 
-    const columns = playerOffenseColumns;
-
     const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
     const [aggTeams, setAggTeams] = useState(props.teams);
-    const [weekFilter, setWeekFilter] = useState([
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-    ]);
+    const [weekFilter, setWeekFilter] = useState(regSeasonWeeks);
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
 
     const aggregateStats = (dataframe: IPlayerRushingStats[]) => {

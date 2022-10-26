@@ -46,9 +46,7 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
     const [aggPersonnel, setAggPersonnel] = useState(props.players);
     const columns = teamPersonnelGroupingColumns;
     const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
-    const [weekFilter, setWeekFilter] = useState([
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-    ]);
+    const [weekFilter, setWeekFilter] = useState(regSeasonWeeks);
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
     const [personnelChartView, setPersonnelChartView] = useState("frequency");
     const [personnelChartDataOne, setPersonnelChartDataOne] =

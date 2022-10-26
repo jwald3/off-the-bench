@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef } from "react";
+import { regSeasonWeeks } from "../data/globalVars";
 import wks from "../data/weeks.json";
 import styles from "../styles/WeekSelector.module.scss";
 
@@ -118,9 +119,7 @@ const WeekSelector = (props: CheckboxProps) => {
     };
 
     const handleSelectAll = () => {
-        const newChecked: Array<number> = [
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-        ];
+        const newChecked: Array<number> = regSeasonWeeks;
         setChecked(newChecked);
         props.handleFilters(newChecked);
 

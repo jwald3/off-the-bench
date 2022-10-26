@@ -104,10 +104,6 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
     const [opponentGameLogs, setOpponentGameLogs] = useState(
         props.opponent_game_logs
     );
-    const [offenseDownData, setOffenseDownData] = useState(props.down_data);
-    const [convSuccessRates, setConvSuccessRates] = useState(
-        props.conversion_success
-    );
     const [aggConvSuccessRts, setAggConvSuccessRts] = useState(
         props.conversion_success
     );
