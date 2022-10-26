@@ -5,10 +5,7 @@ import { useEffect, useState } from "react";
 import SelectorTray from "../../../components/SelectorTray";
 import StatTable from "../../../components/StatTable";
 import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
-import {
-    teamPersonnelGoupingColumns,
-    teamStatColumns,
-} from "../../../data/tableColumns";
+import { teamPersonnelGoupingColumns } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
 import styles from "../../../styles/TeamStats.module.scss";
 import { ITeamFormationStats } from "../../../ts/interfaces/teamInterfaces";
@@ -44,7 +41,6 @@ interface TeamProps {
 const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     const router = useRouter();
     const { query } = router;
-    const columns = teamStatColumns;
 
     const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
     const [aggTeams, setAggTeams] = useState(props.teams);
@@ -52,18 +48,6 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
     ]);
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
-
-    useEffect(() => {
-        if (query.weeks !== undefined && query.weeks !== "none") {
-            const selectedWeeks = (query.weeks as string)
-                ?.split(",")
-                .map(Number);
-
-            setWeekFilter(selectedWeeks);
-        } else if (query.weeks === "none") {
-            setWeekFilter([]);
-        }
-    }, []);
 
     const aggregateStats = (dataframe: ITeamFormationStats[]) => {
         let teamsMap = new Map();
@@ -238,6 +222,33 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     };
 
     useEffect(() => {
+        // if "weeks" query present in URL, update week state
+        if (query.weeks !== undefined && query.weeks !== "none") {
+            const selectedWeeks = (query.weeks as string)
+                ?.split(",")
+                .map(Number);
+
+            console.log(query.weeks);
+            setWeekFilter(selectedWeeks);
+        } else if (query.weeks === "none") {
+            console.log(query.weeks);
+            setWeekFilter([]);
+        }
+
+        // if "downs" query present in URL, update down state
+        if (query.downs !== undefined && query.downs !== "none") {
+            const selectedDowns = (query.downs as string)
+                ?.split(",")
+                .map(Number);
+
+            console.log(query.downs);
+            setDownFilter(selectedDowns);
+        } else if (query.downs === "none") {
+            console.log(query.downs);
+            setDownFilter([]);
+        }
+
+        // aggregate stats when page loads
         const reducedTeams = aggregateStats(props.teams);
 
         setAggTeams(reducedTeams);
@@ -255,21 +266,7 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
         const reducedTeams = aggregateStats(filteredTeams);
 
         setAggTeams(reducedTeams);
-    }, [weekFilter]);
-
-    useEffect(() => {
-        const filteredTeams = props.teams
-            .filter((team) =>
-                weekFilter.includes(Number.parseInt(team.week.toString()))
-            )
-            .filter((team) =>
-                downFilter.includes(Number.parseInt(team.down.toString()))
-            );
-
-        const reducedTeams = aggregateStats(filteredTeams);
-
-        setAggTeams(reducedTeams);
-    }, [downFilter]);
+    }, [weekFilter, downFilter]);
 
     return (
         <div className={styles.teamStatsPageContainer}>
