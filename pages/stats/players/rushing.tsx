@@ -324,6 +324,10 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                     name="description"
                     content="Player Stats filterable by week"
                 />
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width, height=device-height"
+                />
             </Head>
             <div className={styles.statPageArea}>
                 <div className={styles.statsMainContainer}>

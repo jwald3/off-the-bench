@@ -704,6 +704,10 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
                     name="description"
                     content={`Team Homepage for the ${teamName[0].team_name}`}
                 />
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width, height=device-height"
+                />
             </Head>
             <div className={styles.teamHomepage}>
                 <TeamHomepageBar

@@ -17,6 +17,10 @@ const Home: NextPage = () => {
                                         sports"
                     />
                     <link rel="icon" href="/favicon.ico" />
+                    <meta
+                        name="viewport"
+                        content="initial-scale=1.0, width=device-width, height=device-height"
+                    />
                 </Head>
 
                 <div className={styles.homeBodyContainer}>

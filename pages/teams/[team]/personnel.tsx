@@ -240,6 +240,10 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
             <Head>
                 <title>Team Personnel Stats</title>
                 <meta name="description" content="Team Personnel Stats" />
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width, height=device-height"
+                />
             </Head>
             <div className={styles.personnelPage}>
                 <div className={styles.selectorTrayContainer}>

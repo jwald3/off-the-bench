@@ -414,6 +414,10 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             <Head>
                 <title>Team Usage Stats</title>
                 <meta name="description" content="Team Usage Stats" />
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width, height=device-height"
+                />
             </Head>
             <div className={styles.usagePage}>
                 <div className={styles.selectorTrayContainer}>

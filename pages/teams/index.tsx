@@ -64,6 +64,10 @@ const TeamLandingPage: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                     name="description"
                     content="Search stats and data by team"
                 />
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width, height=device-height"
+                />
             </Head>
             <div className={styles.allTeamsHomeContainer}>
                 <div className={styles.teamsHeaderBar}>Teams</div>

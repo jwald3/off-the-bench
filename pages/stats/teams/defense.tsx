@@ -195,6 +195,10 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                     name="description"
                     content="Team Stats filterable by week"
                 />
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width, height=device-height"
+                />
             </Head>
             <div className={styles.statPageArea}>
                 <div className={styles.statsMainContainer}>

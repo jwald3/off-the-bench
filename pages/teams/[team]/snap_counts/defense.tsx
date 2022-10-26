@@ -201,6 +201,10 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
                     name="description"
                     content="Player Defensive Snaps by Week and Down"
                 />
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width, height=device-height"
+                />
             </Head>
             <div className={styles.pageArea}>
                 <div className={styles.snapsMainContainer}>
