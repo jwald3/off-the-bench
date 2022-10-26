@@ -5,6 +5,7 @@ import GameLog from "../../../components/GameLog";
 import TeamHomepageBar from "../../../components/TeamHomepageBar";
 import TeamLinkBar from "../../../components/TeamLinkBar";
 import UsageInfo from "../../../components/UsageInfo";
+import { regSeasonWeeks } from "../../../data/globalVars";
 import {
     conversionRateStatCols,
     downDataColumns,
@@ -35,6 +36,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         where: {
             season: season,
             posteam: team,
+            week: {
+                in: regSeasonWeeks,
+            },
         },
     });
 
@@ -49,6 +53,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         where: {
             season: season,
             posteam: team,
+            week: {
+                in: regSeasonWeeks,
+            },
         },
     });
 
@@ -56,6 +63,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         where: {
             season: season,
             posteam: team,
+            week: {
+                in: regSeasonWeeks,
+            },
         },
     });
 

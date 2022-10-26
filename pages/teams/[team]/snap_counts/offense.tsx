@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import SelectorTray from "../../../../components/SelectorTray";
 import StatTable from "../../../../components/StatTable";
 import TeamLinkFooter from "../../../../components/TeamFooter";
+import { regSeasonWeeks } from "../../../../data/globalVars";
 import { playerSnapCols } from "../../../../data/tableColumns";
 import prisma from "../../../../lib/prisma";
 import styles from "../../../../styles/TeamSnaps.module.scss";
@@ -17,6 +18,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         where: {
             season: season,
             posteam: team,
+            week: {
+                in: regSeasonWeeks,
+            },
         },
     });
 

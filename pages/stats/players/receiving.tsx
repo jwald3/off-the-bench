@@ -10,6 +10,7 @@ import {
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/PlayerStats.module.scss";
+import { regSeasonWeeks } from "../../../data/globalVars";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: IPlayerReceiving[];
@@ -18,10 +19,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const playerSubRes = await prisma.advanced_receiving_stats.findMany({
         where: {
             week: {
-                in: [
-                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
-                    18,
-                ],
+                in: regSeasonWeeks,
             },
             season: season,
         },

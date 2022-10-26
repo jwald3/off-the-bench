@@ -15,6 +15,7 @@ const StatChart = dynamic(import("../../../components/StatChart"), {
     ssr: false,
 });
 import styles from "../../../styles/UsagePage.module.scss";
+import { regSeasonWeeks } from "../../../data/globalVars";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
@@ -24,6 +25,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         where: {
             season: season,
             posteam: team,
+            week: {
+                in: regSeasonWeeks,
+            },
         },
     });
 

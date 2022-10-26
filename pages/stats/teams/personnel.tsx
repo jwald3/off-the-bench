@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import SelectorTray from "../../../components/SelectorTray";
 import StatTable from "../../../components/StatTable";
+import { regSeasonWeeks } from "../../../data/globalVars";
 import {
     teamPersonnelGoupingColumns,
     teamStatColumns,
@@ -20,10 +21,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         await prisma.personnel_usage_and_success_by_team.findMany({
             where: {
                 week: {
-                    in: [
-                        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-                        17, 18,
-                    ],
+                    in: regSeasonWeeks,
                 },
                 season: season,
             },
