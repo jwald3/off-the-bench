@@ -1,8 +1,4 @@
-import {
-    GridCellParams,
-    GridColDef,
-    GridValueFormatterParams,
-} from "@mui/x-data-grid";
+import { GridCellParams } from "@mui/x-data-grid";
 
 // teamStatColumns Functions
 

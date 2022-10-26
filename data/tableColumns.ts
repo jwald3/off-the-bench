@@ -1,8 +1,4 @@
-import {
-    GridCellParams,
-    GridColDef,
-    GridValueFormatterParams,
-} from "@mui/x-data-grid";
+import { GridColDef, GridValueFormatterParams } from "@mui/x-data-grid";
 import {
     getAdot,
     getAirYdsPct,
