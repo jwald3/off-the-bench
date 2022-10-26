@@ -12,13 +12,29 @@ export default function DrawerAppBar() {
         <div className={styles.navbar}>
             <div className={styles.appLogo}>
                 <Link href="/">
-                    <Image
-                        src="/sameLineLogo.png"
-                        height={35}
-                        width={350}
-                        alt="Off The Bench Logo"
-                        style={{ cursor: "pointer" }}
-                    />
+                    <picture>
+                        <source
+                            srcSet="https://user-images.githubusercontent.com/59290280/197950860-40a12f30-b942-455d-a34d-cfb636cac81c.png"
+                            media="(min-width: 1400px)"
+                            style={{
+                                width: "350px",
+                                height: "35px",
+                            }}
+                        />
+                        <source
+                            srcSet="https://user-images.githubusercontent.com/59290280/197330148-52e59072-de59-4105-b9d9-bcc738e65af5.png"
+                            media="(max-width: 900px)"
+                            style={{
+                                width: "350px",
+                                height: "35px",
+                            }}
+                        />
+                        <img
+                            src="https://user-images.githubusercontent.com/59290280/197950860-40a12f30-b942-455d-a34d-cfb636cac81c.png"
+                            alt="example"
+                            className={styles.logo}
+                        />
+                    </picture>
                 </Link>
             </div>
             <div className={styles.navbarLinks}>

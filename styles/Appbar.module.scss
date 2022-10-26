@@ -19,6 +19,19 @@
         font-size: 2em;
         font-weight: bold;
         color: $off-white;
+
+        .logo {
+            height: 100%;
+            max-width: 350px;
+            width: auto;
+            display: flex;
+            align-items: center;
+
+            @media screen and (max-width: 900px) {
+                height: 120px;
+                width: 120px;
+            }
+        }
     }
 
     .navbarLinks {
