@@ -16,6 +16,7 @@ const StatChart = dynamic(import("../../../components/StatChart"), {
 });
 import styles from "../../../styles/UsagePage.module.scss";
 import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
+import { IPlayerUsageStats } from "../../../ts/interfaces/playerInterfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
@@ -31,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         },
     });
 
-    const playerData: IPlayerUsage[] = parseBigInt(teamQueryResponse);
+    const playerData: IPlayerUsageStats[] = parseBigInt(teamQueryResponse);
 
     return {
         props: {
@@ -40,52 +41,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     };
 };
 
-export interface IPlayerUsage {
-    posteam: string;
-    game_id: string;
-    player_id: string;
-    down: number;
-    position: string;
-    targets: number;
-    receptions: number;
-    receiving_yards: number;
-    air_yards: number;
-    yards_after_catch: number;
-    receiving_touchdown: number;
-    redzone_target: number;
-    redzone_catch: number;
-    endzone_target: number;
-    endzone_catch: number;
-    first_down_target: number;
-    second_down_target: number;
-    third_down_target: number;
-    fourth_down_target: number;
-    first_down_catch: number;
-    second_down_catch: number;
-    third_down_catch: number;
-    fourth_down_catch: number;
-    rush_attempt: number;
-    rushing_yards: number;
-    rush_touchdown: number;
-    stacked_box_rush: number;
-    tackled_for_loss: number;
-    fumble: number;
-    first_down_rush: number;
-    second_down_rush: number;
-    third_down_rush: number;
-    fourth_down_rush: number;
-    redzone_rush: number;
-    goalline_rush: number;
-    redzone_rush_touchdown: number;
-    goalline_rush_touchdown: number;
-    gsis_id: string;
-    db_id: string;
-    season: number;
-    week: number;
-}
-
 interface PlayerProps {
-    players: IPlayerUsage[];
+    players: IPlayerUsageStats[];
 }
 
 const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
@@ -108,7 +65,7 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
     const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
 
-    const aggregateStats = (dataframe: IPlayerUsage[]) => {
+    const aggregateStats = (dataframe: IPlayerUsageStats[]) => {
         let teamsMap = new Map();
 
         for (let obj in dataframe) {

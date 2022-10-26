@@ -8,9 +8,10 @@ import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/PlayerStats.module.scss";
 import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
+import { IBasicOffensePlayerStats } from "../../../ts/interfaces/playerInterfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    let team: IPlayerSeason[];
+    let team: IBasicOffensePlayerStats[];
     let season = Number(query.season) || 2022;
 
     const playerSubRes = await prisma.player_offense_stats_basic.findMany({
@@ -31,35 +32,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     };
 };
 
-interface IPlayerSeason {
-    player_id: string;
-    position: string;
-    week: number;
-    team_abbr: string;
-    pass_attempt: number;
-    completion: number;
-    incompletion: number;
-    passing_yards: number;
-    passing_TD: number;
-    interception: number;
-    sack: number;
-    rush_attempt: number;
-    rushing_yards: number;
-    rushing_TD: number;
-    tackled_for_loss: number;
-    fumble: number;
-    reception: number;
-    target: number;
-    receiving_yards: number;
-    receiving_TD: number;
-    game_id_db: string;
-    week_count: number;
-    season: number;
-    down: number;
-}
-
 interface PlayerProps {
-    teams: IPlayerSeason[];
+    teams: IBasicOffensePlayerStats[];
 }
 
 const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
@@ -89,7 +63,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
         }
     }, []);
 
-    const aggregateStats = (dataframe: IPlayerSeason[]) => {
+    const aggregateStats = (dataframe: IBasicOffensePlayerStats[]) => {
         let teamsMap = new Map();
 
         for (let obj in dataframe) {

@@ -11,9 +11,10 @@ import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/PlayerStats.module.scss";
 import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
+import { IPlayerRushingStats } from "../../../ts/interfaces/playerInterfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    let team: IPlayerRushing[];
+    let team: IPlayerRushingStats[];
     let season = Number(query.season) || 2022;
 
     const playerSubRes = await prisma.advanced_rushing_stats.findMany({
@@ -34,46 +35,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     };
 };
 
-interface IPlayerRushing {
-    player_id: string;
-    game_id: string;
-    posteam: string;
-    key: number;
-    down: number;
-    rush_attempt: number;
-    rushing_yards: number;
-    rush_touchdown: number;
-    first_down_rush: number;
-    red_zone_rush: number;
-    red_zone_td: number;
-    red_zone_yards: number;
-    goal_to_go_rush: number;
-    goal_to_go_td: number;
-    goal_to_go_yards: number;
-    goalline_rush: number;
-    goalline_td: number;
-    goalline_yards: number;
-    team_rush_attempt: number;
-    team_rushing_yards: number;
-    team_rush_touchdown: number;
-    team_first_down_rush: number;
-    team_red_zone_rush: number;
-    team_red_zone_td: number;
-    team_red_zone_yards: number;
-    team_goal_to_go_rush: number;
-    team_goal_to_go_td: number;
-    team_goal_to_go_yards: number;
-    team_goalline_rush: number;
-    team_goalline_td: number;
-    team_goalline_yards: number;
-    gsis_id: string;
-    week: number;
-    season: number;
-    db_id: string;
-}
-
 interface PlayerProps {
-    teams: IPlayerRushing[];
+    teams: IPlayerRushingStats[];
 }
 
 const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
@@ -103,7 +66,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
         }
     }, []);
 
-    const aggregateStats = (dataframe: IPlayerRushing[]) => {
+    const aggregateStats = (dataframe: IPlayerRushingStats[]) => {
         let teamsMap = new Map();
 
         for (let obj in dataframe) {

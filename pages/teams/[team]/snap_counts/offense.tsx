@@ -9,6 +9,7 @@ import { parseBigInt, regSeasonWeeks } from "../../../../data/globalVars";
 import { playerSnapCols } from "../../../../data/tableColumns";
 import prisma from "../../../../lib/prisma";
 import styles from "../../../../styles/TeamSnaps.module.scss";
+import { IPlayerOffensiveSnapData } from "../../../../ts/interfaces/playerInterfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
@@ -33,30 +34,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     };
 };
 
-interface IPlayerSnapData {
-    posteam: string;
-    game_id: string;
-    down: number;
-    player_id: string;
-    snap_ct: number;
-    rush_snap: number;
-    pass_snap: number;
-    team_snaps: number;
-    team_rushing_plays: number;
-    team_passing_plays: number;
-    week: number;
-    season: number;
-    target: number;
-    reception: number;
-    receiving_touchdown: number;
-    carries: number;
-    rushing_touchdown: number;
-    db_id: string;
-    gsis_id: string;
-}
-
 interface SnapProps {
-    players: IPlayerSnapData[];
+    players: IPlayerOffensiveSnapData[];
 }
 
 const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
@@ -71,7 +50,7 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
     const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
 
-    const aggregateStatsByPlayer = (dataframe: IPlayerSnapData[]) => {
+    const aggregateStatsByPlayer = (dataframe: IPlayerOffensiveSnapData[]) => {
         let teamsMap = new Map();
 
         for (let obj in dataframe) {
