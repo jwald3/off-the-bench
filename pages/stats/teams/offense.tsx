@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import SelectorTray from "../../../components/SelectorTray";
 import StatTable from "../../../components/StatTable";
-import { regSeasonWeeks } from "../../../data/globalVars";
+import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
 import { teamStatColumns } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
 import styles from "../../../styles/TeamStats.module.scss";
@@ -23,19 +23,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         },
     });
 
-    team = JSON.parse(
-        JSON.stringify(teamQueryResponse, (_, v) =>
-            typeof v === "bigint" ? v.toString() : v
-        )
-    );
+    team = parseBigInt(teamQueryResponse);
 
     return {
         props: {
-            teams: JSON.parse(
-                JSON.stringify(team, (_, v) =>
-                    typeof v === "bigint" ? v.toString() : v
-                )
-            ),
+            teams: parseBigInt(team),
         },
     };
 };

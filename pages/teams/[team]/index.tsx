@@ -5,7 +5,7 @@ import GameLog from "../../../components/GameLog";
 import TeamHomepageBar from "../../../components/TeamHomepageBar";
 import TeamLinkBar from "../../../components/TeamLinkBar";
 import UsageInfo from "../../../components/UsageInfo";
-import { regSeasonWeeks } from "../../../data/globalVars";
+import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
 import {
     conversionRateStatCols,
     downDataColumns,
@@ -26,11 +26,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
             team_abbr: team,
         },
     });
-    teamInformation = JSON.parse(
-        JSON.stringify(teamDbInfo, (_, v) =>
-            typeof v === "bigint" ? v.toString() : v
-        )
-    );
+
+    teamInformation = parseBigInt(teamDbInfo);
 
     let teamQueryResponse = await prisma.game_logs_basic.findMany({
         where: {
@@ -69,57 +66,20 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         },
     });
 
-    const playerData: ITeamGameLogs[] = JSON.parse(
-        JSON.stringify(teamQueryResponse, (_, v) =>
-            typeof v === "bigint" ? v.toString() : v
-        )
+    const playerData: ITeamGameLogs[] = parseBigInt(teamQueryResponse);
+    const downData: IStatsByDown[] = parseBigInt(statsByDown);
+    const opponentGameLogs: ITeamGameLogs[] = parseBigInt(
+        opponentQueryResponse
     );
-
-    const downData: IStatsByDown[] = JSON.parse(
-        JSON.stringify(statsByDown, (_, v) =>
-            typeof v === "bigint" ? v.toString() : v
-        )
-    );
-
-    const opponentGameLogs: ITeamGameLogs[] = JSON.parse(
-        JSON.stringify(opponentQueryResponse, (_, v) =>
-            typeof v === "bigint" ? v.toString() : v
-        )
-    );
-
-    const successRates: IConversionRates[] = JSON.parse(
-        JSON.stringify(conversionRts, (_, v) =>
-            typeof v === "bigint" ? v.toString() : v
-        )
-    );
+    const successRates: IConversionRates[] = parseBigInt(conversionRts);
 
     return {
         props: {
-            game_logs: JSON.parse(
-                JSON.stringify(playerData, (_, v) =>
-                    typeof v === "bigint" ? v.toString() : v
-                )
-            ),
-            opponent_game_logs: JSON.parse(
-                JSON.stringify(opponentGameLogs, (_, v) =>
-                    typeof v === "bigint" ? v.toString() : v
-                )
-            ),
-            down_data: JSON.parse(
-                JSON.stringify(downData, (_, v) =>
-                    typeof v === "bigint" ? v.toString() : v
-                )
-            ),
-            conversion_success: JSON.parse(
-                JSON.stringify(successRates, (_, v) =>
-                    typeof v === "bigint" ? v.toString() : v
-                )
-            ),
-            team_details: JSON.parse(
-                JSON.stringify(teamInformation, (_, v) =>
-                    typeof v === "bigint" ? v.toString() : v
-                )
-            ),
+            game_logs: parseBigInt(playerData),
+            opponent_game_logs: parseBigInt(opponentGameLogs),
+            down_data: parseBigInt(downData),
+            conversion_success: parseBigInt(successRates),
+            team_details: parseBigInt(teamInformation),
         },
     };
 };

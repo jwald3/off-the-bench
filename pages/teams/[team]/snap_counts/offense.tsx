@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import SelectorTray from "../../../../components/SelectorTray";
 import StatTable from "../../../../components/StatTable";
 import TeamLinkFooter from "../../../../components/TeamFooter";
-import { regSeasonWeeks } from "../../../../data/globalVars";
+import { parseBigInt, regSeasonWeeks } from "../../../../data/globalVars";
 import { playerSnapCols } from "../../../../data/tableColumns";
 import prisma from "../../../../lib/prisma";
 import styles from "../../../../styles/TeamSnaps.module.scss";
@@ -24,19 +24,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         },
     });
 
-    const playerData: IPlayerSnapData[] = JSON.parse(
-        JSON.stringify(teamQueryResponse, (_, v) =>
-            typeof v === "bigint" ? v.toString() : v
-        )
-    );
+    const playerData = parseBigInt(teamQueryResponse);
 
     return {
         props: {
-            players: JSON.parse(
-                JSON.stringify(playerData, (_, v) =>
-                    typeof v === "bigint" ? v.toString() : v
-                )
-            ),
+            players: parseBigInt(playerData),
         },
     };
 };

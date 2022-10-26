@@ -15,7 +15,7 @@ const StatChart = dynamic(import("../../../components/StatChart"), {
     ssr: false,
 });
 import styles from "../../../styles/UsagePage.module.scss";
-import { regSeasonWeeks } from "../../../data/globalVars";
+import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
@@ -31,19 +31,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         },
     });
 
-    const playerData: IPlayerUsage[] = JSON.parse(
-        JSON.stringify(teamQueryResponse, (_, v) =>
-            typeof v === "bigint" ? v.toString() : v
-        )
-    );
+    const playerData: IPlayerUsage[] = parseBigInt(teamQueryResponse);
 
     return {
         props: {
-            players: JSON.parse(
-                JSON.stringify(playerData, (_, v) =>
-                    typeof v === "bigint" ? v.toString() : v
-                )
-            ),
+            players: parseBigInt(playerData),
         },
     };
 };

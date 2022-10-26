@@ -10,7 +10,7 @@ import {
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/PlayerStats.module.scss";
-import { regSeasonWeeks } from "../../../data/globalVars";
+import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: IPlayerReceiving[];
@@ -24,19 +24,12 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
             season: season,
         },
     });
-    team = JSON.parse(
-        JSON.stringify(playerSubRes, (_, v) =>
-            typeof v === "bigint" ? v.toString() : v
-        )
-    );
+
+    team = parseBigInt(playerSubRes);
 
     return {
         props: {
-            teams: JSON.parse(
-                JSON.stringify(team, (_, v) =>
-                    typeof v === "bigint" ? v.toString() : v
-                )
-            ),
+            teams: parseBigInt(team),
         },
     };
 };

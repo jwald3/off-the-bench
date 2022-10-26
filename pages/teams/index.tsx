@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import TeamDivisionGroup from "../../components/TeamDivisionGroup";
+import { parseBigInt } from "../../data/globalVars";
 import prisma from "../../lib/prisma";
 import styles from "../../styles/AllTeamsHome.module.scss";
 
@@ -9,19 +10,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: ITeamInformation[];
 
     const playerSubRes = await prisma.team_information.findMany({});
-    team = JSON.parse(
-        JSON.stringify(playerSubRes, (_, v) =>
-            typeof v === "bigint" ? v.toString() : v
-        )
-    );
+    team = parseBigInt(playerSubRes);
 
     return {
         props: {
-            teams: JSON.parse(
-                JSON.stringify(team, (_, v) =>
-                    typeof v === "bigint" ? v.toString() : v
-                )
-            ),
+            teams: parseBigInt(team),
         },
     };
 };
