@@ -11,9 +11,10 @@ import {
 } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
 import styles from "../../../styles/TeamStats.module.scss";
+import { ITeamFormationStats } from "../../../ts/interfaces/teamInterfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    let team: ITeam[];
+    let team: ITeamFormationStats[];
     let season = Number(query.season) || 2022;
     let teamQueryResponse;
 
@@ -36,62 +37,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     };
 };
 
-interface ITeam {
-    posteam: string;
-    game_id: string;
-    down: number;
-    snap_ct_personnel_00: number;
-    personnel_epa_personnel_00: number;
-    snap_ct_personnel_01: number;
-    personnel_epa_personnel_01: number;
-    snap_ct_personnel_01personnel_wildcat: number;
-    personnel_epa_personnel_01personnel_wildcat: number;
-    snap_ct_personnel_02: number;
-    personnel_epa_personnel_02: number;
-    snap_ct_personnel_02personnel_wildcat: number;
-    personnel_epa_personnel_02personnel_wildcat: number;
-    snap_ct_personnel_10: number;
-    personnel_epa_personnel_10: number;
-    snap_ct_personnel_11: number;
-    personnel_epa_personnel_11: number;
-    snap_ct_personnel_11personnel_wildcat: number;
-    personnel_epa_personnel_11personnel_wildcat: number;
-    snap_ct_personnel_12: number;
-    personnel_epa_personnel_12: number;
-    snap_ct_personnel_12personnel_wildcat: number;
-    personnel_epa_personnel_12personnel_wildcat: number;
-    snap_ct_personnel_13: number;
-    personnel_epa_personnel_13: number;
-    snap_ct_personnel_20: number;
-    personnel_epa_personnel_20: number;
-    snap_ct_personnel_20personnel_wildcat: number;
-    personnel_epa_personnel_20personnel_wildcat: number;
-    snap_ct_personnel_21: number;
-    personnel_epa_personnel_21: number;
-    snap_ct_personnel_21personnel_wildcat: number;
-    personnel_epa_personnel_21personnel_wildcat: number;
-    snap_ct_personnel_22: number;
-    personnel_epa_personnel_22: number;
-    snap_ct_personnel_22personnel_wildcat: number;
-    personnel_epa_personnel_22personnel_wildcat: number;
-    snap_ct_personnel_23: number;
-    personnel_epa_personnel_23: number;
-    snap_ct_personnel_23personnel_wildcat: number;
-    personnel_epa_personnel_23personnel_wildcat: number;
-    snap_ct_personnel_jumbo: number;
-    personnel_epa_personnel_jumbo: number;
-    snap_ct_personnel_wildcat: number;
-    personnel_epa_personnel_wildcat: number;
-    team_total_snaps: number;
-    team_epa: number;
-    db_id: string;
-    season: number;
-    week: number;
-    week_count: number;
-}
-
 interface TeamProps {
-    teams: ITeam[];
+    teams: ITeamFormationStats[];
 }
 
 const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
@@ -118,7 +65,7 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
         }
     }, []);
 
-    const aggregateStats = (dataframe: ITeam[]) => {
+    const aggregateStats = (dataframe: ITeamFormationStats[]) => {
         let teamsMap = new Map();
 
         for (let obj in dataframe) {

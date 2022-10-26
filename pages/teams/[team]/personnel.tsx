@@ -9,6 +9,7 @@ import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
 import { teamPersonnelGroupingColumns } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
 import styles from "../../../styles/PersonnelPage.module.scss";
+import { ITeamPersonnelStats } from "../../../ts/interfaces/teamInterfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
@@ -24,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         },
     });
 
-    const playerData: IPersonnelData[] = parseBigInt(teamQueryResponse);
+    const playerData: ITeamPersonnelStats[] = parseBigInt(teamQueryResponse);
 
     return {
         props: {
@@ -33,27 +34,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     };
 };
 
-interface IPersonnelData {
-    game_id: string;
-    posteam: string;
-    offense_grouping: string;
-    snap_ct: number;
-    passing_snap: number;
-    rushing_snap: number;
-    passing_yards: number;
-    pass_touchdown: number;
-    rushing_yards: number;
-    rush_touchdown: number;
-    season: number;
-    week: number;
-    week_count: number;
-    db_id: string;
-    total_game_snaps: number;
-    down: number;
-}
-
 interface PersonnelProps {
-    players: IPersonnelData[];
+    players: ITeamPersonnelStats[];
 }
 
 const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
@@ -84,7 +66,7 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
         }
     }, [personnelChartView]);
 
-    const aggregateStats = (dataframe: IPersonnelData[]) => {
+    const aggregateStats = (dataframe: ITeamPersonnelStats[]) => {
         let teamsMap = new Map();
 
         for (let obj in dataframe) {

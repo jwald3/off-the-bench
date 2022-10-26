@@ -14,6 +14,12 @@ import {
 } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
 import styles from "../../../styles/SingleTeamHome.module.scss";
+import {
+    ITeamConversionRates,
+    ITeamGameLogs,
+    ITeamInformation,
+    ITeamStatsByDown,
+} from "../../../ts/interfaces/teamInterfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const team = String(query.team) || "NYJ";
@@ -67,11 +73,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     });
 
     const playerData: ITeamGameLogs[] = parseBigInt(teamQueryResponse);
-    const downData: IStatsByDown[] = parseBigInt(statsByDown);
+    const downData: ITeamStatsByDown[] = parseBigInt(statsByDown);
     const opponentGameLogs: ITeamGameLogs[] = parseBigInt(
         opponentQueryResponse
     );
-    const successRates: IConversionRates[] = parseBigInt(conversionRts);
+    const successRates: ITeamConversionRates[] = parseBigInt(conversionRts);
 
     return {
         props: {
@@ -84,100 +90,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     };
 };
 
-interface ITeamGameLogs {
-    game_id: string;
-    posteam: string;
-    defteam: string;
-    posteam_score: number;
-    defteam_score: number;
-    yards_gained: number;
-    turnovers: number;
-    fumbles: number;
-    fumbles_lost: number;
-    completed_passes: number;
-    incomplete_passes: number;
-    pass_attempts: number;
-    receiving_yards: number;
-    passing_touchdowns: number;
-    interceptions: number;
-    sacks: number;
-    rush_attempts: number;
-    rushing_yards: number;
-    rushing_touchdown: number;
-    extra_points_made: number;
-    extra_point_attempts: number;
-    field_goals_made: number;
-    field_goals_attempted: number;
-    time_of_possession: string;
-    penalties: number;
-    penalty_yards: number;
-    db_id: string;
-    season: number;
-    week: number;
-}
-
-interface ITeamInformation {
-    team_abbr: string;
-    team_name: string;
-    team_id: number;
-    team_nick: string;
-    team_conf: string;
-    team_division: string;
-    wins: number;
-    losses: number;
-    ties: number;
-    standing: string;
-    team_color: string;
-    team_color2: string;
-    team_color3: string;
-    team_color4: string;
-    team_logo_wikipedia: string;
-    team_logo_espn: string;
-    team_wordmark: string;
-    team_conference_logo: string;
-    team_league_logo: string;
-    team_logo_squared: string;
-}
-
-interface IStatsByDown {
-    game_id: string;
-    posteam: string;
-    down: number;
-    special: number;
-    rush_attempt: number;
-    rushing_yards: number;
-    rush_touchdown: number;
-    complete_pass: number;
-    pass_attempt: number;
-    passing_yards: number;
-    pass_touchdown: number;
-    interception: number;
-    sack: number;
-    season: number;
-    week: number;
-    db_id: string;
-}
-
-interface IConversionRates {
-    posteam: string;
-    game_id: string;
-    play_type: string;
-    third_down_converted: number;
-    third_down_failed: number;
-    fourth_down_converted: number;
-    fourth_down_failed: number;
-    third_down_attempt: number;
-    fourth_down_attempt: number;
-    week: number;
-    season: number;
-    db_id: string;
-}
-
 interface GameLogProps {
     game_logs: ITeamGameLogs[];
-    down_data: IStatsByDown[];
+    down_data: ITeamStatsByDown[];
     opponent_game_logs: ITeamGameLogs[];
-    conversion_success: IConversionRates[];
+    conversion_success: ITeamConversionRates[];
     team_details: ITeamInformation[];
 }
 
@@ -206,7 +123,7 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
     const [convChartDataTwo, setConvChartDataTwo] =
         useState("third_down_attempt");
 
-    const aggregateStats = (dataframe: IStatsByDown[]) => {
+    const aggregateStats = (dataframe: ITeamStatsByDown[]) => {
         let teamsMap = new Map();
 
         for (let obj in dataframe) {
@@ -530,7 +447,7 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
         return Array.from(teamsMap.values());
     };
 
-    const aggregateConvRates = (dataframe: IConversionRates[]) => {
+    const aggregateConvRates = (dataframe: ITeamConversionRates[]) => {
         let teamsMap = new Map();
 
         for (let obj in dataframe) {

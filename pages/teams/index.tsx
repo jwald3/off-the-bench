@@ -5,6 +5,7 @@ import TeamDivisionGroup from "../../components/TeamDivisionGroup";
 import { parseBigInt } from "../../data/globalVars";
 import prisma from "../../lib/prisma";
 import styles from "../../styles/AllTeamsHome.module.scss";
+import { ITeamInformation } from "../../ts/interfaces/teamInterfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     let team: ITeamInformation[];
@@ -18,29 +19,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         },
     };
 };
-
-interface ITeamInformation {
-    team_abbr: string;
-    team_name: string;
-    team_id: number;
-    team_nick: string;
-    team_conf: string;
-    team_division: string;
-    wins: number;
-    losses: number;
-    ties: number;
-    standing: string;
-    team_color: string;
-    team_color2: string;
-    team_color3: string;
-    team_color4: string;
-    team_logo_wikipedia: string;
-    team_logo_espn: string;
-    team_wordmark: string;
-    team_conference_logo: string;
-    team_league_logo: string;
-    team_logo_squared: string;
-}
 
 interface TeamProps {
     teams: ITeamInformation[];

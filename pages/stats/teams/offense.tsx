@@ -8,9 +8,10 @@ import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
 import { teamStatColumns } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
 import styles from "../../../styles/TeamStats.module.scss";
+import { ITeamBasicStats } from "../../../ts/interfaces/teamInterfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    let team: ITeam[];
+    let team: ITeamBasicStats[];
     let season = Number(query.season) || 2022;
     let teamQueryResponse;
 
@@ -32,26 +33,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     };
 };
 
-interface ITeam {
-    posteam: string;
-    week: number;
-    pass_attempts: number;
-    completions: number;
-    pass_touchdown: number;
-    interceptions: number;
-    sacks: number;
-    passing_yards: number;
-    rush_attempt: number;
-    rushing_yards: number;
-    rush_touchdown: number;
-    points_for: number;
-    points_allowed: number;
-    down: number;
-    db_id: string;
-}
-
 interface TeamProps {
-    teams: ITeam[];
+    teams: ITeamBasicStats[];
 }
 
 const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
@@ -78,7 +61,7 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
         }
     }, []);
 
-    const aggregateStats = (dataframe: ITeam[]) => {
+    const aggregateStats = (dataframe: ITeamBasicStats[]) => {
         let teamsMap = new Map();
 
         for (let obj in dataframe) {
