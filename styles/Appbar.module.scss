@@ -11,7 +11,7 @@
     width: 100%;
 
     .appLogo {
-        width: 75%;
+        width: auto;
         height: 100%;
         padding: 0% 4%;
         display: flex;
@@ -23,7 +23,8 @@
 
     .navbarLinks {
         display: flex;
-        width: 25%;
+        width: auto;
+        margin: 0% 2%;
         gap: 5%;
         justify-content: flex-end;
 

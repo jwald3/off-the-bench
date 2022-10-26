@@ -17,6 +17,7 @@ export default function DrawerAppBar() {
                         height={35}
                         width={350}
                         alt="Off The Bench Logo"
+                        style={{ cursor: "pointer" }}
                     />
                 </Link>
             </div>
