@@ -550,18 +550,14 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
         );
 
         setAggDownData(reducedDownData);
-    }, []);
 
-    useEffect(() => {
         const oppStats = aggGameLogs(opponentGameLogs, "defteam");
         const teamStats = aggGameLogs(gameLogs, "posteam");
 
         const aggStatLog = [...teamStats, ...oppStats];
 
         setAggedTeamGameLogs(aggStatLog);
-    }, []);
 
-    useEffect(() => {
         const aggrConvSuccessRates = aggregateConvRates(
             props.conversion_success
         );

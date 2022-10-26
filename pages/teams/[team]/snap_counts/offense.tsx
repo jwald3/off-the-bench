@@ -42,11 +42,8 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
     const router = useRouter();
     const { query } = router;
 
-    const [playerSnaps, setPlayerSnaps] = useState(props.players);
     const [aggPlayerSnaps, setAggPlayerSnaps] = useState(props.players);
-    const [weekFilter, setWeekFilter] = useState([
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-    ]);
+    const [weekFilter, setWeekFilter] = useState(regSeasonWeeks);
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
     const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
 
@@ -122,11 +119,6 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
     };
 
     useEffect(() => {
-        const aggPlayers = aggregateStatsByPlayer(playerSnaps);
-        setAggPlayerSnaps(aggPlayers);
-    }, []);
-
-    useEffect(() => {
         if (query.weeks !== undefined && query.weeks !== "") {
             const selectedWeeks = (query.weeks as string)
                 ?.split(",")
@@ -176,21 +168,7 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
         const reducedPlayers = aggregateStatsByPlayer(filteredPlayers);
 
         setAggPlayerSnaps(reducedPlayers);
-    }, [downFilter]);
-
-    useEffect(() => {
-        const filteredPlayers = props.players
-            .filter((player) =>
-                weekFilter.includes(Number.parseInt(player.week.toString()))
-            )
-            .filter((player) =>
-                downFilter.includes(Number.parseInt(player.down.toString()))
-            );
-
-        const reducedPlayers = aggregateStatsByPlayer(filteredPlayers);
-
-        setAggPlayerSnaps(reducedPlayers);
-    }, [weekFilter]);
+    }, [weekFilter, downFilter]);
 
     return (
         <div className={styles.snapSharePageContainer}>

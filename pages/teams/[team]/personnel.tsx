@@ -43,7 +43,6 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
 }) => {
     const router = useRouter();
     const { query } = router;
-    const [personnelStats, setPersonnelStats] = useState(props.players);
     const [aggPersonnel, setAggPersonnel] = useState(props.players);
     const columns = teamPersonnelGroupingColumns;
     const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
@@ -55,16 +54,6 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
     const [personnelChartDataOne, setPersonnelChartDataOne] =
         useState("snap_ct");
     const [personnelChartDataTwo, setPersonnelChartDataTwo] = useState("");
-
-    useEffect(() => {
-        if (personnelChartView === "all") {
-            setPersonnelChartDataOne("snap_ct");
-            setPersonnelChartDataTwo("");
-        } else if (personnelChartView === "rz") {
-            setPersonnelChartDataOne("passing_yards");
-            setPersonnelChartDataTwo("rushing_yards");
-        }
-    }, [personnelChartView]);
 
     const aggregateStats = (dataframe: ITeamPersonnelStats[]) => {
         let teamsMap = new Map();
@@ -168,27 +157,14 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
     }, []);
 
     useEffect(() => {
-        const filteredPlayers = props.players
-            .filter((player) =>
-                weekFilter.includes(Number.parseInt(player.week.toString()))
-            )
-            .filter((player) =>
-                downFilter.includes(Number.parseInt(player.down.toString()))
-            );
-
-        const reducedPlayers = aggregateStats(filteredPlayers);
-        reducedPlayers.sort((a, b) => b.snap_ct - a.snap_ct);
-
-        reducedPlayers.forEach(
-            (tgt) => (tgt.passing_yards = parseInt(tgt.passing_yards))
-        );
-        reducedPlayers.forEach(
-            (tgt) => (tgt.rushing_yards = parseInt(tgt.rushing_yards))
-        );
-        reducedPlayers.forEach((tgt) => (tgt.snap_ct = parseInt(tgt.snap_ct)));
-
-        setAggPersonnel(reducedPlayers);
-    }, [weekFilter]);
+        if (personnelChartView === "all") {
+            setPersonnelChartDataOne("snap_ct");
+            setPersonnelChartDataTwo("");
+        } else if (personnelChartView === "rz") {
+            setPersonnelChartDataOne("passing_yards");
+            setPersonnelChartDataTwo("rushing_yards");
+        }
+    }, [personnelChartView]);
 
     useEffect(() => {
         const filteredPlayers = props.players
@@ -211,7 +187,7 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
         reducedPlayers.forEach((tgt) => (tgt.snap_ct = parseInt(tgt.snap_ct)));
 
         setAggPersonnel(reducedPlayers);
-    }, [downFilter]);
+    }, [weekFilter, downFilter]);
 
     return (
         <div className={styles.personnelPageContainer}>

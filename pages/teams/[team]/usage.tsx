@@ -327,40 +327,7 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
 
         setPlayerTargets(targets);
         setPlayerRushes(rushes);
-    }, [weekFilter]);
-
-    useEffect(() => {
-        const filteredPlayers = props.players
-            .filter((player) =>
-                weekFilter.includes(Number.parseInt(player.week.toString()))
-            )
-            .filter((player) =>
-                downFilter.includes(Number.parseInt(player.down.toString()))
-            );
-
-        const reducedPlayers = aggregateStats(filteredPlayers);
-
-        setAggPlayers(reducedPlayers);
-
-        const targets = reducedPlayers.filter(
-            (player) => player.targets !== "0" && player.targets !== 0
-        );
-
-        const rushes = reducedPlayers.filter(
-            (player) => player.rush_attempt !== "0" && player.rush_attempt !== 0
-        );
-
-        targets.sort((a, b) => b.targets - a.targets);
-        rushes.sort((a, b) => b.rush_attempt - a.rush_attempt);
-
-        targets.forEach((tgt) => (tgt.targets = parseInt(tgt.targets)));
-        rushes.forEach(
-            (tgt) => (tgt.rush_attempt = parseInt(tgt.rush_attempt))
-        );
-
-        setPlayerTargets(targets);
-        setPlayerRushes(rushes);
-    }, [downFilter]);
+    }, [weekFilter, downFilter]);
 
     return (
         <div className={styles.usagePageContainer}>
