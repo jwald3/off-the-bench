@@ -49,20 +49,6 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     ]);
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
 
-    useEffect(() => {
-        if (query.weeks !== undefined && query.weeks !== "") {
-            const selectedWeeks = (query.weeks as string)
-                ?.split(",")
-                .map(Number);
-
-            console.log(query.weeks);
-            setWeekFilter(selectedWeeks);
-        } else if (query.weeks === "") {
-            console.log(query.weeks);
-            setWeekFilter([]);
-        }
-    }, []);
-
     const aggregateStats = (dataframe: IBasicOffensePlayerStats[]) => {
         let teamsMap = new Map();
 
@@ -147,6 +133,32 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     };
 
     useEffect(() => {
+        // if "weeks" query present in URL, update week state
+        if (query.weeks !== undefined && query.weeks !== "none") {
+            const selectedWeeks = (query.weeks as string)
+                ?.split(",")
+                .map(Number);
+
+            console.log(query.weeks);
+            setWeekFilter(selectedWeeks);
+        } else if (query.weeks === "none") {
+            console.log(query.weeks);
+            setWeekFilter([]);
+        }
+
+        // if "downs" query present in URL, update down state
+        if (query.downs !== undefined && query.downs !== "none") {
+            const selectedDowns = (query.downs as string)
+                ?.split(",")
+                .map(Number);
+
+            console.log(query.downs);
+            setDownFilter(selectedDowns);
+        } else if (query.downs === "none") {
+            console.log(query.downs);
+            setDownFilter([]);
+        }
+
         const reducedTeams = aggregateStats(props.teams);
 
         setAggTeams(reducedTeams);
@@ -164,21 +176,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
         const reducedTeams = aggregateStats(filteredTeams);
 
         setAggTeams(reducedTeams);
-    }, [weekFilter]);
-
-    useEffect(() => {
-        const filteredTeams = props.teams
-            .filter((team) =>
-                weekFilter.includes(Number.parseInt(team.week.toString()))
-            )
-            .filter((team) =>
-                downFilter.includes(Number.parseInt(team.down.toString()))
-            );
-
-        const reducedTeams = aggregateStats(filteredTeams);
-
-        setAggTeams(reducedTeams);
-    }, [downFilter]);
+    }, [weekFilter, downFilter]);
 
     return (
         <div className={styles.playerStatsPageContainer}>
