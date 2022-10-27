@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import SelectorTray from "../../../../components/SelectorTray";
 import StatTable from "../../../../components/StatTable";
 import TeamLinkFooter from "../../../../components/TeamFooter";
-import { parseBigInt, regSeasonWeeks } from "../../../../data/globalVars";
+import {
+    aggregateOffenseSnaps,
+    parseBigInt,
+    regSeasonWeeks,
+} from "../../../../data/globalVars";
 import { playerSnapCols } from "../../../../data/tableColumns";
 import prisma from "../../../../lib/prisma";
 import styles from "../../../../styles/TeamSnaps.module.scss";
@@ -47,77 +51,6 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
     const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
 
-    const aggregateStatsByPlayer = (dataframe: IPlayerOffensiveSnapData[]) => {
-        let teamsMap = new Map();
-
-        for (let obj in dataframe) {
-            if (teamsMap.get(dataframe[obj].player_id)) {
-                let currentObj = teamsMap.get(dataframe[obj].player_id);
-                let newObj = {
-                    player_id: dataframe[obj].player_id,
-                    posteam: dataframe[obj].posteam,
-                    down: dataframe[obj].down,
-                    snap_ct:
-                        Number.parseInt(currentObj.snap_ct.toString()) +
-                        Number.parseInt(dataframe[obj].snap_ct.toString()),
-                    pass_snap:
-                        Number.parseInt(currentObj.pass_snap.toString()) +
-                        Number.parseInt(dataframe[obj].pass_snap.toString()),
-                    rush_snap:
-                        Number.parseInt(currentObj.rush_snap.toString()) +
-                        Number.parseInt(dataframe[obj].rush_snap.toString()),
-                    team_snaps:
-                        Number.parseInt(currentObj.team_snaps.toString()) +
-                        Number.parseInt(dataframe[obj].team_snaps.toString()),
-                    team_rushing_plays:
-                        Number.parseInt(
-                            currentObj.team_rushing_plays.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].team_rushing_plays.toString()
-                        ),
-                    team_passing_plays:
-                        Number.parseInt(
-                            currentObj.team_passing_plays.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].team_passing_plays.toString()
-                        ),
-                    target:
-                        Number.parseInt(currentObj.target.toString()) +
-                        Number.parseInt(dataframe[obj].target.toString()),
-                    reception:
-                        Number.parseInt(currentObj.reception.toString()) +
-                        Number.parseInt(dataframe[obj].reception.toString()),
-                    receiving_touchdown:
-                        Number.parseInt(
-                            currentObj.receiving_touchdown.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].receiving_touchdown.toString()
-                        ),
-                    carries:
-                        Number.parseInt(currentObj.carries.toString()) +
-                        Number.parseInt(dataframe[obj].carries.toString()),
-                    rushing_touchdown:
-                        Number.parseInt(
-                            currentObj.rushing_touchdown.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].rushing_touchdown.toString()
-                        ),
-                    db_id: currentObj.db_id,
-                };
-                teamsMap.set(currentObj.player_id, newObj);
-            } else {
-                teamsMap.set(dataframe[obj].player_id, {
-                    ...dataframe[obj],
-                });
-            }
-        }
-        return Array.from(teamsMap.values());
-    };
-
     useEffect(() => {
         if (query.weeks !== undefined && query.weeks !== "") {
             const selectedWeeks = (query.weeks as string)
@@ -151,7 +84,24 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
                 downFilter.includes(Number.parseInt(player.down.toString()))
             );
 
-        const aggPlayers = aggregateStatsByPlayer(currWeekData);
+        const aggPlayers: Array<IPlayerOffensiveSnapData> =
+            aggregateOffenseSnaps(
+                currWeekData,
+                "down",
+                "snap_ct",
+                "rush_snap",
+                "pass_snap",
+                "team_snaps",
+                "team_rushing_plays",
+                "team_passing_plays",
+                "week",
+                "season",
+                "reception",
+                "receiving_touchdown",
+                "carries",
+                "rushing_touchdown",
+                "target"
+            );
 
         setAggPlayerSnaps(aggPlayers);
     }, []);
@@ -165,7 +115,23 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
                 weekFilter.includes(Number.parseInt(player.week.toString()))
             );
 
-        const reducedPlayers = aggregateStatsByPlayer(filteredPlayers);
+        const reducedPlayers = aggregateOffenseSnaps(
+            filteredPlayers,
+            "down",
+            "snap_ct",
+            "rush_snap",
+            "pass_snap",
+            "team_snaps",
+            "team_rushing_plays",
+            "team_passing_plays",
+            "week",
+            "season",
+            "reception",
+            "receiving_touchdown",
+            "carries",
+            "rushing_touchdown",
+            "target"
+        );
 
         setAggPlayerSnaps(reducedPlayers);
     }, [weekFilter, downFilter]);
