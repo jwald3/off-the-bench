@@ -15,7 +15,11 @@ const StatChart = dynamic(import("../../../components/StatChart"), {
     ssr: false,
 });
 import styles from "../../../styles/UsagePage.module.scss";
-import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
+import {
+    aggregateUsageStats,
+    parseBigInt,
+    regSeasonWeeks,
+} from "../../../data/globalVars";
 import { IPlayerUsageStats } from "../../../ts/interfaces/playerInterfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
@@ -63,156 +67,6 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
     const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
 
-    const aggregateStats = (dataframe: IPlayerUsageStats[]) => {
-        let teamsMap = new Map();
-
-        for (let obj in dataframe) {
-            if (teamsMap.get(dataframe[obj].player_id)) {
-                let currentObj = teamsMap.get(dataframe[obj].player_id);
-                let newObj = {
-                    player_id: dataframe[obj].player_id,
-                    targets:
-                        Number.parseInt(currentObj.targets.toString()) +
-                        Number.parseInt(dataframe[obj].targets.toString()),
-                    receptions:
-                        Number.parseInt(currentObj.receptions.toString()) +
-                        Number.parseInt(dataframe[obj].receptions.toString()),
-                    receiving_yards:
-                        Number.parseInt(currentObj.receiving_yards.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].receiving_yards.toString()
-                        ),
-                    air_yards:
-                        Number.parseInt(currentObj.air_yards.toString()) +
-                        Number.parseInt(dataframe[obj].air_yards.toString()),
-                    yards_after_catch:
-                        Number.parseInt(
-                            currentObj.yards_after_catch.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].yards_after_catch.toString()
-                        ),
-                    receiving_touchdown:
-                        Number.parseInt(
-                            currentObj.receiving_touchdown.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].receiving_touchdown.toString()
-                        ),
-                    redzone_target:
-                        Number.parseInt(currentObj.redzone_target.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].redzone_target.toString()
-                        ),
-                    redzone_catch:
-                        Number.parseInt(currentObj.redzone_catch.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].redzone_catch.toString()
-                        ),
-                    endzone_catch:
-                        Number.parseInt(currentObj.endzone_catch.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].endzone_catch.toString()
-                        ),
-                    endzone_target:
-                        Number.parseInt(currentObj.endzone_target.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].endzone_target.toString()
-                        ),
-                    third_down_target:
-                        Number.parseInt(
-                            currentObj.third_down_target.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].third_down_target.toString()
-                        ),
-                    third_down_catch:
-                        Number.parseInt(
-                            currentObj.third_down_catch.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].third_down_catch.toString()
-                        ),
-                    fourth_down_target:
-                        Number.parseInt(
-                            currentObj.fourth_down_target.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].fourth_down_target.toString()
-                        ),
-                    fourth_down_catch:
-                        Number.parseInt(
-                            currentObj.fourth_down_catch.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].fourth_down_catch.toString()
-                        ),
-                    rush_attempt:
-                        Number.parseInt(currentObj.rush_attempt.toString()) +
-                        Number.parseInt(dataframe[obj].rush_attempt.toString()),
-                    rushing_yards:
-                        Number.parseInt(currentObj.rushing_yards.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].rushing_yards.toString()
-                        ),
-                    rush_touchdown:
-                        Number.parseInt(currentObj.rush_touchdown.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].rush_touchdown.toString()
-                        ),
-                    stacked_box_rush:
-                        Number.parseInt(
-                            currentObj.stacked_box_rush.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].stacked_box_rush.toString()
-                        ),
-                    tackled_for_loss:
-                        Number.parseInt(
-                            currentObj.tackled_for_loss.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].tackled_for_loss.toString()
-                        ),
-                    fumble:
-                        Number.parseInt(currentObj.fumble.toString()) +
-                        Number.parseInt(dataframe[obj].fumble.toString()),
-                    redzone_rush:
-                        Number.parseInt(currentObj.redzone_rush.toString()) +
-                        Number.parseInt(dataframe[obj].redzone_rush.toString()),
-                    redzone_rush_touchdown:
-                        Number.parseInt(
-                            currentObj.redzone_rush_touchdown.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].redzone_rush_touchdown.toString()
-                        ),
-                    goalline_rush:
-                        Number.parseInt(currentObj.goalline_rush.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].goalline_rush.toString()
-                        ),
-                    goalline_rush_touchdown:
-                        Number.parseInt(
-                            currentObj.goalline_rush_touchdown.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].goalline_rush_touchdown.toString()
-                        ),
-                    db_id: currentObj.db_id,
-                    posteam: currentObj.posteam,
-                    position: currentObj.position,
-                };
-                teamsMap.set(currentObj.player_id, newObj);
-            } else {
-                teamsMap.set(dataframe[obj].player_id, {
-                    ...dataframe[obj],
-                });
-            }
-        }
-        return Array.from(teamsMap.values());
-    };
-
     useEffect(() => {
         if (query.weeks !== undefined && query.weeks !== "") {
             const selectedWeeks = (query.weeks as string)
@@ -246,19 +100,57 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 downFilter.includes(Number.parseInt(player.down.toString()))
             );
 
-        const reducedTeams = aggregateStats(currWeekData);
-
-        const targets = reducedTeams.filter(
-            (player) => player.targets !== "0" && player.targets !== 0
+        currWeekData.forEach(
+            (tgt) => (tgt.targets = parseInt(tgt.targets.toString()))
         );
+
+        currWeekData.forEach(
+            (rec) => (rec.receptions = parseInt(rec.receptions.toString()))
+        );
+
+        const reducedTeams: Array<IPlayerUsageStats> = aggregateUsageStats(
+            currWeekData,
+            "down",
+            "targets",
+            "receptions",
+            "receiving_yards",
+            "air_yards",
+            "yards_after_catch",
+            "receiving_touchdown",
+            "redzone_target",
+            "redzone_catch",
+            "endzone_target",
+            "endzone_catch",
+            "first_down_target",
+            "second_down_target",
+            "third_down_target",
+            "fourth_down_target",
+            "first_down_catch",
+            "second_down_catch",
+            "third_down_catch",
+            "fourth_down_catch",
+            "rush_attempt",
+            "rushing_yards",
+            "rush_touchdown",
+            "stacked_box_rush",
+            "tackled_for_loss",
+            "fumble",
+            "first_down_rush",
+            "second_down_rush",
+            "third_down_rush",
+            "fourth_down_rush",
+            "redzone_rush",
+            "goalline_rush",
+            "redzone_rush_touchdown",
+            "goalline_rush_touchdown",
+            "season",
+            "week"
+        );
+
+        const targets = reducedTeams.filter((player) => player.targets !== 0);
 
         const rushes = reducedTeams.filter(
-            (player) => player.rush_attempt !== "0" && player.rush_attempt !== 0
-        );
-
-        targets.forEach((tgt) => (tgt.targets = parseInt(tgt.targets)));
-        rushes.forEach(
-            (tgt) => (tgt.rush_attempt = parseInt(tgt.rush_attempt))
+            (player) => player.rush_attempt !== 0
         );
 
         targets.sort((a, b) => b.targets - a.targets);
@@ -303,25 +195,55 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 downFilter.includes(Number.parseInt(player.down.toString()))
             );
 
-        const reducedPlayers = aggregateStats(filteredPlayers);
+        const reducedPlayers: Array<IPlayerUsageStats> = aggregateUsageStats(
+            filteredPlayers,
+            "down",
+            "season",
+            "targets",
+            "receptions",
+            "receiving_yards",
+            "air_yards",
+            "yards_after_catch",
+            "receiving_touchdown",
+            "redzone_target",
+            "redzone_catch",
+            "endzone_target",
+            "endzone_catch",
+            "first_down_target",
+            "second_down_target",
+            "third_down_target",
+            "fourth_down_target",
+            "first_down_catch",
+            "second_down_catch",
+            "third_down_catch",
+            "fourth_down_catch",
+            "rush_attempt",
+            "rushing_yards",
+            "rush_touchdown",
+            "stacked_box_rush",
+            "tackled_for_loss",
+            "fumble",
+            "first_down_rush",
+            "second_down_rush",
+            "third_down_rush",
+            "fourth_down_rush",
+            "redzone_rush",
+            "goalline_rush",
+            "redzone_rush_touchdown",
+            "goalline_rush_touchdown",
+            "week"
+        );
 
         setAggPlayers(reducedPlayers);
 
-        const targets = reducedPlayers.filter(
-            (player) => player.targets !== "0" && player.targets !== 0
-        );
+        const targets = reducedPlayers.filter((player) => player.targets !== 0);
 
         const rushes = reducedPlayers.filter(
-            (player) => player.rush_attempt !== "0" && player.rush_attempt !== 0
+            (player) => player.rush_attempt !== 0
         );
 
         targets.sort((a, b) => b.targets - a.targets);
         rushes.sort((a, b) => b.rush_attempt - a.rush_attempt);
-
-        targets.forEach((tgt) => (tgt.targets = parseInt(tgt.targets)));
-        rushes.forEach(
-            (tgt) => (tgt.rush_attempt = parseInt(tgt.rush_attempt))
-        );
 
         setPlayerTargets(targets);
         setPlayerRushes(rushes);

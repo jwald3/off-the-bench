@@ -1,6 +1,6 @@
 export interface IBasicDefensePlayerStats {
     player_id: string;
-    game_id: string;
+    game_id?: string;
     passes_defended: number;
     interception: number;
     int_return_yards: number;
@@ -14,7 +14,7 @@ export interface IBasicDefensePlayerStats {
     half_sack: number;
     tackle_with_assist: number;
     game_id_db: string;
-    gsis_id: string;
+    gsis_id?: string;
     team_abbr: string;
     position: string;
     week: number;
@@ -158,7 +158,7 @@ export interface IPlayerOffensiveSnapData {
 
 export interface IPlayerUsageStats {
     posteam: string;
-    game_id: string;
+    game_id?: string;
     player_id: string;
     down: number;
     position: string;
@@ -194,7 +194,7 @@ export interface IPlayerUsageStats {
     goalline_rush: number;
     redzone_rush_touchdown: number;
     goalline_rush_touchdown: number;
-    gsis_id: string;
+    gsis_id?: string;
     db_id: string;
     season: number;
     week: number;
