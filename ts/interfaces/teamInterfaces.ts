@@ -160,7 +160,7 @@ export interface ITeamConversionRates {
 }
 
 export interface ITeamPersonnelStats {
-    game_id: string;
+    game_id?: string;
     posteam: string;
     offense_grouping: string;
     snap_ct: number;

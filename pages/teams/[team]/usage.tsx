@@ -198,7 +198,6 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
         const reducedPlayers: Array<IPlayerUsageStats> = aggregateUsageStats(
             filteredPlayers,
             "down",
-            "season",
             "targets",
             "receptions",
             "receiving_yards",
@@ -231,6 +230,7 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             "goalline_rush",
             "redzone_rush_touchdown",
             "goalline_rush_touchdown",
+            "season",
             "week"
         );
 

@@ -23,9 +23,14 @@ interface IUsagePlayerStatsShell {
     player_id: string;
     position: string;
     db_id: string;
-    posteam: string;
-    week?: number;
     gsis_id?: string;
+    posteam: string;
+}
+
+interface IPersonnelStatsShell {
+    offense_grouping: string;
+    db_id: string;
+    posteam: string;
 }
 
 export const aggregateStats = <K extends string>(
@@ -89,6 +94,36 @@ export const aggregateUsageStats = <K extends string>(
             });
         } else {
             teamsMap.set(dataframeObj.player_id, {
+                ...dataframeObj,
+            });
+        }
+    }
+    return Array.from(teamsMap.values());
+};
+
+export const aggregatePersonnelStats = <K extends string>(
+    dataframe: (Record<K, number> & IPersonnelStatsShell)[],
+    ...keys: K[]
+) => {
+    let teamsMap = new Map<string, Record<K, number> & IPersonnelStatsShell>();
+    for (let dataframeObj of dataframe) {
+        const currentObj = teamsMap.get(dataframeObj.offense_grouping);
+        if (currentObj) {
+            let newObjStatic = {
+                offense_grouping: dataframeObj.offense_grouping,
+                db_id: currentObj.db_id,
+                posteam: currentObj.posteam,
+            };
+            const newObjDynamic = {} as Record<K, number>;
+            keys.forEach(
+                (k) => (newObjDynamic[k] = currentObj[k] + dataframeObj[k])
+            );
+            teamsMap.set(currentObj.offense_grouping, {
+                ...newObjStatic,
+                ...newObjDynamic,
+            });
+        } else {
+            teamsMap.set(dataframeObj.offense_grouping, {
                 ...dataframeObj,
             });
         }
