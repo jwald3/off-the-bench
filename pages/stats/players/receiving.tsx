@@ -3,14 +3,15 @@ import prisma from "../../../lib/prisma";
 import StatTable from "../../../components/StatTable";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import {
-    playerAdvRecCols,
-    playerOffenseColumns,
-} from "../../../data/tableColumns";
+import { playerAdvRecCols } from "../../../data/tableColumns";
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/PlayerStats.module.scss";
-import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
+import {
+    aggregateAdvancedStats,
+    parseBigInt,
+    regSeasonWeeks,
+} from "../../../data/globalVars";
 import { IPlayerReceivingStats } from "../../../ts/interfaces/playerInterfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
@@ -43,112 +44,10 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     const router = useRouter();
     const { query } = router;
 
-    const columns = playerOffenseColumns;
-
     const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
     const [aggTeams, setAggTeams] = useState(props.teams);
     const [weekFilter, setWeekFilter] = useState(regSeasonWeeks);
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
-
-    const aggregateStats = (dataframe: IPlayerReceivingStats[]) => {
-        let teamsMap = new Map();
-
-        for (let obj in dataframe) {
-            if (teamsMap.get(dataframe[obj].player_id)) {
-                let currentObj = teamsMap.get(dataframe[obj].player_id);
-                let newObj = {
-                    player_id: dataframe[obj].player_id,
-                    passing_yards:
-                        Number.parseInt(currentObj.passing_yards.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].passing_yards.toString()
-                        ),
-                    air_yards:
-                        Number.parseInt(currentObj.air_yards.toString()) +
-                        Number.parseInt(dataframe[obj].air_yards.toString()),
-                    yards_after_catch:
-                        Number.parseInt(
-                            currentObj.yards_after_catch.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].yards_after_catch.toString()
-                        ),
-                    complete_pass:
-                        Number.parseInt(currentObj.complete_pass.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].complete_pass.toString()
-                        ),
-                    pass_attempt:
-                        Number.parseInt(currentObj.pass_attempt.toString()) +
-                        Number.parseInt(dataframe[obj].pass_attempt.toString()),
-                    interception:
-                        Number.parseInt(currentObj.interception.toString()) +
-                        Number.parseInt(dataframe[obj].interception.toString()),
-                    pass_touchdown:
-                        Number.parseInt(currentObj.pass_touchdown.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].pass_touchdown.toString()
-                        ),
-                    team_passing_yards:
-                        Number.parseInt(
-                            currentObj.team_passing_yards.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].team_passing_yards.toString()
-                        ),
-                    team_air_yards:
-                        Number.parseInt(currentObj.team_air_yards.toString()) +
-                        Number.parseInt(
-                            dataframe[obj].team_air_yards.toString()
-                        ),
-                    team_yards_after_catch:
-                        Number.parseInt(
-                            currentObj.team_yards_after_catch.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].team_yards_after_catch.toString()
-                        ),
-                    team_complete_pass:
-                        Number.parseInt(
-                            currentObj.team_complete_pass.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].team_complete_pass.toString()
-                        ),
-                    team_pass_attempt:
-                        Number.parseInt(
-                            currentObj.team_pass_attempt.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].team_pass_attempt.toString()
-                        ),
-                    team_interception:
-                        Number.parseInt(
-                            currentObj.team_interception.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].team_interception.toString()
-                        ),
-                    team_pass_touchdown:
-                        Number.parseInt(
-                            currentObj.team_pass_touchdown.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].team_pass_touchdown.toString()
-                        ),
-                    game_id: currentObj.game_id,
-                    db_id: currentObj.db_id,
-                    posteam: currentObj.posteam,
-                };
-                teamsMap.set(currentObj.player_id, newObj);
-            } else {
-                teamsMap.set(dataframe[obj].player_id, {
-                    ...dataframe[obj],
-                });
-            }
-        }
-        return Array.from(teamsMap.values());
-    };
 
     useEffect(() => {
         // if "weeks" query present in URL, update week state
@@ -177,7 +76,27 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             setDownFilter([]);
         }
 
-        const reducedTeams = aggregateStats(props.teams);
+        const reducedTeams: Array<IPlayerReceivingStats> =
+            aggregateAdvancedStats(
+                props.teams,
+                "down",
+                "passing_yards",
+                "air_yards",
+                "yards_after_catch",
+                "complete_pass",
+                "pass_attempt",
+                "interception",
+                "pass_touchdown",
+                "team_passing_yards",
+                "team_air_yards",
+                "team_yards_after_catch",
+                "team_complete_pass",
+                "team_pass_attempt",
+                "team_interception",
+                "team_pass_touchdown",
+                "week",
+                "season"
+            );
 
         setAggTeams(reducedTeams);
     }, []);
@@ -191,7 +110,26 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 weekFilter.includes(Number.parseInt(player.week.toString()))
             );
 
-        const reducedPlayers = aggregateStats(filteredPlayers);
+        const reducedPlayers = aggregateAdvancedStats(
+            filteredPlayers,
+            "down",
+            "passing_yards",
+            "air_yards",
+            "yards_after_catch",
+            "complete_pass",
+            "pass_attempt",
+            "interception",
+            "pass_touchdown",
+            "team_passing_yards",
+            "team_air_yards",
+            "team_yards_after_catch",
+            "team_complete_pass",
+            "team_pass_attempt",
+            "team_interception",
+            "team_pass_touchdown",
+            "week",
+            "season"
+        );
 
         setAggTeams(reducedPlayers);
     }, [weekFilter, downFilter]);

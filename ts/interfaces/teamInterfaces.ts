@@ -18,7 +18,7 @@ export interface ITeamBasicStats {
 
 export interface ITeamFormationStats {
     posteam: string;
-    game_id: string;
+    game_id?: string;
     down: number;
     snap_ct_personnel_00: number;
     personnel_epa_personnel_00: number;

@@ -19,6 +19,15 @@ interface IBasicPlayerStatsShell {
     gsis_id?: string;
 }
 
+interface IPlayerAdvancedStatsShell {
+    player_id: string;
+    posteam: string;
+    week?: number;
+    gsis_id: string;
+    game_id: string;
+    db_id: string;
+}
+
 interface IUsagePlayerStatsShell {
     player_id: string;
     position: string;
@@ -31,6 +40,11 @@ interface IPersonnelStatsShell {
     offense_grouping: string;
     db_id: string;
     posteam: string;
+}
+
+interface IBasicTeamStatsShell {
+    posteam: string;
+    db_id: string;
 }
 
 export const aggregateStats = <K extends string>(
@@ -49,6 +63,41 @@ export const aggregateStats = <K extends string>(
                 game_id_db: currentObj.game_id_db,
                 position: currentObj.position,
                 team_abbr: currentObj.team_abbr,
+            };
+            const newObjDynamic = {} as Record<K, number>;
+            keys.forEach(
+                (k) => (newObjDynamic[k] = currentObj[k] + dataframeObj[k])
+            );
+            teamsMap.set(currentObj.player_id, {
+                ...newObjStatic,
+                ...newObjDynamic,
+            });
+        } else {
+            teamsMap.set(dataframeObj.player_id, {
+                ...dataframeObj,
+            });
+        }
+    }
+    return Array.from(teamsMap.values());
+};
+
+export const aggregateAdvancedStats = <K extends string>(
+    dataframe: (Record<K, number> & IPlayerAdvancedStatsShell)[],
+    ...keys: K[]
+) => {
+    let teamsMap = new Map<
+        string,
+        Record<K, number> & IPlayerAdvancedStatsShell
+    >();
+    for (let dataframeObj of dataframe) {
+        const currentObj = teamsMap.get(dataframeObj.player_id);
+        if (currentObj) {
+            let newObjStatic = {
+                player_id: dataframeObj.player_id,
+                posteam: currentObj.posteam,
+                game_id: currentObj.game_id,
+                db_id: currentObj.db_id,
+                gsis_id: currentObj.gsis_id,
             };
             const newObjDynamic = {} as Record<K, number>;
             keys.forEach(
@@ -124,6 +173,35 @@ export const aggregatePersonnelStats = <K extends string>(
             });
         } else {
             teamsMap.set(dataframeObj.offense_grouping, {
+                ...dataframeObj,
+            });
+        }
+    }
+    return Array.from(teamsMap.values());
+};
+
+export const aggregateTeamStats = <K extends string>(
+    dataframe: (Record<K, number> & IBasicTeamStatsShell)[],
+    ...keys: K[]
+) => {
+    let teamsMap = new Map<string, Record<K, number> & IBasicTeamStatsShell>();
+    for (let dataframeObj of dataframe) {
+        const currentObj = teamsMap.get(dataframeObj.posteam);
+        if (currentObj) {
+            let newObjStatic = {
+                posteam: currentObj.posteam,
+                db_id: currentObj.db_id,
+            };
+            const newObjDynamic = {} as Record<K, number>;
+            keys.forEach(
+                (k) => (newObjDynamic[k] = currentObj[k] + dataframeObj[k])
+            );
+            teamsMap.set(currentObj.posteam, {
+                ...newObjStatic,
+                ...newObjDynamic,
+            });
+        } else {
+            teamsMap.set(dataframeObj.posteam, {
                 ...dataframeObj,
             });
         }

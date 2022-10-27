@@ -4,7 +4,11 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import SelectorTray from "../../../components/SelectorTray";
 import StatTable from "../../../components/StatTable";
-import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
+import {
+    aggregateTeamStats,
+    parseBigInt,
+    regSeasonWeeks,
+} from "../../../data/globalVars";
 import { teamPersonnelGoupingColumns } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
 import styles from "../../../styles/TeamStats.module.scss";
@@ -47,178 +51,6 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     const [weekFilter, setWeekFilter] = useState(regSeasonWeeks);
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
 
-    const aggregateStats = (dataframe: ITeamFormationStats[]) => {
-        let teamsMap = new Map();
-
-        for (let obj in dataframe) {
-            if (teamsMap.get(dataframe[obj].posteam)) {
-                let currentObj = teamsMap.get(dataframe[obj].posteam);
-                let newObj = {
-                    posteam: currentObj.posteam,
-                    snap_ct_personnel_00:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_00.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].snap_ct_personnel_00.toString()
-                        ),
-                    snap_ct_personnel_01:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_01.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].snap_ct_personnel_01.toString()
-                        ),
-                    snap_ct_personnel_01personnel_wildcat:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_01personnel_wildcat.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[
-                                obj
-                            ].snap_ct_personnel_01personnel_wildcat.toString()
-                        ),
-                    snap_ct_personnel_10:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_10.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].snap_ct_personnel_10.toString()
-                        ),
-                    snap_ct_personnel_11:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_11.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].snap_ct_personnel_11.toString()
-                        ),
-                    snap_ct_personnel_11personnel_wildcat:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_11personnel_wildcat.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[
-                                obj
-                            ].snap_ct_personnel_11personnel_wildcat.toString()
-                        ),
-                    snap_ct_personnel_12:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_12.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].snap_ct_personnel_12.toString()
-                        ),
-                    snap_ct_personnel_12personnel_wildcat:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_12personnel_wildcat.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[
-                                obj
-                            ].snap_ct_personnel_12personnel_wildcat.toString()
-                        ),
-                    snap_ct_personnel_13:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_13.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].snap_ct_personnel_13.toString()
-                        ),
-                    snap_ct_personnel_20:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_20.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].snap_ct_personnel_20.toString()
-                        ),
-                    snap_ct_personnel_20personnel_wildcat:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_20personnel_wildcat.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[
-                                obj
-                            ].snap_ct_personnel_20personnel_wildcat.toString()
-                        ),
-                    snap_ct_personnel_21:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_21.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].snap_ct_personnel_21.toString()
-                        ),
-                    snap_ct_personnel_21personnel_wildcat:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_21personnel_wildcat.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[
-                                obj
-                            ].snap_ct_personnel_21personnel_wildcat.toString()
-                        ),
-                    snap_ct_personnel_22:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_22.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].snap_ct_personnel_22.toString()
-                        ),
-                    snap_ct_personnel_22personnel_wildcat:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_22personnel_wildcat.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[
-                                obj
-                            ].snap_ct_personnel_22personnel_wildcat.toString()
-                        ),
-                    snap_ct_personnel_23:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_23.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].snap_ct_personnel_23.toString()
-                        ),
-                    snap_ct_personnel_23personnel_wildcat:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_23personnel_wildcat.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[
-                                obj
-                            ].snap_ct_personnel_23personnel_wildcat.toString()
-                        ),
-                    snap_ct_personnel_jumbo:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_jumbo.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].snap_ct_personnel_jumbo.toString()
-                        ),
-                    snap_ct_personnel_wildcat:
-                        Number.parseInt(
-                            currentObj.snap_ct_personnel_wildcat.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].snap_ct_personnel_wildcat.toString()
-                        ),
-                    team_total_snaps:
-                        Number.parseInt(
-                            currentObj.team_total_snaps.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].team_total_snaps.toString()
-                        ),
-                    db_id: currentObj.db_id,
-                };
-                teamsMap.set(currentObj.posteam, newObj);
-            } else {
-                teamsMap.set(dataframe[obj].posteam, { ...dataframe[obj] });
-            }
-        }
-        return Array.from(teamsMap.values());
-    };
-
     useEffect(() => {
         // if "weeks" query present in URL, update week state
         if (query.weeks !== undefined && query.weeks !== "none") {
@@ -247,7 +79,57 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
         }
 
         // aggregate stats when page loads
-        const reducedTeams = aggregateStats(props.teams);
+        const reducedTeams: Array<ITeamFormationStats> = aggregateTeamStats(
+            props.teams,
+            "down",
+            "snap_ct_personnel_00",
+            "personnel_epa_personnel_00",
+            "snap_ct_personnel_01",
+            "personnel_epa_personnel_01",
+            "snap_ct_personnel_01personnel_wildcat",
+            "personnel_epa_personnel_01personnel_wildcat",
+            "snap_ct_personnel_02",
+            "personnel_epa_personnel_02",
+            "snap_ct_personnel_02personnel_wildcat",
+            "personnel_epa_personnel_02personnel_wildcat",
+            "snap_ct_personnel_10",
+            "personnel_epa_personnel_10",
+            "snap_ct_personnel_11",
+            "personnel_epa_personnel_11",
+            "snap_ct_personnel_11personnel_wildcat",
+            "personnel_epa_personnel_11personnel_wildcat",
+            "snap_ct_personnel_12",
+            "personnel_epa_personnel_12",
+            "snap_ct_personnel_12personnel_wildcat",
+            "personnel_epa_personnel_12personnel_wildcat",
+            "snap_ct_personnel_13",
+            "personnel_epa_personnel_13",
+            "snap_ct_personnel_20",
+            "personnel_epa_personnel_20",
+            "snap_ct_personnel_20personnel_wildcat",
+            "personnel_epa_personnel_20personnel_wildcat",
+            "snap_ct_personnel_21",
+            "personnel_epa_personnel_21",
+            "snap_ct_personnel_21personnel_wildcat",
+            "personnel_epa_personnel_21personnel_wildcat",
+            "snap_ct_personnel_22",
+            "personnel_epa_personnel_22",
+            "snap_ct_personnel_22personnel_wildcat",
+            "personnel_epa_personnel_22personnel_wildcat",
+            "snap_ct_personnel_23",
+            "personnel_epa_personnel_23",
+            "snap_ct_personnel_23personnel_wildcat",
+            "personnel_epa_personnel_23personnel_wildcat",
+            "snap_ct_personnel_jumbo",
+            "personnel_epa_personnel_jumbo",
+            "snap_ct_personnel_wildcat",
+            "personnel_epa_personnel_wildcat",
+            "team_total_snaps",
+            "team_epa",
+            "season",
+            "week",
+            "week_count"
+        );
 
         setAggTeams(reducedTeams);
     }, []);
@@ -261,7 +143,57 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                 downFilter.includes(Number.parseInt(team.down.toString()))
             );
 
-        const reducedTeams = aggregateStats(filteredTeams);
+        const reducedTeams: Array<ITeamFormationStats> = aggregateTeamStats(
+            filteredTeams,
+            "down",
+            "snap_ct_personnel_00",
+            "personnel_epa_personnel_00",
+            "snap_ct_personnel_01",
+            "personnel_epa_personnel_01",
+            "snap_ct_personnel_01personnel_wildcat",
+            "personnel_epa_personnel_01personnel_wildcat",
+            "snap_ct_personnel_02",
+            "personnel_epa_personnel_02",
+            "snap_ct_personnel_02personnel_wildcat",
+            "personnel_epa_personnel_02personnel_wildcat",
+            "snap_ct_personnel_10",
+            "personnel_epa_personnel_10",
+            "snap_ct_personnel_11",
+            "personnel_epa_personnel_11",
+            "snap_ct_personnel_11personnel_wildcat",
+            "personnel_epa_personnel_11personnel_wildcat",
+            "snap_ct_personnel_12",
+            "personnel_epa_personnel_12",
+            "snap_ct_personnel_12personnel_wildcat",
+            "personnel_epa_personnel_12personnel_wildcat",
+            "snap_ct_personnel_13",
+            "personnel_epa_personnel_13",
+            "snap_ct_personnel_20",
+            "personnel_epa_personnel_20",
+            "snap_ct_personnel_20personnel_wildcat",
+            "personnel_epa_personnel_20personnel_wildcat",
+            "snap_ct_personnel_21",
+            "personnel_epa_personnel_21",
+            "snap_ct_personnel_21personnel_wildcat",
+            "personnel_epa_personnel_21personnel_wildcat",
+            "snap_ct_personnel_22",
+            "personnel_epa_personnel_22",
+            "snap_ct_personnel_22personnel_wildcat",
+            "personnel_epa_personnel_22personnel_wildcat",
+            "snap_ct_personnel_23",
+            "personnel_epa_personnel_23",
+            "snap_ct_personnel_23personnel_wildcat",
+            "personnel_epa_personnel_23personnel_wildcat",
+            "snap_ct_personnel_jumbo",
+            "personnel_epa_personnel_jumbo",
+            "snap_ct_personnel_wildcat",
+            "personnel_epa_personnel_wildcat",
+            "team_total_snaps",
+            "team_epa",
+            "season",
+            "week",
+            "week_count"
+        );
 
         setAggTeams(reducedTeams);
     }, [weekFilter, downFilter]);
