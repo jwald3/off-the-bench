@@ -56,35 +56,32 @@ export const playerDefenseColumns: GridColDef[] = [
         headerName: "Player",
         headerClassName: "grid-header",
         field: "player_id",
-        flex: 1.75,
+        flex: 1,
+        minWidth: 150,
         type: "string",
     },
     {
         headerName: "Position",
         headerClassName: "grid-header",
         field: "position",
-        flex: 0.5,
+        flex: 1,
+        minWidth: 100,
         type: "string",
     },
     {
         headerName: "Team",
         headerClassName: "grid-header",
         field: "team_abbr",
-        flex: 0.5,
+        flex: 1,
+        minWidth: 75,
         type: "string",
-    },
-    {
-        headerName: "Games",
-        headerClassName: "grid-header",
-        field: "week_count",
-        flex: 0.5,
-        type: "number",
     },
     {
         headerName: "INTs",
         headerClassName: "grid-header",
         field: "interception",
         flex: 1,
+        minWidth: 75,
         type: "number",
     },
     {
@@ -92,24 +89,28 @@ export const playerDefenseColumns: GridColDef[] = [
         headerClassName: "grid-header",
         field: "int_return_yards",
         flex: 1,
+        minWidth: 100,
         type: "number",
     },
     {
         headerName: "INT TDs",
         field: "int_return_touchdown",
         flex: 1,
+        minWidth: 100,
         type: "number",
     },
     {
-        headerName: "Passes Defended",
+        headerName: "PD",
         field: "passes_defended",
         flex: 1,
+        minWidth: 75,
         type: "number",
     },
     {
-        headerName: "Forced Fumbles",
+        headerName: "FF",
         field: "fumbles_forced",
         flex: 1,
+        minWidth: 75,
         type: "number",
     },
     {
@@ -117,12 +118,14 @@ export const playerDefenseColumns: GridColDef[] = [
         field: "sack",
         type: "number",
         flex: 1,
+        minWidth: 75,
         valueGetter: getTotalSacks,
     },
     {
-        headerName: "Combined Tackles",
+        headerName: "Comb Tackles",
         field: "comb_tackles",
         flex: 1,
+        minWidth: 100,
         valueGetter: getComboTackles,
         type: "number",
     },
@@ -130,24 +133,28 @@ export const playerDefenseColumns: GridColDef[] = [
         headerName: "Solo Tackles",
         field: "solo_tackles",
         flex: 1,
+        minWidth: 100,
         type: "number",
     },
     {
-        headerName: "Assists on Tackles",
+        headerName: "Ast Tackles",
         field: "assist_tackls",
         flex: 1,
+        minWidth: 100,
         type: "number",
     },
     {
-        headerName: "Tackles For Loss",
+        headerName: "TFL",
         field: "tackles_for_loss",
         flex: 1,
+        minWidth: 75,
         type: "number",
     },
     {
         headerName: "QB Hits",
         field: "qb_hits",
         flex: 1,
+        minWidth: 100,
         type: "number",
     },
 ];
@@ -1393,17 +1400,18 @@ export const playerAdvRecCols: GridColDef[] = [
 ];
 
 export const teamPersonnelGoupingColumns: GridColDef[] = [
-    { headerName: "Team", field: "posteam", flex: 1 },
+    { headerName: "Team", field: "posteam", flex: 1, minWidth: 80 },
     {
         headerName: "Total Snaps",
         field: "team_total_snaps",
-        width: 75,
+        width: 100,
         type: "number",
     },
     {
         headerName: "1-1 (3 WR)",
         field: "personnel_11",
         flex: 1,
+        minWidth: 100,
         valueGetter: getElevenPersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<Number>) => {
@@ -1419,6 +1427,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
         headerName: "1-2 (2 WR)",
         field: "personnel_12",
         flex: 1,
+        minWidth: 100,
         valueGetter: getTwelvePersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1434,6 +1443,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
         headerName: "2-1 (2 WR)",
         field: "personnel_21",
         flex: 1,
+        minWidth: 100,
         valueGetter: getTwentyOnePersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1450,6 +1460,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
         headerName: "1-3 (1 WR)",
         field: "personnel_13",
         flex: 1,
+        minWidth: 100,
         valueGetter: getThirteenPersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1465,6 +1476,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
         headerName: "2-2 (1 WR)",
         field: "personnel_22",
         flex: 1,
+        minWidth: 100,
         valueGetter: getTwentyTwoPersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1480,6 +1492,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
         headerName: "1-0 (4 WR)",
         field: "personnel_10",
         flex: 1,
+        minWidth: 100,
         valueGetter: getTenPersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1495,6 +1508,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
         headerName: "2-0 (3 WR)",
         field: "personnel_20",
         flex: 1,
+        minWidth: 100,
         valueGetter: getTwentyPersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1510,6 +1524,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
         headerName: "0-1 (4 WR)",
         field: "personnel_01",
         flex: 1,
+        minWidth: 100,
         valueGetter: getOnePersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1525,6 +1540,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
         headerName: "2-3 (0 WR)",
         field: "personnel_23",
         flex: 1,
+        minWidth: 100,
         valueGetter: getTwentyThreePersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1540,6 +1556,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
         headerName: "0-0 (5 WR)",
         field: "personnel_00",
         flex: 1,
+        minWidth: 100,
         valueGetter: getZeroPersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1555,6 +1572,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
         headerName: "Jumbo (6+ OL)",
         field: "personnel_jumbo",
         flex: 1,
+        minWidth: 100,
         valueGetter: getJumboPersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1570,6 +1588,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
         headerName: "Other",
         field: "personnel_other",
         flex: 1,
+        minWidth: 100,
         valueGetter: getOtherPersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1585,6 +1604,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
         headerName: "2 RB",
         field: "personnel_2RB",
         flex: 1,
+        minWidth: 100,
         valueGetter: getTwoRBPersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -1600,6 +1620,7 @@ export const teamPersonnelGoupingColumns: GridColDef[] = [
         headerName: "2 TE",
         field: "personnel_2TE",
         flex: 1,
+        minWidth: 100,
         valueGetter: getTwoTEPersonnelSnaps,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
