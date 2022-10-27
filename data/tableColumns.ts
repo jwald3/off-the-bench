@@ -280,36 +280,41 @@ export const playerOffenseColumns: GridColDef[] = [
 ];
 
 export const teamStatColumns: GridColDef[] = [
-    { headerName: "Team", field: "posteam", flex: 1 },
+    { headerName: "Team", field: "posteam", flex: 0.75, minWidth: 50 },
     {
         headerName: "PF",
         field: "points_for",
-        width: 75,
+        flex: 0.75,
+        minWidth: 75,
         type: "number",
     },
     {
         headerName: "PA",
         field: "points_allowed",
-        width: 75,
+        flex: 0.75,
+        minWidth: 75,
         type: "number",
     },
     {
         headerName: "COMP",
         field: "completions",
-        width: 100,
+        flex: 1,
+        minWidth: 75,
         type: "number",
     },
 
     {
         headerName: "ATTs",
         field: "pass_attempts",
-        width: 100,
+        flex: 1,
+        minWidth: 75,
         type: "number",
     },
     {
         headerName: "COMP %",
         field: "compPercent",
-        flex: 1.5,
+        flex: 1,
+        minWidth: 100,
         valueGetter: getCompletionPct,
         type: "number",
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -331,7 +336,8 @@ export const teamStatColumns: GridColDef[] = [
     {
         headerName: "INTs",
         field: "interceptions",
-        width: 50,
+        flex: 0.75,
+        minWidth: 75,
         type: "number",
     },
     { headerName: "Sacks", field: "sacks", width: 75, type: "number" },
@@ -339,31 +345,36 @@ export const teamStatColumns: GridColDef[] = [
         headerName: "Pass Yards",
         field: "passing_yards",
         flex: 1,
+        minWidth: 100,
         type: "number",
     },
     {
         headerName: "Carries",
         field: "rush_attempt",
-        width: 100,
+        flex: 0.75,
+        minWidth: 75,
         type: "number",
     },
     {
         headerName: "Rush Yards",
         field: "rushing_yards",
         flex: 1,
+        minWidth: 100,
         type: "number",
     },
     {
         headerName: "Yards/Carry",
         field: "yardsPerCarry",
         flex: 1,
+        minWidth: 100,
         valueGetter: getYPC,
         type: "number",
     },
     {
         headerName: "Rush TDs",
         field: "rush_touchdown",
-        width: 100,
+        flex: 1,
+        minWidth: 100,
         type: "number",
     },
 ];
