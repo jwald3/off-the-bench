@@ -63,6 +63,13 @@ interface ITeamOffenseSnapsShell {
     gsis_id: string;
 }
 
+interface IConvRateShell {
+    posteam: string;
+    play_type: string;
+    db_id: string;
+    game_id: string;
+}
+
 export const aggregateStats = <K extends string>(
     dataframe: (Record<K, number> & IBasicPlayerStatsShell)[],
     ...keys: K[]
@@ -288,6 +295,37 @@ export const aggregateOffenseSnaps = <K extends string>(
             });
         } else {
             teamsMap.set(dataframeObj.player_id, {
+                ...dataframeObj,
+            });
+        }
+    }
+    return Array.from(teamsMap.values());
+};
+
+export const aggregateConvRates = <K extends string>(
+    dataframe: (Record<K, number> & IConvRateShell)[],
+    ...keys: K[]
+) => {
+    let teamsMap = new Map<string, Record<K, number> & IConvRateShell>();
+    for (let dataframeObj of dataframe) {
+        const currentObj = teamsMap.get(dataframeObj.play_type);
+        if (currentObj) {
+            let newObjStatic = {
+                play_type: dataframeObj.play_type,
+                db_id: dataframeObj.db_id,
+                posteam: dataframeObj.posteam,
+                game_id: dataframeObj.game_id,
+            };
+            const newObjDynamic = {} as Record<K, number>;
+            keys.forEach(
+                (k) => (newObjDynamic[k] = currentObj[k] + dataframeObj[k])
+            );
+            teamsMap.set(currentObj.play_type, {
+                ...newObjStatic,
+                ...newObjDynamic,
+            });
+        } else {
+            teamsMap.set(dataframeObj.play_type, {
                 ...dataframeObj,
             });
         }

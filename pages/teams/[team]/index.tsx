@@ -5,7 +5,11 @@ import GameLog from "../../../components/GameLog";
 import TeamHomepageBar from "../../../components/TeamHomepageBar";
 import TeamLinkBar from "../../../components/TeamLinkBar";
 import UsageInfo from "../../../components/UsageInfo";
-import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
+import {
+    aggregateConvRates,
+    parseBigInt,
+    regSeasonWeeks,
+} from "../../../data/globalVars";
 import {
     conversionRateStatCols,
     downDataColumns,
@@ -443,53 +447,6 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
         return Array.from(teamsMap.values());
     };
 
-    const aggregateConvRates = (dataframe: ITeamConversionRates[]) => {
-        let teamsMap = new Map();
-
-        for (let obj in dataframe) {
-            if (teamsMap.get(dataframe[obj].play_type)) {
-                let currentObj = teamsMap.get(dataframe[obj].play_type);
-                let newObj = {
-                    play_type: currentObj.play_type,
-                    posteam: currentObj.posteam,
-                    third_down_converted:
-                        Number.parseInt(
-                            currentObj.third_down_converted.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].third_down_converted.toString()
-                        ),
-                    third_down_attempt:
-                        Number.parseInt(
-                            currentObj.third_down_attempt.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].third_down_attempt.toString()
-                        ),
-                    fourth_down_converted:
-                        Number.parseInt(
-                            currentObj.fourth_down_converted.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].fourth_down_converted.toString()
-                        ),
-                    fourth_down_attempt:
-                        Number.parseInt(
-                            currentObj.fourth_down_attempt.toString()
-                        ) +
-                        Number.parseInt(
-                            dataframe[obj].fourth_down_attempt.toString()
-                        ),
-                    db_id: currentObj.db_id,
-                };
-                teamsMap.set(currentObj.play_type, newObj);
-            } else {
-                teamsMap.set(dataframe[obj].play_type, { ...dataframe[obj] });
-            }
-        }
-        return Array.from(teamsMap.values());
-    };
-
     useEffect(() => {
         if (downChartView === "all") {
             setDownChartDataOne("rush_percent");
@@ -555,7 +512,15 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
         setAggedTeamGameLogs(aggStatLog);
 
         const aggrConvSuccessRates = aggregateConvRates(
-            props.conversion_success
+            props.conversion_success,
+            "third_down_converted",
+            "third_down_failed",
+            "fourth_down_converted",
+            "fourth_down_failed",
+            "third_down_attempt",
+            "fourth_down_attempt",
+            "week",
+            "season"
         );
 
         setAggConvSuccessRts(aggrConvSuccessRates);
