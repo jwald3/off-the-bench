@@ -20,12 +20,14 @@ const WeekSelector = (props: CheckboxProps) => {
     let menuRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
     useEffect(() => {
-        if (query.weeks !== undefined) {
+        if (query.weeks !== undefined && query.weeks !== "none") {
             const selectedWeeks = (query.weeks as string)
                 ?.split(",")
                 .map(Number);
 
             setChecked(selectedWeeks);
+        } else if (query.weeks === "none") {
+            setChecked([]);
         }
     }, []);
 
@@ -143,7 +145,9 @@ const WeekSelector = (props: CheckboxProps) => {
                     className={styles.cardBody}
                     onClick={() => setShowSelector(!showSelector)}
                 >
-                    {replaceAllConsectives(checked).join(", ")}
+                    {checked.length > 0
+                        ? replaceAllConsectives(checked).join(", ")
+                        : "None"}
                 </div>
             </div>
             {showSelector && (

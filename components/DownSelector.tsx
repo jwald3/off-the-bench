@@ -18,12 +18,14 @@ const DownSelector = (props: CheckboxProps) => {
     const [checked, setChecked] = useState(props.downFilter);
 
     useEffect(() => {
-        if (query.downs !== undefined) {
+        if (query.downs !== undefined && query.downs !== "none") {
             const selectedDowns = (query.downs as string)
                 ?.split(",")
                 .map(Number);
 
             setChecked(selectedDowns);
+        } else if (query.downs === "none") {
+            setChecked([]);
         }
     }, []);
 
@@ -142,7 +144,9 @@ const DownSelector = (props: CheckboxProps) => {
                     className={styles.cardBody}
                     onClick={() => setShowSelector(!showSelector)}
                 >
-                    {replaceAllConsectives(checked).join(", ")}
+                    {checked.length > 0
+                        ? replaceAllConsectives(checked).join(", ")
+                        : "None"}
                 </div>
             </div>
             {showSelector && (
