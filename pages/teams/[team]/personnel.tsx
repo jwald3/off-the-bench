@@ -14,29 +14,33 @@ import { teamPersonnelGroupingColumns } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
 import styles from "../../../styles/PersonnelPage.module.scss";
 import { ITeamPersonnelStats } from "../../../ts/interfaces/teamInterfaces";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    const team = String(query.team) || "NYJ";
-    let season = Number(query.season) || 2022;
+export const getServerSideProps = withPageAuthRequired({
+    getServerSideProps: async ({ query }) => {
+        const team = String(query.team) || "NYJ";
+        let season = Number(query.season) || 2022;
 
-    let teamQueryResponse = await prisma.team_personnel_data.findMany({
-        where: {
-            season: season,
-            posteam: team,
-            week: {
-                in: regSeasonWeeks,
+        let teamQueryResponse = await prisma.team_personnel_data.findMany({
+            where: {
+                season: season,
+                posteam: team,
+                week: {
+                    in: regSeasonWeeks,
+                },
             },
-        },
-    });
+        });
 
-    const playerData: ITeamPersonnelStats[] = parseBigInt(teamQueryResponse);
+        const playerData: ITeamPersonnelStats[] =
+            parseBigInt(teamQueryResponse);
 
-    return {
-        props: {
-            players: parseBigInt(playerData),
-        },
-    };
-};
+        return {
+            props: {
+                players: parseBigInt(playerData),
+            },
+        };
+    },
+});
 
 interface PersonnelProps {
     players: ITeamPersonnelStats[];

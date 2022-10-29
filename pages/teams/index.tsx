@@ -6,19 +6,22 @@ import { parseBigInt } from "../../data/globalVars";
 import prisma from "../../lib/prisma";
 import styles from "../../styles/AllTeamsHome.module.scss";
 import { ITeamInformation } from "../../ts/interfaces/teamInterfaces";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    let team: ITeamInformation[];
+export const getServerSideProps = withPageAuthRequired({
+    getServerSideProps: async ({ query }) => {
+        let team: ITeamInformation[];
 
-    const playerSubRes = await prisma.team_information.findMany({});
-    team = parseBigInt(playerSubRes);
+        const playerSubRes = await prisma.team_information.findMany({});
+        team = parseBigInt(playerSubRes);
 
-    return {
-        props: {
-            teams: parseBigInt(team),
-        },
-    };
-};
+        return {
+            props: {
+                teams: parseBigInt(team),
+            },
+        };
+    },
+});
 
 interface TeamProps {
     teams: ITeamInformation[];

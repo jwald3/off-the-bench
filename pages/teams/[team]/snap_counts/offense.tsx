@@ -14,29 +14,33 @@ import { playerSnapCols } from "../../../../data/tableColumns";
 import prisma from "../../../../lib/prisma";
 import styles from "../../../../styles/TeamSnaps.module.scss";
 import { IPlayerOffensiveSnapData } from "../../../../ts/interfaces/playerInterfaces";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    const team = String(query.team) || "NYJ";
-    let season = Number(query.season) || 2022;
+export const getServerSideProps = withPageAuthRequired({
+    getServerSideProps: async ({ query }) => {
+        const team = String(query.team) || "NYJ";
+        let season = Number(query.season) || 2022;
 
-    let teamQueryResponse = await prisma.offense_player_snaps_by_down.findMany({
-        where: {
-            season: season,
-            posteam: team,
-            week: {
-                in: regSeasonWeeks,
+        let teamQueryResponse =
+            await prisma.offense_player_snaps_by_down.findMany({
+                where: {
+                    season: season,
+                    posteam: team,
+                    week: {
+                        in: regSeasonWeeks,
+                    },
+                },
+            });
+
+        const playerData = parseBigInt(teamQueryResponse);
+
+        return {
+            props: {
+                players: parseBigInt(playerData),
             },
-        },
-    });
-
-    const playerData = parseBigInt(teamQueryResponse);
-
-    return {
-        props: {
-            players: parseBigInt(playerData),
-        },
-    };
-};
+        };
+    },
+});
 
 interface SnapProps {
     players: IPlayerOffensiveSnapData[];

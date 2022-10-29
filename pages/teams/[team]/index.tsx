@@ -24,75 +24,78 @@ import {
     ITeamInformation,
     ITeamStatsByDown,
 } from "../../../ts/interfaces/teamInterfaces";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    const team = String(query.team) || "NYJ";
-    let season = Number(query.season) || 2022;
+export const getServerSideProps = withPageAuthRequired({
+    getServerSideProps: async ({ query }) => {
+        const team = String(query.team) || "NYJ";
+        let season = Number(query.season) || 2022;
 
-    let teamInformation: ITeamInformation[];
+        let teamInformation: ITeamInformation[];
 
-    const teamDbInfo = await prisma.team_information.findMany({
-        where: {
-            team_abbr: team,
-        },
-    });
-
-    teamInformation = parseBigInt(teamDbInfo);
-
-    let teamQueryResponse = await prisma.game_logs_basic.findMany({
-        where: {
-            season: season,
-            posteam: team,
-            week: {
-                in: regSeasonWeeks,
+        const teamDbInfo = await prisma.team_information.findMany({
+            where: {
+                team_abbr: team,
             },
-        },
-    });
+        });
 
-    let opponentQueryResponse = await prisma.game_logs_basic.findMany({
-        where: {
-            season: season,
-            defteam: team,
-        },
-    });
+        teamInformation = parseBigInt(teamDbInfo);
 
-    let statsByDown = await prisma.down_by_down_offense.findMany({
-        where: {
-            season: season,
-            posteam: team,
-            week: {
-                in: regSeasonWeeks,
+        let teamQueryResponse = await prisma.game_logs_basic.findMany({
+            where: {
+                season: season,
+                posteam: team,
+                week: {
+                    in: regSeasonWeeks,
+                },
             },
-        },
-    });
+        });
 
-    let conversionRts = await prisma.conversion_success.findMany({
-        where: {
-            season: season,
-            posteam: team,
-            week: {
-                in: regSeasonWeeks,
+        let opponentQueryResponse = await prisma.game_logs_basic.findMany({
+            where: {
+                season: season,
+                defteam: team,
             },
-        },
-    });
+        });
 
-    const playerData: ITeamGameLogs[] = parseBigInt(teamQueryResponse);
-    const downData: ITeamStatsByDown[] = parseBigInt(statsByDown);
-    const opponentGameLogs: ITeamGameLogs[] = parseBigInt(
-        opponentQueryResponse
-    );
-    const successRates: ITeamConversionRates[] = parseBigInt(conversionRts);
+        let statsByDown = await prisma.down_by_down_offense.findMany({
+            where: {
+                season: season,
+                posteam: team,
+                week: {
+                    in: regSeasonWeeks,
+                },
+            },
+        });
 
-    return {
-        props: {
-            game_logs: parseBigInt(playerData),
-            opponent_game_logs: parseBigInt(opponentGameLogs),
-            down_data: parseBigInt(downData),
-            conversion_success: parseBigInt(successRates),
-            team_details: parseBigInt(teamInformation),
-        },
-    };
-};
+        let conversionRts = await prisma.conversion_success.findMany({
+            where: {
+                season: season,
+                posteam: team,
+                week: {
+                    in: regSeasonWeeks,
+                },
+            },
+        });
+
+        const playerData: ITeamGameLogs[] = parseBigInt(teamQueryResponse);
+        const downData: ITeamStatsByDown[] = parseBigInt(statsByDown);
+        const opponentGameLogs: ITeamGameLogs[] = parseBigInt(
+            opponentQueryResponse
+        );
+        const successRates: ITeamConversionRates[] = parseBigInt(conversionRts);
+
+        return {
+            props: {
+                game_logs: parseBigInt(playerData),
+                opponent_game_logs: parseBigInt(opponentGameLogs),
+                down_data: parseBigInt(downData),
+                conversion_success: parseBigInt(successRates),
+                team_details: parseBigInt(teamInformation),
+            },
+        };
+    },
+});
 
 interface GameLogProps {
     game_logs: ITeamGameLogs[];

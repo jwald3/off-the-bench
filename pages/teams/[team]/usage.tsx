@@ -21,29 +21,32 @@ import {
     regSeasonWeeks,
 } from "../../../data/globalVars";
 import { IPlayerUsageStats } from "../../../ts/interfaces/playerInterfaces";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    const team = String(query.team) || "NYJ";
-    let season = Number(query.season) || 2022;
+export const getServerSideProps = withPageAuthRequired({
+    getServerSideProps: async ({ query }) => {
+        const team = String(query.team) || "NYJ";
+        let season = Number(query.season) || 2022;
 
-    let teamQueryResponse = await prisma.player_usage_by_team.findMany({
-        where: {
-            season: season,
-            posteam: team,
-            week: {
-                in: regSeasonWeeks,
+        let teamQueryResponse = await prisma.player_usage_by_team.findMany({
+            where: {
+                season: season,
+                posteam: team,
+                week: {
+                    in: regSeasonWeeks,
+                },
             },
-        },
-    });
+        });
 
-    const playerData: IPlayerUsageStats[] = parseBigInt(teamQueryResponse);
+        const playerData: IPlayerUsageStats[] = parseBigInt(teamQueryResponse);
 
-    return {
-        props: {
-            players: parseBigInt(playerData),
-        },
-    };
-};
+        return {
+            props: {
+                players: parseBigInt(playerData),
+            },
+        };
+    },
+});
 
 interface PlayerProps {
     players: IPlayerUsageStats[];
