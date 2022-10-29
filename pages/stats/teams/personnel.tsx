@@ -13,30 +13,33 @@ import { teamPersonnelGoupingColumns } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
 import styles from "../../../styles/TeamStats.module.scss";
 import { ITeamFormationStats } from "../../../ts/interfaces/teamInterfaces";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    let team: ITeamFormationStats[];
-    let season = Number(query.season) || 2022;
-    let teamQueryResponse;
+export const getServerSideProps = withPageAuthRequired({
+    getServerSideProps: async ({ query }) => {
+        let team: ITeamFormationStats[];
+        let season = Number(query.season) || 2022;
+        let teamQueryResponse;
 
-    teamQueryResponse =
-        await prisma.personnel_usage_and_success_by_team.findMany({
-            where: {
-                week: {
-                    in: regSeasonWeeks,
+        teamQueryResponse =
+            await prisma.personnel_usage_and_success_by_team.findMany({
+                where: {
+                    week: {
+                        in: regSeasonWeeks,
+                    },
+                    season: season,
                 },
-                season: season,
+            });
+
+        team = parseBigInt(teamQueryResponse);
+
+        return {
+            props: {
+                teams: parseBigInt(team),
             },
-        });
-
-    team = parseBigInt(teamQueryResponse);
-
-    return {
-        props: {
-            teams: parseBigInt(team),
-        },
-    };
-};
+        };
+    },
+});
 
 interface TeamProps {
     teams: ITeamFormationStats[];
