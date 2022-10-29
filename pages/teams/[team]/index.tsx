@@ -105,7 +105,7 @@ interface GameLogProps {
     team_details: ITeamInformation[];
 }
 
-const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
+const TeamIndexPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
     const [teamName, setTeamName] = useState(props.team_details);
     const [gameLogs, setGameLogs] = useState(props.game_logs);
     const [opponentGameLogs, setOpponentGameLogs] = useState(
@@ -607,4 +607,4 @@ const TeamPage: React.FunctionComponent<GameLogProps> = ({ ...props }) => {
     );
 };
 
-export default TeamPage;
+export default TeamIndexPage;

@@ -46,7 +46,9 @@ interface SnapProps {
     players: IPlayerOffensiveSnapData[];
 }
 
-const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
+const PlayerOffenseSnaps: React.FunctionComponent<SnapProps> = ({
+    ...props
+}) => {
     const router = useRouter();
     const { query } = router;
 
@@ -186,4 +188,4 @@ const PlayerSnaps: React.FunctionComponent<SnapProps> = ({ ...props }) => {
     );
 };
 
-export default PlayerSnaps;
+export default PlayerOffenseSnaps;

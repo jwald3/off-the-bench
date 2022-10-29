@@ -44,7 +44,7 @@ interface TeamProps {
     teams: ITeamBasicStats[];
 }
 
-const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
+const TeamOffenseData: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     const router = useRouter();
     const { query } = router;
     const columns = teamStatColumns;
@@ -176,4 +176,4 @@ const TeamWeeks: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     );
 };
 
-export default TeamWeeks;
+export default TeamOffenseData;

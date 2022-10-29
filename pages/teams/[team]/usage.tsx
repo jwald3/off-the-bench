@@ -52,7 +52,7 @@ interface PlayerProps {
     players: IPlayerUsageStats[];
 }
 
-const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
+const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     const router = useRouter();
     const { query } = router;
 
@@ -307,4 +307,4 @@ const TeamWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     );
 };
 
-export default TeamWeeks;
+export default PlayerUsage;
