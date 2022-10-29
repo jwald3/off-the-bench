@@ -3,10 +3,12 @@ import styles from "../styles/Appbar.module.scss";
 import Link from "next/link";
 import { AiFillHome } from "react-icons/ai";
 import { useRouter } from "next/router";
+import { useUser } from "@auth0/nextjs-auth0";
 import Image from "next/image";
 
 export default function DrawerAppBar() {
     const router = useRouter();
+    const { user, error, isLoading } = useUser();
 
     return (
         <div className={styles.navbar}>
@@ -38,52 +40,69 @@ export default function DrawerAppBar() {
                 </Link>
             </div>
             <div className={styles.navbarLinks}>
-                <div className={styles.navbarLink}>
-                    <div>
-                        <span
-                            onClick={() =>
-                                router.replace({
-                                    pathname: "/teams",
-                                })
-                            }
-                        >
-                            TEAMS
-                        </span>
-                    </div>
-                </div>
-                <div className={styles.navbarLink}>
-                    <div>
-                        <span
-                            onClick={() =>
-                                router.replace({
-                                    pathname: "/stats/teams/offense",
-                                })
-                            }
-                        >
-                            TEAM STATS
-                        </span>
-                    </div>
-                </div>
-                <div className={styles.navbarLink}>
-                    <div>
-                        <span
-                            onClick={() =>
-                                router.replace({
-                                    pathname: "/stats/players/offense",
-                                })
-                            }
-                        >
-                            PLAYER STATS
-                        </span>
-                    </div>
-                </div>
-                <div className={styles.navbarHomeLink}>
-                    <Link href="/" passHref>
-                        <span>
-                            <AiFillHome />
-                        </span>
-                    </Link>
-                </div>
+                {user ? (
+                    <>
+                        <div className={styles.navbarLink}>
+                            <div>
+                                <span
+                                    onClick={() =>
+                                        router.replace({
+                                            pathname: "/teams",
+                                        })
+                                    }
+                                >
+                                    TEAMS
+                                </span>
+                            </div>
+                        </div>
+                        <div className={styles.navbarLink}>
+                            <div>
+                                <span
+                                    onClick={() =>
+                                        router.replace({
+                                            pathname: "/stats/teams/offense",
+                                        })
+                                    }
+                                >
+                                    TEAM STATS
+                                </span>
+                            </div>
+                        </div>
+                        <div className={styles.navbarLink}>
+                            <div>
+                                <span
+                                    onClick={() =>
+                                        router.replace({
+                                            pathname: "/stats/players/offense",
+                                        })
+                                    }
+                                >
+                                    PLAYER STATS
+                                </span>
+                            </div>
+                        </div>
+                        <div className={styles.navbarLink}>
+                            <div>
+                                <a href="/api/auth/logout">LOG OUT</a>
+                            </div>
+                        </div>
+                        <div className={styles.navbarHomeLink}>
+                            <Link href="/" passHref>
+                                <span>
+                                    <AiFillHome />
+                                </span>
+                            </Link>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className={styles.navbarLink}>
+                            <div>
+                                <a href="/api/auth/login">LOGIN</a>
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );
