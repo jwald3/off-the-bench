@@ -83,7 +83,7 @@ export default function DrawerAppBar() {
                         </div>
                         <div className={styles.navbarLink}>
                             <div>
-                                <a href="/api/auth/logout">LOG OUT</a>
+                                <Link href="/api/auth/logout">LOG OUT</Link>
                             </div>
                         </div>
                         <div className={styles.navbarHomeLink}>
@@ -98,7 +98,7 @@ export default function DrawerAppBar() {
                     <>
                         <div className={styles.navbarLink}>
                             <div>
-                                <a href="/api/auth/login">LOGIN</a>
+                                <Link href="/api/auth/login">LOGIN</Link>
                             </div>
                         </div>
                     </>
