@@ -13,28 +13,31 @@ import {
     regSeasonWeeks,
 } from "../../../data/globalVars";
 import { IBasicOffensePlayerStats } from "../../../ts/interfaces/playerInterfaces";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    let team: IBasicOffensePlayerStats[];
-    let season = Number(query.season) || 2022;
+export const getServerSideProps = withPageAuthRequired({
+    getServerSideProps: async ({ query }) => {
+        let team: IBasicOffensePlayerStats[];
+        let season = Number(query.season) || 2022;
 
-    const playerSubRes = await prisma.player_offense_stats_basic.findMany({
-        where: {
-            week: {
-                in: regSeasonWeeks,
+        const playerSubRes = await prisma.player_offense_stats_basic.findMany({
+            where: {
+                week: {
+                    in: regSeasonWeeks,
+                },
+                season: season,
             },
-            season: season,
-        },
-    });
+        });
 
-    team = parseBigInt(playerSubRes);
+        team = parseBigInt(playerSubRes);
 
-    return {
-        props: {
-            teams: parseBigInt(team),
-        },
-    };
-};
+        return {
+            props: {
+                teams: parseBigInt(team),
+            },
+        };
+    },
+});
 
 interface PlayerProps {
     teams: IBasicOffensePlayerStats[];
