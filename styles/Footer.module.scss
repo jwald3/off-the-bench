@@ -4,7 +4,7 @@
 .footerContainer {
     width: 100%;
     height: 30vh;
-    background-color: $secondary-dark;
+    background-color: $main-dark;
     align-items: center;
     display: flex;
     box-shadow: $containerBoxShadow;
@@ -18,7 +18,7 @@
         padding-right: 5%;
         padding-top: 1%;
         border-right: 1px solid $app-bg;
-        color: $off-white;
+        color: $container-white;
         flex-direction: column;
     }
 

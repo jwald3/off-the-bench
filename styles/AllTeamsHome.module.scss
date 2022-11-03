@@ -18,7 +18,7 @@
         align-items: center;
         padding-left: $cardInteriorPadding;
         text-align: start;
-        background-color: $off-white;
+        background-color: $container-white;
         box-shadow: $containerBoxShadow;
         width: 90%;
         height: 10%;
@@ -31,7 +31,7 @@
     .divisionContainer {
         display: flex;
         justify-content: space-around;
-        background-color: $off-white;
+        background-color: $container-white;
         padding-left: $cardInteriorPadding;
         padding-top: $cardInteriorPadding;
         padding-bottom: $cardInteriorPadding;

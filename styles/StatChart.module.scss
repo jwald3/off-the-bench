@@ -1,7 +1,7 @@
 @import "colors";
 
 .chartBody {
-    background-color: $off-white;
+    background-color: $container-white;
     width: 100%;
     max-width: 2000px;
     margin-left: auto;
@@ -10,7 +10,7 @@
 
     .barChart {
         width: 100%;
-        background-color: $off-white;
+        background-color: $container-white;
         font-size: 0.7em;
     }
 }

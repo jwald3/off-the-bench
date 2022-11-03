@@ -3,7 +3,7 @@
 .divisionContainer {
     display: flex;
     flex-direction: column;
-    background-color: $off-white;
+    background-color: $container-white;
     padding: 1.5%;
     gap: 1em;
     text-transform: uppercase;
@@ -15,7 +15,7 @@
         padding: 2%;
         align-items: center;
         justify-content: space-between;
-        color: $secondary-dark;
+        color: $main-dark;
         font-weight: bold;
 
         span {
@@ -31,7 +31,7 @@
         display: flex;
         flex-direction: column;
         padding-left: 2%;
-        background-color: $off-white;
+        background-color: $container-white;
         gap: 1em;
         width: fit-content;
         color: $true-medium;

@@ -67,13 +67,13 @@
             }
 
             .checkboxActive {
-                background-color: $secondary-dark;
-                color: $off-white;
+                background-color: $main-dark;
+                color: $container-white;
             }
 
             .checkboxInactive {
-                background-color: $off-white;
-                color: $secondary-dark;
+                background-color: $container-white;
+                color: $main-dark;
             }
         }
 
@@ -95,7 +95,7 @@
                 background-color: $medium-dark;
                 cursor: pointer;
                 font-size: 0.75em;
-                color: $off-white;
+                color: $container-white;
                 text-transform: uppercase;
                 box-shadow: 1px 2px 5px 1px rgba(201, 201, 201, 0.6);
             }
