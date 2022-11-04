@@ -104,7 +104,10 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
                 "week",
                 "down",
                 "week_count",
-                "season"
+                "season",
+                "epa",
+                "pass_epa",
+                "rush_epa"
             );
 
         reducedPersonnel.sort((a, b) => b.snap_ct - a.snap_ct);
@@ -144,7 +147,10 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
             "week",
             "down",
             "week_count",
-            "season"
+            "season",
+            "epa",
+            "pass_epa",
+            "rush_epa"
         );
         reducedPlayers.sort((a, b) => b.snap_ct - a.snap_ct);
 

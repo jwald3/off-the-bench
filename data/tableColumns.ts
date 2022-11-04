@@ -24,6 +24,9 @@ import {
     getYardsTarget,
 } from "./tableAssets/columnFunctions/playerStatColFunctions";
 import {
+    getAverageEpa,
+    getAveragePassEpa,
+    getAverageRushEpa,
     getCompletionPct,
     getElevenPersonnelSnaps,
     getFourthDownConv,
@@ -617,14 +620,14 @@ export const teamPersonnelGroupingColumns: GridColDef[] = [
         headerName: "Total Snaps",
         field: "snap_ct",
         flex: 1,
-        minWidth: 75,
+        minWidth: 110,
         type: "number",
     },
     {
         headerName: "Personnel %",
         field: "personnel_pct",
         flex: 1,
-        minWidth: 75,
+        minWidth: 110,
         type: "number",
         valueGetter: getPersonnelPct,
         valueFormatter: (params: GridValueFormatterParams<number>) => {
@@ -635,6 +638,14 @@ export const teamPersonnelGroupingColumns: GridColDef[] = [
             const valueFormatted = Number(params.value).toLocaleString();
             return `${valueFormatted} %`;
         },
+    },
+    {
+        headerName: "Avg EPA",
+        field: "epa",
+        flex: 1,
+        minWidth: 75,
+        type: "number",
+        valueGetter: getAverageEpa,
     },
     {
         headerName: "Pass Snaps",
@@ -658,6 +669,14 @@ export const teamPersonnelGroupingColumns: GridColDef[] = [
         type: "number",
     },
     {
+        headerName: "Avg Pass EPA",
+        field: "pass_epa",
+        flex: 1,
+        minWidth: 100,
+        type: "number",
+        valueGetter: getAveragePassEpa,
+    },
+    {
         headerName: "Rush Snaps",
         field: "rushing_snap",
         flex: 1,
@@ -677,6 +696,14 @@ export const teamPersonnelGroupingColumns: GridColDef[] = [
         flex: 1,
         minWidth: 75,
         type: "number",
+    },
+    {
+        headerName: "Avg Rush EPA",
+        field: "rush_epa",
+        flex: 1,
+        minWidth: 100,
+        type: "number",
+        valueGetter: getAverageRushEpa,
     },
 ];
 

@@ -24,6 +24,30 @@ export function getPersonnelPct(params: GridCellParams) {
     ).toFixed(2);
 }
 
+export function getAverageEpa(params: GridCellParams) {
+    if (params.row.total_game_snaps === 0) {
+        return 0;
+    }
+
+    return ((params.row.epa || 0) / params.row.total_game_snaps).toFixed(3);
+}
+
+export function getAveragePassEpa(params: GridCellParams) {
+    if (params.row.passing_snap === 0) {
+        return 0;
+    }
+
+    return (params.row.pass_epa / params.row.passing_snap).toFixed(3);
+}
+
+export function getAverageRushEpa(params: GridCellParams) {
+    if (params.row.rushing_snap === 0) {
+        return 0;
+    }
+
+    return (params.row.rush_epa / params.row.rushing_snap).toFixed(3);
+}
+
 // teamGameLogColumns Functions
 
 export function getGameResult(params: GridCellParams) {

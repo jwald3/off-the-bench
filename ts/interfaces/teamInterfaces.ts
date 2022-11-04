@@ -164,12 +164,15 @@ export interface ITeamPersonnelStats {
     posteam: string;
     offense_grouping: string;
     snap_ct: number;
+    epa: number;
     passing_snap: number;
     rushing_snap: number;
     passing_yards: number;
     pass_touchdown: number;
+    pass_epa: number;
     rushing_yards: number;
     rush_touchdown: number;
+    rush_epa: number;
     season: number;
     week: number;
     week_count: number;
