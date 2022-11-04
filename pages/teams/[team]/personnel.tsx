@@ -110,9 +110,25 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
                 "rush_epa"
             );
 
-        reducedPersonnel.sort((a, b) => b.snap_ct - a.snap_ct);
+        const sumOfSnaps = reducedPersonnel.reduce((i, obj) => {
+            return i + obj.snap_ct;
+        }, 0);
 
-        setAggPersonnel(reducedPersonnel);
+        const finalPersonnel: ITeamPersonnelStats[] = reducedPersonnel.filter(
+            (group) => {
+                return group.snap_ct !== 0;
+            }
+        );
+
+        finalPersonnel.forEach((group) => {
+            return { ...group, total_game_snaps: sumOfSnaps };
+        });
+
+        finalPersonnel.sort((a, b) => {
+            return b.snap_ct - a.snap_ct;
+        });
+
+        setAggPersonnel(finalPersonnel);
     }, []);
 
     useEffect(() => {
@@ -134,7 +150,7 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
                 downFilter.includes(Number.parseInt(player.down.toString()))
             );
 
-        const reducedPlayers = aggregatePersonnelStats(
+        const reducedPersonnel = aggregatePersonnelStats(
             filteredPlayers,
             "snap_ct",
             "passing_snap",
@@ -152,9 +168,22 @@ const TeamPersonnel: React.FunctionComponent<PersonnelProps> = ({
             "pass_epa",
             "rush_epa"
         );
-        reducedPlayers.sort((a, b) => b.snap_ct - a.snap_ct);
 
-        setAggPersonnel(reducedPlayers);
+        const sumOfSnaps = reducedPersonnel.reduce((i, obj) => {
+            return i + obj.snap_ct;
+        }, 0);
+
+        const finalPersonnel: ITeamPersonnelStats[] = reducedPersonnel
+            .filter((group) => {
+                return group.snap_ct !== 0;
+            })
+            .map((group) => ({ ...group, total_game_snaps: sumOfSnaps }));
+
+        finalPersonnel.sort((a, b) => {
+            return b.snap_ct - a.snap_ct;
+        });
+
+        setAggPersonnel(finalPersonnel);
     }, [weekFilter, downFilter]);
 
     return (
