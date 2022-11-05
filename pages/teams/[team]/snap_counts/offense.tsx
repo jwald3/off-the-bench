@@ -63,10 +63,8 @@ const PlayerOffenseSnaps: React.FunctionComponent<SnapProps> = ({
                 ?.split(",")
                 .map(Number);
 
-            console.log(query.weeks);
             setWeekFilter(selectedWeeks);
         } else if (query.weeks === "") {
-            console.log(query.weeks);
             setWeekFilter([]);
         }
 
@@ -75,10 +73,8 @@ const PlayerOffenseSnaps: React.FunctionComponent<SnapProps> = ({
                 ?.split(",")
                 .map(Number);
 
-            console.log(query.downs);
             setDownFilter(selecteddowns);
         } else if (query.downs === "") {
-            console.log(query.downs);
             setDownFilter([]);
         }
 

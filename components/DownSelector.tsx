@@ -33,7 +33,6 @@ const DownSelector = (props: CheckboxProps) => {
         let handler = (e: any) => {
             if (!menuRef.current.contains(e.target)) {
                 setShowSelector(false);
-                console.log(menuRef.current);
             }
         };
 

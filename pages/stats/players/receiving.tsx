@@ -59,10 +59,8 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 ?.split(",")
                 .map(Number);
 
-            console.log(query.weeks);
             setWeekFilter(selectedWeeks);
         } else if (query.weeks === "none") {
-            console.log(query.weeks);
             setWeekFilter([]);
         }
 
@@ -72,10 +70,8 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 ?.split(",")
                 .map(Number);
 
-            console.log(query.downs);
             setDownFilter(selectedDowns);
         } else if (query.downs === "none") {
-            console.log(query.downs);
             setDownFilter([]);
         }
 

@@ -76,10 +76,8 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 ?.split(",")
                 .map(Number);
 
-            console.log(query.weeks);
             setWeekFilter(selectedWeeks);
         } else if (query.weeks === "") {
-            console.log(query.weeks);
             setWeekFilter([]);
         }
 
@@ -88,10 +86,8 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 ?.split(",")
                 .map(Number);
 
-            console.log(query.downs);
             setDownFilter(selectedDowns);
         } else if (query.downs === "") {
-            console.log(query.downs);
             setDownFilter([]);
         }
 
@@ -160,8 +156,6 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                     total_team_target: sumOfSnaps,
                 };
             });
-
-        console.log(sumOfSnaps);
 
         finalTargets.sort((a, b) => {
             return b.target - a.target;

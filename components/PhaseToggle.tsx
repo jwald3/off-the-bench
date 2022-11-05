@@ -32,7 +32,6 @@ const PhaseToggle: React.FunctionComponent<PhaseProps> = ({ ...props }) => {
         let handler = (e: any) => {
             if (!menuRef.current.contains(e.target)) {
                 setShowSelector(false);
-                console.log(menuRef.current);
             }
         };
 
