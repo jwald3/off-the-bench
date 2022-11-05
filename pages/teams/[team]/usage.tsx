@@ -145,16 +145,6 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             "total_team_target"
         );
 
-        // const targets = reducedTeams.filter((player) => player.target !== 0);
-
-        // const sumOfTargets = targets.reduce((i, obj) => {
-        //     return i + obj.target;
-        // }, 0);
-
-        // targets.forEach((group) => {
-        //     return { ...group, total_team_target: sumOfTargets };
-        // });
-
         const sumOfSnaps = reducedTeams.reduce((i, obj) => {
             return i + obj.target;
         }, 0);
@@ -188,10 +178,8 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             return { ...group, total_team_rushes: sumOfRushes };
         });
 
-        // targets.sort((a, b) => b.target - a.target);
         rushes.sort((a, b) => b.rush - a.rush);
 
-        // setPlayerTargets(targets);
         setPlayerRushes(rushes);
     }, []);
 
@@ -266,38 +254,73 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
 
         setAggPlayers(reducedPlayers);
 
-        // const targets = reducedPlayers.filter((player) => player.target !== 0);
+        if (recChartDataOne === "target") {
+            const targets = reducedPlayers.filter((group) => {
+                return group.target !== 0;
+            });
 
-        // const sumOfTargets = targets.reduce((i, obj) => {
-        //     return i + obj.target;
-        // }, 0);
+            const sumOfTargets = targets.reduce((i, obj) => {
+                return i + obj.target;
+            }, 0);
 
-        // targets.forEach((group) => {
-        //     return { ...group, total_team_target: sumOfTargets };
-        // });
+            const finalTargets: IPlayerUsageStats[] = targets.map((player) => {
+                return {
+                    ...player,
+                    target_metric: player.target,
+                    total_team_target: sumOfTargets,
+                };
+            });
 
-        const targets = reducedPlayers.filter((group) => {
-            return group.target !== 0;
-        });
+            finalTargets.sort((a, b) => {
+                return b.target - a.target;
+            });
 
-        const sumOfTargets = targets.reduce((i, obj) => {
-            return i + obj.target;
-        }, 0);
+            setPlayerTargets(finalTargets);
+        } else if (recChartDataOne === "redzone_target") {
+            const targets = reducedPlayers.filter((group) => {
+                return group.redzone_target !== 0;
+            });
 
-        const finalTargets: IPlayerUsageStats[] = targets.map((player) => {
-            return {
-                ...player,
-                total_team_target: sumOfTargets,
-            };
-        });
+            const sumOfTargets = targets.reduce((i, obj) => {
+                return i + obj.redzone_target;
+            }, 0);
 
-        console.log(sumOfTargets);
+            const finalTargets: IPlayerUsageStats[] = targets.map((player) => {
+                return {
+                    ...player,
+                    target_metric: player.redzone_target,
+                    total_team_target: sumOfTargets,
+                };
+            });
 
-        finalTargets.sort((a, b) => {
-            return b.target - a.target;
-        });
+            finalTargets.sort((a, b) => {
+                return b.redzone_target - a.redzone_target;
+            });
 
-        setPlayerTargets(finalTargets);
+            setPlayerTargets(finalTargets);
+        } else if (recChartDataOne === "endzone_target") {
+            const targets = reducedPlayers.filter((group) => {
+                return group.endzone_target !== 0;
+            });
+
+            const sumOfTargets = targets.reduce((i, obj) => {
+                return i + obj.endzone_target;
+            }, 0);
+
+            const finalTargets: IPlayerUsageStats[] = targets.map((player) => {
+                return {
+                    ...player,
+                    target_metric: player.endzone_target,
+                    total_team_target: sumOfTargets,
+                };
+            });
+
+            finalTargets.sort((a, b) => {
+                return b.endzone_target - a.endzone_target;
+            });
+
+            setPlayerTargets(finalTargets);
+        }
 
         const rushes = reducedPlayers.filter((player) => player.rush !== 0);
 
@@ -309,12 +332,10 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             return { ...group, total_team_rushes: sumOfRushes };
         });
 
-        // targets.sort((a, b) => b.target - a.target);
         rushes.sort((a, b) => b.rush - a.rush);
 
-        // setPlayerTargets(targets);
         setPlayerRushes(rushes);
-    }, [weekFilter, downFilter]);
+    }, [weekFilter, downFilter, recChartDataOne]);
 
     return (
         <div className={styles.usagePageContainer}>

@@ -30,13 +30,14 @@ export function getPlayerCompletionPct(params: GridCellParams) {
 // playerUsageColumns
 
 export function getTargetEpa(params: GridCellParams) {
-    return (params.row.receiving_epa / params.row.target).toFixed(3);
+    return (params.row.receiving_epa / params.row.target_metric).toFixed(3);
 }
 
 export function getTargetPct(params: GridCellParams) {
-    return ((params.row.target / params.row.total_team_target) * 100).toFixed(
-        2
-    );
+    return (
+        (params.row.target_metric / params.row.total_team_target) *
+        100
+    ).toFixed(2);
 }
 
 // playerRushUsageColumns Functions
