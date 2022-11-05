@@ -33,6 +33,12 @@ export function getTargetEpa(params: GridCellParams) {
     return (params.row.receiving_epa / params.row.target).toFixed(3);
 }
 
+export function getTargetPct(params: GridCellParams) {
+    return ((params.row.target / params.row.total_team_target) * 100).toFixed(
+        2
+    );
+}
+
 // playerRushUsageColumns Functions
 
 export function getRushYPC(params: GridCellParams) {

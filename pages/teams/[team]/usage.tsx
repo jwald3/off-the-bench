@@ -141,17 +141,57 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             "rush_epa",
             "season",
             "week",
-            "week_count"
+            "week_count",
+            "total_team_target"
         );
 
-        const targets = reducedTeams.filter((player) => player.target !== 0);
+        // const targets = reducedTeams.filter((player) => player.target !== 0);
+
+        // const sumOfTargets = targets.reduce((i, obj) => {
+        //     return i + obj.target;
+        // }, 0);
+
+        // targets.forEach((group) => {
+        //     return { ...group, total_team_target: sumOfTargets };
+        // });
+
+        const sumOfSnaps = reducedTeams.reduce((i, obj) => {
+            return i + obj.target;
+        }, 0);
+
+        const finalTargets: IPlayerUsageStats[] = reducedTeams
+            .filter((group) => {
+                return group.target !== 0;
+            })
+            .map((group) => {
+                return {
+                    ...group,
+                    total_team_target: sumOfSnaps,
+                };
+            });
+
+        console.log(sumOfSnaps);
+
+        finalTargets.sort((a, b) => {
+            return b.target - a.target;
+        });
+
+        setPlayerTargets(finalTargets);
 
         const rushes = reducedTeams.filter((player) => player.rush !== 0);
 
-        targets.sort((a, b) => b.target - a.target);
+        const sumOfRushes = rushes.reduce((i, obj) => {
+            return i + obj.rush;
+        }, 0);
+
+        rushes.forEach((group) => {
+            return { ...group, total_team_rushes: sumOfRushes };
+        });
+
+        // targets.sort((a, b) => b.target - a.target);
         rushes.sort((a, b) => b.rush - a.rush);
 
-        setPlayerTargets(targets);
+        // setPlayerTargets(targets);
         setPlayerRushes(rushes);
     }, []);
 
@@ -220,19 +260,59 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             "rush_epa",
             "season",
             "week",
-            "week_count"
+            "week_count",
+            "total_team_target"
         );
 
         setAggPlayers(reducedPlayers);
 
-        const targets = reducedPlayers.filter((player) => player.target !== 0);
+        // const targets = reducedPlayers.filter((player) => player.target !== 0);
+
+        // const sumOfTargets = targets.reduce((i, obj) => {
+        //     return i + obj.target;
+        // }, 0);
+
+        // targets.forEach((group) => {
+        //     return { ...group, total_team_target: sumOfTargets };
+        // });
+
+        const targets = reducedPlayers.filter((group) => {
+            return group.target !== 0;
+        });
+
+        const sumOfTargets = targets.reduce((i, obj) => {
+            return i + obj.target;
+        }, 0);
+
+        const finalTargets: IPlayerUsageStats[] = targets.map((player) => {
+            return {
+                ...player,
+                total_team_target: sumOfTargets,
+            };
+        });
+
+        console.log(sumOfTargets);
+
+        finalTargets.sort((a, b) => {
+            return b.target - a.target;
+        });
+
+        setPlayerTargets(finalTargets);
 
         const rushes = reducedPlayers.filter((player) => player.rush !== 0);
 
-        targets.sort((a, b) => b.target - a.target);
+        const sumOfRushes = rushes.reduce((i, obj) => {
+            return i + obj.rush;
+        }, 0);
+
+        rushes.forEach((group) => {
+            return { ...group, total_team_rushes: sumOfRushes };
+        });
+
+        // targets.sort((a, b) => b.target - a.target);
         rushes.sort((a, b) => b.rush - a.rush);
 
-        setPlayerTargets(targets);
+        // setPlayerTargets(targets);
         setPlayerRushes(rushes);
     }, [weekFilter, downFilter]);
 

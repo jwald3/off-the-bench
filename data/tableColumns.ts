@@ -18,6 +18,7 @@ import {
     getRushYPC,
     getStackedBoxPct,
     getTargetEpa,
+    getTargetPct,
     getTargetShare,
     getTgtPct,
     getTotalSacks,
@@ -406,6 +407,22 @@ export const playerUsageColumns: GridColDef[] = [
         flex: 1,
         minWidth: 80,
         type: "string",
+    },
+    {
+        headerName: "Target Share",
+        field: "compPercent",
+        flex: 1,
+        minWidth: 100,
+        valueGetter: getTargetPct,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
     },
     {
         headerName: "TGT",

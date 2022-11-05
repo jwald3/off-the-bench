@@ -135,6 +135,7 @@ model player_usage_by_team {
   rushing_first_down   Int?
   rush_epa             Float?
   gsis_id              String?
+  total_team_target    BigInt?
   db_id                String  @id
   season               Int?
   week                 Int?

@@ -38,7 +38,7 @@ const UsageInfo: React.FunctionComponent<UsageProps> = ({ ...props }) => {
                     data={props.playerData}
                     columns={props.columns}
                     rowIdCol={"db_id"}
-                    pageSize={10}
+                    pageSize={25}
                     disableFooter={true}
                     showToolbar={false}
                 />

@@ -192,4 +192,5 @@ export interface IPlayerUsageStats {
     season: number;
     week: number;
     week_count: number;
+    total_team_target: number;
 }
