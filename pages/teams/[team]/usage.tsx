@@ -142,7 +142,8 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             "season",
             "week",
             "week_count",
-            "total_team_target"
+            "total_team_target",
+            "total_team_rushes"
         );
 
         const sumOfSnaps = reducedTeams.reduce((i, obj) => {
@@ -168,19 +169,29 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
 
         setPlayerTargets(finalTargets);
 
-        const rushes = reducedTeams.filter((player) => player.rush !== 0);
+        /* */
 
-        const sumOfRushes = rushes.reduce((i, obj) => {
+        const sumOfRushes = reducedTeams.reduce((i, obj) => {
             return i + obj.rush;
         }, 0);
 
-        rushes.forEach((group) => {
-            return { ...group, total_team_rushes: sumOfRushes };
+        const finalRushes: IPlayerUsageStats[] = reducedTeams
+            .filter((group) => {
+                return group.rush !== 0;
+            })
+            .map((group) => {
+                return {
+                    ...group,
+                    rush_metric: group.rush,
+                    total_team_rushes: sumOfRushes,
+                };
+            });
+
+        finalRushes.sort((a, b) => {
+            return b.rush - a.rush;
         });
 
-        rushes.sort((a, b) => b.rush - a.rush);
-
-        setPlayerRushes(rushes);
+        setPlayerRushes(finalRushes);
     }, []);
 
     useEffect(() => {
@@ -249,7 +260,8 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             "season",
             "week",
             "week_count",
-            "total_team_target"
+            "total_team_target",
+            "total_team_rushes"
         );
 
         setAggPlayers(reducedPlayers);
@@ -323,51 +335,70 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
         }
 
         if (rushChartDataOne === "rush") {
-            const rushes = reducedPlayers.filter((player) => player.rush !== 0);
+            const rushes = reducedPlayers.filter((group) => {
+                return group.rush !== 0;
+            });
 
             const sumOfRushes = rushes.reduce((i, obj) => {
                 return i + obj.rush;
             }, 0);
 
-            rushes.forEach((group) => {
-                return { ...group, total_team_rushes: sumOfRushes };
+            const finalRushes: IPlayerUsageStats[] = rushes.map((player) => {
+                return {
+                    ...player,
+                    rush_metric: player.rush,
+                    total_team_rushes: sumOfRushes,
+                };
             });
 
-            rushes.sort((a, b) => b.rush - a.rush);
+            finalRushes.sort((a, b) => {
+                return b.rush - a.rush;
+            });
 
-            setPlayerRushes(rushes);
+            setPlayerRushes(finalRushes);
         } else if (rushChartDataOne === "redzone_carry") {
-            const rushes = reducedPlayers.filter(
-                (player) => player.redzone_carry !== 0
-            );
-
+            const rushes = reducedPlayers.filter((group) => {
+                return group.redzone_carry > 0;
+            });
             const sumOfRushes = rushes.reduce((i, obj) => {
                 return i + obj.redzone_carry;
             }, 0);
 
-            rushes.forEach((group) => {
-                return { ...group, total_team_rushes: sumOfRushes };
+            const finalRushes: IPlayerUsageStats[] = rushes.map((player) => {
+                return {
+                    ...player,
+                    rush_metric: player.redzone_carry,
+                    total_team_rushes: sumOfRushes,
+                };
             });
 
-            rushes.sort((a, b) => b.redzone_carry - a.redzone_carry);
+            finalRushes.sort((a, b) => {
+                return b.redzone_carry - a.redzone_carry;
+            });
 
-            setPlayerRushes(rushes);
+            setPlayerRushes(finalRushes);
         } else if (rushChartDataOne === "goalline_carry") {
-            const rushes = reducedPlayers.filter(
-                (player) => player.goalline_carry !== 0
-            );
+            const rushes = reducedPlayers.filter((group) => {
+                return group.goalline_carry !== 0;
+            });
 
             const sumOfRushes = rushes.reduce((i, obj) => {
                 return i + obj.goalline_carry;
             }, 0);
 
-            rushes.forEach((group) => {
-                return { ...group, total_team_rushes: sumOfRushes };
+            const finalRushes: IPlayerUsageStats[] = rushes.map((player) => {
+                return {
+                    ...player,
+                    rush_metric: player.goalline_carry,
+                    total_team_rushes: sumOfRushes,
+                };
             });
 
-            rushes.sort((a, b) => b.goalline_carry - a.goalline_carry);
+            finalRushes.sort((a, b) => {
+                return b.goalline_carry - a.goalline_carry;
+            });
 
-            setPlayerRushes(rushes);
+            setPlayerRushes(finalRushes);
         }
     }, [weekFilter, downFilter, recChartDataOne, rushChartDataOne]);
 

@@ -3,6 +3,7 @@ import {
     getAdot,
     getAirYdsPct,
     getCarryEpa,
+    getCarryLoad,
     getCarryPercent,
     getCarryShare,
     getCatchPct,
@@ -518,6 +519,22 @@ export const playerRushUsageColumns: GridColDef[] = [
         flex: 1,
         minWidth: 75,
         type: "string",
+    },
+    {
+        headerName: "Rush Share",
+        field: "rushPct",
+        flex: 1,
+        minWidth: 100,
+        valueGetter: getCarryLoad,
+        type: "number",
+        valueFormatter: (params: GridValueFormatterParams<number>) => {
+            if (params.value == null) {
+                return "";
+            }
+
+            const valueFormatted = Number(params.value).toLocaleString();
+            return `${valueFormatted} %`;
+        },
     },
     {
         headerName: "Rushes",

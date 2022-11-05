@@ -46,6 +46,13 @@ export function getRushYPC(params: GridCellParams) {
     return (params.row.rushing_yards / params.row.rush).toFixed(2);
 }
 
+export function getCarryLoad(params: GridCellParams) {
+    return (
+        (params.row.rush_metric / params.row.total_team_rushes) *
+        100
+    ).toFixed(2);
+}
+
 export function getStackedBoxPct(params: GridCellParams) {
     return (
         ((params.row.stacked_box_rush || 0) / params.row.rush) *
