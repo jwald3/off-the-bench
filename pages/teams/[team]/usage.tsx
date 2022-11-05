@@ -322,20 +322,54 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             setPlayerTargets(finalTargets);
         }
 
-        const rushes = reducedPlayers.filter((player) => player.rush !== 0);
+        if (rushChartDataOne === "rush") {
+            const rushes = reducedPlayers.filter((player) => player.rush !== 0);
 
-        const sumOfRushes = rushes.reduce((i, obj) => {
-            return i + obj.rush;
-        }, 0);
+            const sumOfRushes = rushes.reduce((i, obj) => {
+                return i + obj.rush;
+            }, 0);
 
-        rushes.forEach((group) => {
-            return { ...group, total_team_rushes: sumOfRushes };
-        });
+            rushes.forEach((group) => {
+                return { ...group, total_team_rushes: sumOfRushes };
+            });
 
-        rushes.sort((a, b) => b.rush - a.rush);
+            rushes.sort((a, b) => b.rush - a.rush);
 
-        setPlayerRushes(rushes);
-    }, [weekFilter, downFilter, recChartDataOne]);
+            setPlayerRushes(rushes);
+        } else if (rushChartDataOne === "redzone_carry") {
+            const rushes = reducedPlayers.filter(
+                (player) => player.redzone_carry !== 0
+            );
+
+            const sumOfRushes = rushes.reduce((i, obj) => {
+                return i + obj.redzone_carry;
+            }, 0);
+
+            rushes.forEach((group) => {
+                return { ...group, total_team_rushes: sumOfRushes };
+            });
+
+            rushes.sort((a, b) => b.redzone_carry - a.redzone_carry);
+
+            setPlayerRushes(rushes);
+        } else if (rushChartDataOne === "goalline_carry") {
+            const rushes = reducedPlayers.filter(
+                (player) => player.goalline_carry !== 0
+            );
+
+            const sumOfRushes = rushes.reduce((i, obj) => {
+                return i + obj.goalline_carry;
+            }, 0);
+
+            rushes.forEach((group) => {
+                return { ...group, total_team_rushes: sumOfRushes };
+            });
+
+            rushes.sort((a, b) => b.goalline_carry - a.goalline_carry);
+
+            setPlayerRushes(rushes);
+        }
+    }, [weekFilter, downFilter, recChartDataOne, rushChartDataOne]);
 
     return (
         <div className={styles.usagePageContainer}>
