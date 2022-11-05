@@ -27,13 +27,27 @@ export function getPlayerCompletionPct(params: GridCellParams) {
     ).toFixed(2);
 }
 
+// playerUsageColumns
+
+export function getTargetEpa(params: GridCellParams) {
+    return (params.row.receiving_epa / params.row.target).toFixed(3);
+}
+
 // playerRushUsageColumns Functions
+
+export function getRushYPC(params: GridCellParams) {
+    return (params.row.rushing_yards / params.row.rush).toFixed(2);
+}
 
 export function getStackedBoxPct(params: GridCellParams) {
     return (
-        ((params.row.stacked_box_rush || 0) / params.row.rush_attempt) *
+        ((params.row.stacked_box_rush || 0) / params.row.rush) *
         100
     ).toFixed(2);
+}
+
+export function getCarryEpa(params: GridCellParams) {
+    return (params.row.rush_epa / params.row.rush).toFixed(3);
 }
 
 // playerSnapCols Functions

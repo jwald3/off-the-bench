@@ -61,10 +61,10 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     const [playerTargets, setPlayerTargets] = useState(props.players);
     const [playerRushes, setPlayerRushes] = useState(props.players);
     const [recChartView, setRecChartView] = useState("all");
-    const [recChartDataOne, setRecChartDataOne] = useState("targets");
-    const [recChartDataTwo, setRecChartDataTwo] = useState("receptions");
+    const [recChartDataOne, setRecChartDataOne] = useState("target");
+    const [recChartDataTwo, setRecChartDataTwo] = useState("reception");
     const [rushChartView, setRushChartView] = useState("all");
-    const [rushChartDataOne, setRushChartDataOne] = useState("rush_attempt");
+    const [rushChartDataOne, setRushChartDataOne] = useState("rush");
     const [rushChartDataTwo, setRushChartDataTwo] = useState("");
     const [weekFilter, setWeekFilter] = useState(regSeasonWeeks);
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
@@ -104,60 +104,52 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             );
 
         currWeekData.forEach(
-            (tgt) => (tgt.targets = parseInt(tgt.targets.toString()))
+            (tgt) => (tgt.target = parseInt(tgt.target.toString()))
         );
 
         currWeekData.forEach(
-            (rec) => (rec.receptions = parseInt(rec.receptions.toString()))
+            (rec) => (rec.reception = parseInt(rec.reception.toString()))
         );
 
         const reducedTeams: Array<IPlayerUsageStats> = aggregateUsageStats(
             currWeekData,
             "down",
-            "targets",
-            "receptions",
-            "receiving_yards",
-            "air_yards",
-            "yards_after_catch",
+            "target",
+            "reception",
             "receiving_touchdown",
+            "passing_yards",
+            "yards_after_catch",
+            "air_yards",
             "redzone_target",
-            "redzone_catch",
+            "redzone_reception",
             "endzone_target",
-            "endzone_catch",
-            "first_down_target",
-            "second_down_target",
-            "third_down_target",
-            "fourth_down_target",
-            "first_down_catch",
-            "second_down_catch",
-            "third_down_catch",
-            "fourth_down_catch",
-            "rush_attempt",
+            "endzone_reception",
+            "receiving_first_down",
+            "receiving_epa",
+            "rush",
             "rushing_yards",
             "rush_touchdown",
             "stacked_box_rush",
-            "tackled_for_loss",
+            "redzone_carry",
+            "redzone_rush_td",
+            "goal_to_go_carry",
+            "goalline_carry",
+            "goalline_rush_td",
             "fumble",
-            "first_down_rush",
-            "second_down_rush",
-            "third_down_rush",
-            "fourth_down_rush",
-            "redzone_rush",
-            "goalline_rush",
-            "redzone_rush_touchdown",
-            "goalline_rush_touchdown",
+            "tackled_for_loss",
+            "rushing_first_down",
+            "rush_epa",
             "season",
-            "week"
+            "week",
+            "week_count"
         );
 
-        const targets = reducedTeams.filter((player) => player.targets !== 0);
+        const targets = reducedTeams.filter((player) => player.target !== 0);
 
-        const rushes = reducedTeams.filter(
-            (player) => player.rush_attempt !== 0
-        );
+        const rushes = reducedTeams.filter((player) => player.rush !== 0);
 
-        targets.sort((a, b) => b.targets - a.targets);
-        rushes.sort((a, b) => b.rush_attempt - a.rush_attempt);
+        targets.sort((a, b) => b.target - a.target);
+        rushes.sort((a, b) => b.rush - a.rush);
 
         setPlayerTargets(targets);
         setPlayerRushes(rushes);
@@ -165,27 +157,27 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
 
     useEffect(() => {
         if (recChartView === "all") {
-            setRecChartDataOne("targets");
-            setRecChartDataTwo("receptions");
+            setRecChartDataOne("target");
+            setRecChartDataTwo("reception");
         } else if (recChartView === "rz") {
             setRecChartDataOne("redzone_target");
-            setRecChartDataTwo("redzone_catch");
+            setRecChartDataTwo("redzone_reception");
         } else if (recChartView === "ez") {
             setRecChartDataOne("endzone_target");
-            setRecChartDataTwo("endzone_catch");
+            setRecChartDataTwo("endzone_reception");
         }
     }, [recChartView]);
 
     useEffect(() => {
         if (rushChartView === "all") {
-            setRushChartDataOne("rush_attempt");
+            setRushChartDataOne("rush");
             setRushChartDataTwo("");
         } else if (rushChartView === "rz") {
-            setRushChartDataOne("redzone_rush");
-            setRushChartDataTwo("redzone_rush_touchdown");
+            setRushChartDataOne("redzone_carry");
+            setRushChartDataTwo("redzone_rush_td");
         } else if (rushChartView === "ez") {
-            setRushChartDataOne("goalline_rush");
-            setRushChartDataTwo("goalline_rush_touchdown");
+            setRushChartDataOne("goalline_carry");
+            setRushChartDataTwo("goalline_rush_td");
         }
     }, [rushChartView]);
 
@@ -201,52 +193,44 @@ const PlayerUsage: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
         const reducedPlayers: Array<IPlayerUsageStats> = aggregateUsageStats(
             filteredPlayers,
             "down",
-            "targets",
-            "receptions",
-            "receiving_yards",
-            "air_yards",
-            "yards_after_catch",
+            "target",
+            "reception",
             "receiving_touchdown",
+            "passing_yards",
+            "yards_after_catch",
+            "air_yards",
             "redzone_target",
-            "redzone_catch",
+            "redzone_reception",
             "endzone_target",
-            "endzone_catch",
-            "first_down_target",
-            "second_down_target",
-            "third_down_target",
-            "fourth_down_target",
-            "first_down_catch",
-            "second_down_catch",
-            "third_down_catch",
-            "fourth_down_catch",
-            "rush_attempt",
+            "endzone_reception",
+            "receiving_first_down",
+            "receiving_epa",
+            "rush",
             "rushing_yards",
             "rush_touchdown",
             "stacked_box_rush",
-            "tackled_for_loss",
+            "redzone_carry",
+            "redzone_rush_td",
+            "goal_to_go_carry",
+            "goalline_carry",
+            "goalline_rush_td",
             "fumble",
-            "first_down_rush",
-            "second_down_rush",
-            "third_down_rush",
-            "fourth_down_rush",
-            "redzone_rush",
-            "goalline_rush",
-            "redzone_rush_touchdown",
-            "goalline_rush_touchdown",
+            "tackled_for_loss",
+            "rushing_first_down",
+            "rush_epa",
             "season",
-            "week"
+            "week",
+            "week_count"
         );
 
         setAggPlayers(reducedPlayers);
 
-        const targets = reducedPlayers.filter((player) => player.targets !== 0);
+        const targets = reducedPlayers.filter((player) => player.target !== 0);
 
-        const rushes = reducedPlayers.filter(
-            (player) => player.rush_attempt !== 0
-        );
+        const rushes = reducedPlayers.filter((player) => player.rush !== 0);
 
-        targets.sort((a, b) => b.targets - a.targets);
-        rushes.sort((a, b) => b.rush_attempt - a.rush_attempt);
+        targets.sort((a, b) => b.target - a.target);
+        rushes.sort((a, b) => b.rush - a.rush);
 
         setPlayerTargets(targets);
         setPlayerRushes(rushes);
