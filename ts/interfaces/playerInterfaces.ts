@@ -135,25 +135,23 @@ export interface IPlayerDefensiveSnapData {
 }
 
 export interface IPlayerOffensiveSnapData {
-    posteam: string;
-    game_id: string;
-    down: number;
     player_id: string;
+    game_id: string;
+    posteam: string;
+    down: number;
     snap_ct: number;
     rush_snap: number;
+    player_rushing: number;
     pass_snap: number;
-    team_snaps: number;
-    team_rushing_plays: number;
-    team_passing_plays: number;
-    week: number;
+    player_targeted: number;
     season: number;
-    target: number;
-    reception: number;
-    receiving_touchdown: number;
-    carries: number;
-    rushing_touchdown: number;
+    team_total_snaps: number;
+    team_rush_snaps: number;
+    team_pass_snaps: number;
+    week: number;
     db_id: string;
     gsis_id: string;
+    position: string;
 }
 
 export interface IPlayerUsageStats {

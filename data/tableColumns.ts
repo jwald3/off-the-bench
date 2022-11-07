@@ -1265,7 +1265,7 @@ export const playerSnapCols: GridColDef[] = [
     },
     {
         headerName: "Carries",
-        field: "carries",
+        field: "player_rushing",
         flex: 1,
         minWidth: 75,
         type: "number",
@@ -1287,13 +1287,6 @@ export const playerSnapCols: GridColDef[] = [
         },
     },
     {
-        headerName: "Rush TDs",
-        flex: 1,
-        minWidth: 80,
-        field: "rushing_touchdown",
-        type: "number",
-    },
-    {
         headerName: "Pass Snaps",
         flex: 1,
         minWidth: 80,
@@ -1301,7 +1294,7 @@ export const playerSnapCols: GridColDef[] = [
         type: "number",
     },
     {
-        headerName: "Pass %",
+        headerName: "Pass Snap %",
         field: "pass_snap_pct",
         valueGetter: getPassSnapPct,
         flex: 1,
@@ -1317,15 +1310,8 @@ export const playerSnapCols: GridColDef[] = [
         },
     },
     {
-        headerName: "REC",
-        field: "reception",
-        flex: 1,
-        minWidth: 65,
-        type: "number",
-    },
-    {
         headerName: "TGT",
-        field: "target",
+        field: "player_targeted",
         flex: 1,
         minWidth: 65,
         type: "number",
@@ -1345,13 +1331,6 @@ export const playerSnapCols: GridColDef[] = [
             const valueFormatted = Number(params.value).toLocaleString();
             return `${valueFormatted} %`;
         },
-    },
-    {
-        headerName: "REC TD",
-        flex: 1,
-        minWidth: 80,
-        field: "receiving_touchdown",
-        type: "number",
     },
 ];
 

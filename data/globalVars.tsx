@@ -61,6 +61,7 @@ interface ITeamOffenseSnapsShell {
     db_id: string;
     game_id: string;
     gsis_id: string;
+    position: string;
 }
 
 interface IConvRateShell {
@@ -284,6 +285,7 @@ export const aggregateOffenseSnaps = <K extends string>(
                 posteam: currentObj.posteam,
                 game_id: currentObj.game_id,
                 gsis_id: currentObj.gsis_id,
+                position: currentObj.position,
             };
             const newObjDynamic = {} as Record<K, number>;
             keys.forEach(

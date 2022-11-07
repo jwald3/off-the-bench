@@ -71,7 +71,9 @@ export function getTotalSnapPct(params: GridCellParams) {
         return 0;
     }
 
-    return ((params.row.snap_ct / params.row.team_snaps) * 100).toFixed(1);
+    return ((params.row.snap_ct / params.row.team_total_snaps) * 100).toFixed(
+        1
+    );
 }
 
 export function getRushSnapPct(params: GridCellParams) {
@@ -79,10 +81,9 @@ export function getRushSnapPct(params: GridCellParams) {
         return 0;
     }
 
-    return (
-        (params.row.rush_snap / params.row.team_rushing_plays) *
-        100
-    ).toFixed(1);
+    return ((params.row.rush_snap / params.row.team_rush_snaps) * 100).toFixed(
+        1
+    );
 }
 
 export function getPassSnapPct(params: GridCellParams) {
@@ -90,10 +91,9 @@ export function getPassSnapPct(params: GridCellParams) {
         return 0;
     }
 
-    return (
-        (params.row.pass_snap / params.row.team_passing_plays) *
-        100
-    ).toFixed(1);
+    return ((params.row.pass_snap / params.row.team_pass_snaps) * 100).toFixed(
+        1
+    );
 }
 
 export function getTargetShare(params: GridCellParams) {

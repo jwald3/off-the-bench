@@ -255,25 +255,23 @@ model conversion_success {
 }
 
 model offense_player_snaps_by_down {
-  player_id           String?
-  game_id             String?
-  posteam             String?
-  down                Int?
-  snap_ct             BigInt?
-  rush_snap           Float?
-  pass_snap           Float?
-  team_snaps          Float?
-  team_rushing_plays  Float?
-  team_passing_plays  Float?
-  week                Int?
-  season              Int?
-  target              Float?
-  reception           Float?
-  receiving_touchdown Float?
-  carries             Float?
-  rushing_touchdown   Float?
-  db_id               String  @id
-  gsis_id             String?
+  player_id        String?
+  game_id          String?
+  posteam          String?
+  down             BigInt?
+  snap_ct          Float?
+  rush_snap        Float?
+  player_rushing   Float?
+  pass_snap        Float?
+  player_targeted  Float?
+  season           Int?
+  team_total_snaps Float?
+  team_rush_snaps  Float?
+  team_pass_snaps  Float?
+  week             Int?
+  db_id            String  @id
+  gsis_id          String?
+  position         String?
 }
 
 model defense_player_snaps_by_down {
