@@ -1218,6 +1218,12 @@ export const playerSnapCols: GridColDef[] = [
         type: "string",
     },
     {
+        headerName: "Position",
+        headerClassName: "grid-header",
+        field: "position",
+        type: "string",
+    },
+    {
         headerName: "Total Snaps",
         field: "snap_ct",
         flex: 1,

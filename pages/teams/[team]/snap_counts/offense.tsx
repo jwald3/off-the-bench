@@ -120,6 +120,14 @@ const PlayerOffenseSnaps: React.FunctionComponent<SnapProps> = ({
 
         const maxRushSnaps = Math.max(...rushSnaps);
 
+        const sumOfTargets = aggPlayers.reduce((i, obj) => {
+            return i + obj.player_targeted;
+        }, 0);
+
+        const sumOfCarries = aggPlayers.reduce((i, obj) => {
+            return i + obj.player_rushing;
+        }, 0);
+
         const finalAggPlayers: Array<IPlayerOffensiveSnapData> = aggPlayers
             .filter((group) => {
                 return group.player_id !== "dummy";
@@ -130,6 +138,8 @@ const PlayerOffenseSnaps: React.FunctionComponent<SnapProps> = ({
                     team_total_snaps: maxTotalSnaps,
                     team_pass_snaps: maxPassSnaps,
                     team_rush_snaps: maxRushSnaps,
+                    team_total_targets: sumOfTargets,
+                    team_total_carries: sumOfCarries,
                 };
             });
 
@@ -178,6 +188,14 @@ const PlayerOffenseSnaps: React.FunctionComponent<SnapProps> = ({
 
         const maxRushSnaps = Math.max(...rushSnaps);
 
+        const sumOfTargets = reducedPlayers.reduce((i, obj) => {
+            return i + obj.player_targeted;
+        }, 0);
+
+        const sumOfCarries = reducedPlayers.reduce((i, obj) => {
+            return i + obj.player_rushing;
+        }, 0);
+
         const finalAggPlayers: Array<IPlayerOffensiveSnapData> = reducedPlayers
             .filter((group) => {
                 return group.player_id !== "dummy";
@@ -188,6 +206,8 @@ const PlayerOffenseSnaps: React.FunctionComponent<SnapProps> = ({
                     team_total_snaps: maxTotalSnaps,
                     team_pass_snaps: maxPassSnaps,
                     team_rush_snaps: maxRushSnaps,
+                    team_total_targets: sumOfTargets,
+                    team_total_carries: sumOfCarries,
                 };
             });
 

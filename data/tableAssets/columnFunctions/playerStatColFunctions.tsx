@@ -101,9 +101,10 @@ export function getTargetShare(params: GridCellParams) {
         return 0;
     }
 
-    return ((params.row.target / params.row.team_passing_plays) * 100).toFixed(
-        1
-    );
+    return (
+        (params.row.player_targeted / params.row.team_total_targets) *
+        100
+    ).toFixed(1);
 }
 
 export function getCarryShare(params: GridCellParams) {
@@ -111,9 +112,10 @@ export function getCarryShare(params: GridCellParams) {
         return 0;
     }
 
-    return ((params.row.carries / params.row.team_rushing_plays) * 100).toFixed(
-        1
-    );
+    return (
+        (params.row.player_rushing / params.row.team_total_carries) *
+        100
+    ).toFixed(1);
 }
 
 // playerAdvRecCols Functions
