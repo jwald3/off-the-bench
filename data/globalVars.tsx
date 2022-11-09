@@ -53,6 +53,7 @@ interface ITeamDefenseSnapsShell {
     db_id: string;
     game_id: string;
     gsis_id: string;
+    position: string;
 }
 
 interface ITeamOffenseSnapsShell {
@@ -250,6 +251,7 @@ export const aggregateDefenseSnaps = <K extends string>(
                 defteam: currentObj.defteam,
                 game_id: currentObj.game_id,
                 gsis_id: currentObj.gsis_id,
+                position: currentObj.position,
             };
             const newObjDynamic = {} as Record<K, number>;
             keys.forEach(

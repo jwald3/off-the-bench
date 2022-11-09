@@ -37,7 +37,7 @@ export function getTargetPct(params: GridCellParams) {
     return (
         (params.row.target_metric / params.row.total_team_target) *
         100
-    ).toFixed(2);
+    ).toFixed(1);
 }
 
 // playerRushUsageColumns Functions

@@ -121,17 +121,14 @@ export interface IPlayerDefensiveSnapData {
     snap_ct: number;
     rush_snap: number;
     pass_snap: number;
-    team_snaps: number;
-    team_rushing_plays: number;
-    team_passing_plays: number;
+    team_total_snaps: number;
+    team_rush_snaps: number;
+    team_pass_snaps: number;
     week: number;
     season: number;
-    reception: number;
-    receiving_touchdown: number;
-    carries: number;
-    rushing_touchdown: number;
     db_id: string;
     gsis_id: string;
+    position: string;
 }
 
 export interface IPlayerOffensiveSnapData {

@@ -93,18 +93,45 @@ const PlayerDefenseSnaps: React.FunctionComponent<SnapProps> = ({
                 "snap_ct",
                 "rush_snap",
                 "pass_snap",
-                "team_snaps",
-                "team_rushing_plays",
-                "team_passing_plays",
                 "week",
                 "season",
-                "reception",
-                "receiving_touchdown",
-                "carries",
-                "rushing_touchdown"
+                "team_total_snaps",
+                "team_rush_snaps",
+                "team_pass_snaps"
             );
 
-        setAggPlayerSnaps(aggPlayers);
+        const totSnaps = aggPlayers.map((object) => {
+            return object.team_total_snaps;
+        });
+
+        const maxTotalSnaps = Math.max(...totSnaps);
+
+        const passSnaps = aggPlayers.map((object) => {
+            return object.team_pass_snaps;
+        });
+
+        const maxPassSnaps = Math.max(...passSnaps);
+
+        const rushSnaps = aggPlayers.map((object) => {
+            return object.team_rush_snaps;
+        });
+
+        const maxRushSnaps = Math.max(...rushSnaps);
+
+        const finalAggPlayers: Array<IPlayerDefensiveSnapData> = aggPlayers
+            .filter((group) => {
+                return group.player_id !== "dummy";
+            })
+            .map((group) => {
+                return {
+                    ...group,
+                    team_total_snaps: maxTotalSnaps,
+                    team_pass_snaps: maxPassSnaps,
+                    team_rush_snaps: maxRushSnaps,
+                };
+            });
+
+        setAggPlayerSnaps(finalAggPlayers);
     }, []);
 
     useEffect(() => {
@@ -122,18 +149,45 @@ const PlayerDefenseSnaps: React.FunctionComponent<SnapProps> = ({
             "snap_ct",
             "rush_snap",
             "pass_snap",
-            "team_snaps",
-            "team_rushing_plays",
-            "team_passing_plays",
             "week",
             "season",
-            "reception",
-            "receiving_touchdown",
-            "carries",
-            "rushing_touchdown"
+            "team_total_snaps",
+            "team_rush_snaps",
+            "team_pass_snaps"
         );
 
-        setAggPlayerSnaps(reducedPlayers);
+        const totSnaps = reducedPlayers.map((object) => {
+            return object.team_total_snaps;
+        });
+
+        const maxTotalSnaps = Math.max(...totSnaps);
+
+        const passSnaps = reducedPlayers.map((object) => {
+            return object.team_pass_snaps;
+        });
+
+        const maxPassSnaps = Math.max(...passSnaps);
+
+        const rushSnaps = reducedPlayers.map((object) => {
+            return object.team_rush_snaps;
+        });
+
+        const maxRushSnaps = Math.max(...rushSnaps);
+
+        const finalAggPlayers: Array<IPlayerDefensiveSnapData> = reducedPlayers
+            .filter((group) => {
+                return group.player_id !== "dummy";
+            })
+            .map((group) => {
+                return {
+                    ...group,
+                    team_total_snaps: maxTotalSnaps,
+                    team_pass_snaps: maxPassSnaps,
+                    team_rush_snaps: maxRushSnaps,
+                };
+            });
+
+        setAggPlayerSnaps(finalAggPlayers);
     }, [weekFilter, downFilter]);
 
     return (
