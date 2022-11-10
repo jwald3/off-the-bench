@@ -13,6 +13,7 @@ export interface ITeamBasicStats {
     points_for: number;
     points_allowed: number;
     down: number;
+    game_id: string;
     db_id: string;
 }
 
