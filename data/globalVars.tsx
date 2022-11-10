@@ -45,6 +45,7 @@ interface IPersonnelStatsShell {
 interface IBasicTeamStatsShell {
     posteam: string;
     db_id: string;
+    game_id: string;
 }
 
 interface ITeamDefenseSnapsShell {
@@ -216,6 +217,7 @@ export const aggregateTeamStats = <K extends string>(
             let newObjStatic = {
                 posteam: currentObj.posteam,
                 db_id: currentObj.db_id,
+                game_id: currentObj.game_id,
             };
             const newObjDynamic = {} as Record<K, number>;
             keys.forEach(
