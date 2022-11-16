@@ -19,11 +19,15 @@ export const getServerSideProps = withPageAuthRequired({
     getServerSideProps: async ({ query }) => {
         let team: IPlayerReceivingStats[];
         let season = Number(query.season) || 2022;
+        let weeks = regSeasonWeeks;
+
+        weeks =
+            (query.weeks as string)?.split(",").map(Number) || regSeasonWeeks;
 
         const playerSubRes = await prisma.advanced_receiving_stats.findMany({
             where: {
                 week: {
-                    in: regSeasonWeeks,
+                    in: weeks,
                 },
                 season: season,
             },
