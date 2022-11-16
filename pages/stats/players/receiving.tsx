@@ -86,15 +86,14 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                 "pass_attempt",
                 "interception",
                 "pass_touchdown",
-                "team_passing_yards",
-                "team_air_yards",
-                "team_yards_after_catch",
-                "team_complete_pass",
-                "team_pass_attempt",
-                "team_interception",
-                "team_pass_touchdown",
                 "week",
-                "season"
+                "season",
+                "first_down_pass",
+                "red_zone_target",
+                "red_zone_rec",
+                "red_zone_yards",
+                "end_zone_target",
+                "end_zone_rec"
             );
 
         setAggTeams(reducedTeams);
@@ -119,15 +118,14 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
             "pass_attempt",
             "interception",
             "pass_touchdown",
-            "team_passing_yards",
-            "team_air_yards",
-            "team_yards_after_catch",
-            "team_complete_pass",
-            "team_pass_attempt",
-            "team_interception",
-            "team_pass_touchdown",
             "week",
-            "season"
+            "season",
+            "first_down_pass",
+            "red_zone_target",
+            "red_zone_rec",
+            "red_zone_yards",
+            "end_zone_target",
+            "end_zone_rec"
         );
 
         setAggTeams(reducedPlayers);

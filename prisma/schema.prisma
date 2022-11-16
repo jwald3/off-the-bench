@@ -10,7 +10,7 @@ datasource db {
 model player_defense_stats_basic {
   player_id            String?
   game_id              String?
-  down                 Float?
+  down                 BigInt?
   passes_defended      Float?
   interception         Float?
   int_return_yards     Float?
@@ -333,41 +333,57 @@ model advanced_receiving_stats {
 }
 
 model personnel_usage_and_success_by_team {
-  posteam                         String?
-  game_id                         String?
-  down                            BigInt?
-  snap_ct_personnel_00            Float?
-  personnel_epa_personnel_00      Float?
-  snap_ct_personnel_01            Float?
-  personnel_epa_personnel_01      Float?
-  snap_ct_personnel_02            Float?
-  personnel_epa_personnel_02      Float?
-  snap_ct_personnel_10            Float?
-  personnel_epa_personnel_10      Float?
-  snap_ct_personnel_11            Float?
-  personnel_epa_personnel_11      Float?
-  snap_ct_personnel_12            Float?
-  personnel_epa_personnel_12      Float?
-  snap_ct_personnel_13            Float?
-  personnel_epa_personnel_13      Float?
-  snap_ct_personnel_20            Float?
-  personnel_epa_personnel_20      Float?
-  snap_ct_personnel_21            Float?
-  personnel_epa_personnel_21      Float?
-  snap_ct_personnel_22            Float?
-  personnel_epa_personnel_22      Float?
-  snap_ct_personnel_23            Float?
-  personnel_epa_personnel_23      Float?
-  snap_ct_personnel_jumbo         Float?
-  personnel_epa_personnel_jumbo   Float?
-  snap_ct_personnel_wildcat       Float?
-  personnel_epa_personnel_wildcat Float?
-  team_total_snaps                Int?
-  team_epa                        Float?
-  db_id                           String  @id
-  season                          Int?
-  week                            Int?
-  week_count                      BigInt?
+  posteam                                     String?
+  game_id                                     String?
+  down                                        BigInt?
+  snap_ct_personnel_00                        BigInt?
+  personnel_epa_personnel_00                  Float?
+  snap_ct_personnel_01                        BigInt?
+  personnel_epa_personnel_01                  Float?
+  snap_ct_personnel_01personnel_wildcat       BigInt?
+  personnel_epa_personnel_01personnel_wildcat Float?
+  snap_ct_personnel_02                        BigInt?
+  personnel_epa_personnel_02                  Float?
+  snap_ct_personnel_02personnel_wildcat       BigInt?
+  personnel_epa_personnel_02personnel_wildcat Float?
+  snap_ct_personnel_10                        BigInt?
+  personnel_epa_personnel_10                  Float?
+  snap_ct_personnel_11                        BigInt?
+  personnel_epa_personnel_11                  Float?
+  snap_ct_personnel_11personnel_wildcat       BigInt?
+  personnel_epa_personnel_11personnel_wildcat Float?
+  snap_ct_personnel_12                        BigInt?
+  personnel_epa_personnel_12                  Float?
+  snap_ct_personnel_12personnel_wildcat       BigInt?
+  personnel_epa_personnel_12personnel_wildcat Float?
+  snap_ct_personnel_13                        BigInt?
+  personnel_epa_personnel_13                  Float?
+  snap_ct_personnel_20                        BigInt?
+  personnel_epa_personnel_20                  Float?
+  snap_ct_personnel_20personnel_wildcat       BigInt?
+  personnel_epa_personnel_20personnel_wildcat Float?
+  snap_ct_personnel_21                        BigInt?
+  personnel_epa_personnel_21                  Float?
+  snap_ct_personnel_21personnel_wildcat       BigInt?
+  personnel_epa_personnel_21personnel_wildcat Float?
+  snap_ct_personnel_22                        BigInt?
+  personnel_epa_personnel_22                  Float?
+  snap_ct_personnel_22personnel_wildcat       BigInt?
+  personnel_epa_personnel_22personnel_wildcat Float?
+  snap_ct_personnel_23                        BigInt?
+  personnel_epa_personnel_23                  Float?
+  snap_ct_personnel_23personnel_wildcat       BigInt?
+  personnel_epa_personnel_23personnel_wildcat Float?
+  snap_ct_personnel_jumbo                     BigInt?
+  personnel_epa_personnel_jumbo               Float?
+  snap_ct_personnel_wildcat                   BigInt?
+  personnel_epa_personnel_wildcat             Float?
+  team_total_snaps                            BigInt?
+  team_epa                                    Float?
+  db_id                                       String  @id
+  season                                      Int?
+  week                                        Int?
+  week_count                                  BigInt?
 }
 
 model advanced_rushing_stats {

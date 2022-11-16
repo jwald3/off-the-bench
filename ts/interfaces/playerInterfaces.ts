@@ -51,10 +51,10 @@ export interface IBasicOffensePlayerStats {
 }
 
 export interface IPlayerReceivingStats {
+    player_id: string;
     game_id: string;
     posteam: string;
     down: number;
-    player_id: string;
     passing_yards: number;
     air_yards: number;
     yards_after_catch: number;
@@ -62,13 +62,12 @@ export interface IPlayerReceivingStats {
     pass_attempt: number;
     interception: number;
     pass_touchdown: number;
-    team_passing_yards: number;
-    team_air_yards: number;
-    team_yards_after_catch: number;
-    team_complete_pass: number;
-    team_pass_attempt: number;
-    team_interception: number;
-    team_pass_touchdown: number;
+    first_down_pass: number;
+    red_zone_target: number;
+    red_zone_rec: number;
+    red_zone_yards: number;
+    end_zone_target: number;
+    end_zone_rec: number;
     gsis_id: string;
     week: number;
     season: number;
