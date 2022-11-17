@@ -1500,22 +1500,22 @@ export const playerAdvRecCols: GridColDef[] = [
         flex: 1,
         minWidth: 100,
     },
-    {
-        headerName: "TGT SHARE",
-        field: "tgr_pct",
-        flex: 1,
-        minWidth: 100,
-        valueGetter: getTgtPct,
-        type: "number",
-        valueFormatter: (params: GridValueFormatterParams<number>) => {
-            if (params.value == null) {
-                return "";
-            }
+    // {
+    //     headerName: "TGT SHARE",
+    //     field: "tgr_pct",
+    //     flex: 1,
+    //     minWidth: 100,
+    //     valueGetter: getTgtPct,
+    //     type: "number",
+    //     valueFormatter: (params: GridValueFormatterParams<number>) => {
+    //         if (params.value == null) {
+    //             return "";
+    //         }
 
-            const valueFormatted = Number(params.value).toLocaleString();
-            return `${valueFormatted} %`;
-        },
-    },
+    //         const valueFormatted = Number(params.value).toLocaleString();
+    //         return `${valueFormatted} %`;
+    //     },
+    // },
     {
         headerName: "AIR YDS",
         field: "air_yards",
@@ -1531,38 +1531,38 @@ export const playerAdvRecCols: GridColDef[] = [
         valueGetter: getAdot,
         type: "number",
     },
-    {
-        headerName: "AIR YDS %",
-        field: "adot_pct",
-        flex: 1,
-        minWidth: 100,
-        valueGetter: getAirYdsPct,
-        type: "number",
-        valueFormatter: (params: GridValueFormatterParams<number>) => {
-            if (params.value == null) {
-                return "";
-            }
+    // {
+    //     headerName: "AIR YDS %",
+    //     field: "adot_pct",
+    //     flex: 1,
+    //     minWidth: 100,
+    //     valueGetter: getAirYdsPct,
+    //     type: "number",
+    //     valueFormatter: (params: GridValueFormatterParams<number>) => {
+    //         if (params.value == null) {
+    //             return "";
+    //         }
 
-            const valueFormatted = Number(params.value).toLocaleString();
-            return `${valueFormatted} %`;
-        },
-    },
-    {
-        headerName: "RACR",
-        field: "racr",
-        flex: 1,
-        minWidth: 100,
-        valueGetter: getRacr,
-        type: "number",
-    },
-    {
-        headerName: "WOPR",
-        field: "wopr",
-        flex: 1,
-        minWidth: 100,
-        valueGetter: getWopr,
-        type: "number",
-    },
+    //         const valueFormatted = Number(params.value).toLocaleString();
+    //         return `${valueFormatted} %`;
+    //     },
+    // },
+    // {
+    //     headerName: "RACR",
+    //     field: "racr",
+    //     flex: 1,
+    //     minWidth: 100,
+    //     valueGetter: getRacr,
+    //     type: "number",
+    // },
+    // {
+    //     headerName: "WOPR",
+    //     field: "wopr",
+    //     flex: 1,
+    //     minWidth: 100,
+    //     valueGetter: getWopr,
+    //     type: "number",
+    // },
 ];
 
 export const teamPersonnelGoupingColumns: GridColDef[] = [

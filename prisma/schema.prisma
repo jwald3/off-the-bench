@@ -295,41 +295,28 @@ model defense_player_snaps_by_down {
 }
 
 model advanced_receiving_stats {
-  player_id              String?
-  game_id                String?
-  posteam                String?
-  key                    BigInt?
-  down                   Int?
-  passing_yards          Float?
-  air_yards              Float?
-  yards_after_catch      Float?
-  complete_pass          Float?
-  pass_attempt           Float?
-  interception           Float?
-  pass_touchdown         Float?
-  first_down_pass        Float?
-  red_zone_target        Float?
-  red_zone_rec           Float?
-  red_zone_yards         Float?
-  end_zone_target        Float?
-  end_zone_rec           Float?
-  team_passing_yards     Float?
-  team_air_yards         Float?
-  team_yards_after_catch Float?
-  team_complete_pass     Float?
-  team_pass_attempt      Float?
-  team_interception      Float?
-  team_pass_touchdown    Float?
-  team_first_down_pass   Float?
-  team_red_zone_target   Float?
-  team_red_zone_rec      Float?
-  team_red_zone_yards    Float?
-  team_end_zone_target   Float?
-  team_end_zone_rec      Float?
-  gsis_id                String?
-  week                   Int?
-  season                 Int?
-  db_id                  String  @id
+  player_id         String?
+  game_id           String?
+  posteam           String?
+  key               BigInt?
+  down              Int?
+  passing_yards     Float?
+  air_yards         Float?
+  yards_after_catch Float?
+  complete_pass     Float?
+  pass_attempt      Float?
+  interception      Float?
+  pass_touchdown    Float?
+  first_down_pass   Float?
+  red_zone_target   Float?
+  red_zone_rec      Float?
+  red_zone_yards    Float?
+  end_zone_target   Float?
+  end_zone_rec      Float?
+  gsis_id           String?
+  week              Int?
+  season            Int?
+  db_id             String  @id
 }
 
 model personnel_usage_and_success_by_team {
