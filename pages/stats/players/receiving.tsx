@@ -21,8 +21,9 @@ export const getServerSideProps = withPageAuthRequired({
         let season = Number(query.season) || 2022;
         let weeks = regSeasonWeeks;
 
-        weeks =
-            (query.weeks as string)?.split(",").map(Number) || regSeasonWeeks;
+        weeks = (query.weeks as string)?.split(",").map(Number) || [
+            1, 2, 3, 4, 5,
+        ];
 
         const playerSubRes = await prisma.advanced_receiving_stats.findMany({
             where: {
