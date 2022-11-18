@@ -7,11 +7,7 @@ import { playerAdvRecCols } from "../../../data/tableColumns";
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/PlayerStats.module.scss";
-import {
-    aggregateAdvancedStats,
-    parseBigInt,
-    regSeasonWeeks,
-} from "../../../data/globalVars";
+import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
 import { IPlayerReceivingStats } from "../../../ts/interfaces/playerInterfaces";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
@@ -29,7 +25,7 @@ export const getServerSideProps = withPageAuthRequired({
             : (query.downs as string)?.split(",").map(Number)) || [1, 2, 3, 4];
 
         const playerSubRes = await prisma.advanced_receiving_stats.groupBy({
-            by: ["player_id", "gsis_id"],
+            by: ["player_id", "gsis_id", "posteam"],
             where: {
                 season: season,
                 week: {
@@ -53,6 +49,11 @@ export const getServerSideProps = withPageAuthRequired({
                 red_zone_yards: true,
                 end_zone_target: true,
                 end_zone_rec: true,
+            },
+            orderBy: {
+                _sum: {
+                    pass_attempt: "desc",
+                },
             },
         });
 
