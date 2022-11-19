@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import prisma from "../../../lib/prisma";
 import StatTable from "../../../components/StatTable";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { playerAdvRecCols } from "../../../data/tableColumns";
 import Head from "next/head";

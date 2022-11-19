@@ -1,17 +1,13 @@
 import { GetServerSideProps } from "next";
 import prisma from "../../../lib/prisma";
 import StatTable from "../../../components/StatTable";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { playerOffenseColumns } from "../../../data/tableColumns";
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/PlayerStats.module.scss";
-import {
-    aggregateStats,
-    parseBigInt,
-    regSeasonWeeks,
-} from "../../../data/globalVars";
+import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
 import { IBasicOffensePlayerStats } from "../../../ts/interfaces/playerInterfaces";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
