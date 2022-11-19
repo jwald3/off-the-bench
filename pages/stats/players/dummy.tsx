@@ -3,7 +3,10 @@ import prisma from "../../../lib/prisma";
 import StatTable from "../../../components/StatTable";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { playerOffenseColumns } from "../../../data/tableColumns";
+import {
+    playerDefenseColumns,
+    playerOffenseColumns,
+} from "../../../data/tableColumns";
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/PlayerStats.module.scss";
@@ -12,12 +15,12 @@ import {
     parseBigInt,
     regSeasonWeeks,
 } from "../../../data/globalVars";
-import { IBasicOffensePlayerStats } from "../../../ts/interfaces/playerInterfaces";
+import { IBasicDefensePlayerStats } from "../../../ts/interfaces/playerInterfaces";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 export const getServerSideProps = withPageAuthRequired({
     getServerSideProps: async ({ query }) => {
-        let team: IBasicOffensePlayerStats[];
+        let team: IBasicDefensePlayerStats[];
         let season = Number(query.season) || 2022;
         let weeks =
             (query.weeks === "none"
@@ -28,7 +31,7 @@ export const getServerSideProps = withPageAuthRequired({
             ? []
             : (query.downs as string)?.split(",").map(Number)) || [1, 2, 3, 4];
 
-        const playerSubRes = await prisma.player_offense_stats_basic.groupBy({
+        const playerSubRes = await prisma.player_defense_stats_basic.groupBy({
             by: ["player_id", "gsis_id", "team_abbr", "position"],
             where: {
                 season: season,
@@ -40,26 +43,25 @@ export const getServerSideProps = withPageAuthRequired({
                 },
             },
             _sum: {
-                pass_attempt: true,
-                completion: true,
-                incompletion: true,
-                passing_yards: true,
-                passing_TD: true,
+                passes_defended: true,
                 interception: true,
+                int_return_yards: true,
+                int_return_touchdown: true,
+                tackles_for_loss: true,
+                qb_hits: true,
+                fumbles_forced: true,
+                solo_tackles: true,
+                assist_tackls: true,
                 sack: true,
-                rush_attempt: true,
-                rushing_yards: true,
-                rushing_TD: true,
-                tackled_for_loss: true,
-                fumble: true,
-                reception: true,
-                target: true,
-                receiving_yards: true,
-                receiving_TD: true,
+                half_sack: true,
+                tackle_with_assist: true,
+            },
+            _count: {
+                game_id: true,
             },
             orderBy: {
                 _sum: {
-                    pass_attempt: "desc",
+                    solo_tackles: "desc",
                 },
             },
         });
@@ -77,7 +79,7 @@ export const getServerSideProps = withPageAuthRequired({
             return out;
         };
 
-        let playerData = playerSubRes.map((player) => flat(player, {}));
+        let playerData = team.map((player) => flat(player, {}));
 
         return {
             props: {
@@ -88,7 +90,7 @@ export const getServerSideProps = withPageAuthRequired({
 });
 
 interface PlayerProps {
-    playerData: IBasicOffensePlayerStats[];
+    playerData: IBasicDefensePlayerStats[];
 }
 
 const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
@@ -122,16 +124,16 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                                 handleSeason={setSelectedSeason}
                                 handleDownFilters={setDownFilter}
                                 downFilter={downFilter}
-                                phaseUrl={"/stats/players/defense"}
+                                phaseUrl={"/stats/players/offense"}
                                 showStatSel={true}
-                                statOption={"Receiving"}
+                                statOption={"Basic"}
                                 categories={"players"}
                             />
                         </div>
                         <div className={styles.statTableContainer}>
                             <StatTable
                                 data={props.playerData}
-                                columns={playerOffenseColumns}
+                                columns={playerDefenseColumns}
                                 rowIdCol={"gsis_id"}
                                 pageSize={25}
                                 showToolbar={true}
