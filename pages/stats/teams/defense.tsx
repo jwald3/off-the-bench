@@ -1,17 +1,13 @@
 import { GetServerSideProps } from "next";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import SelectorTray from "../../../components/SelectorTray";
-import StatTable from "../../../components/StatTable";
-import {
-    aggregateTeamStats,
-    parseBigInt,
-    regSeasonWeeks,
-} from "../../../data/globalVars";
-import { teamStatColumns } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
+import StatTable from "../../../components/StatTable";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { teamStatColumns } from "../../../data/tableColumns";
+import Head from "next/head";
+import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/TeamStats.module.scss";
+import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
 import { ITeamBasicStats } from "../../../ts/interfaces/teamInterfaces";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
@@ -19,112 +15,82 @@ export const getServerSideProps = withPageAuthRequired({
     getServerSideProps: async ({ query }) => {
         let team: ITeamBasicStats[];
         let season = Number(query.season) || 2022;
-        let teamQueryResponse;
+        let weeks =
+            (query.weeks === "none"
+                ? []
+                : (query.weeks as string)?.split(",").map(Number)) ||
+            regSeasonWeeks;
+        let downs = (query.downs === ""
+            ? []
+            : (query.downs as string)?.split(",").map(Number)) || [1, 2, 3, 4];
 
-        teamQueryResponse = await prisma.team_defense_stats_basic.findMany({
+        const teamSubRes = await prisma.team_defense_stats_basic.groupBy({
+            by: ["posteam"],
             where: {
-                week: {
-                    in: regSeasonWeeks,
-                },
                 season: season,
+                week: {
+                    in: weeks || [0],
+                },
+                down: {
+                    in: downs,
+                },
+            },
+            _sum: {
+                pass_attempts: true,
+                completions: true,
+                pass_touchdown: true,
+                interceptions: true,
+                sacks: true,
+                passing_yards: true,
+                rush_attempt: true,
+                rushing_yards: true,
+                rush_touchdown: true,
+                points_for: true,
+                points_allowed: true,
+            },
+            _count: {
+                game_id: true,
+            },
+            orderBy: {
+                _sum: {
+                    points_allowed: "asc",
+                },
             },
         });
 
-        team = parseBigInt(teamQueryResponse);
+        team = parseBigInt(teamSubRes);
+
+        const flat = (obj: any, out: any) => {
+            Object.keys(obj).forEach((key) => {
+                if (typeof obj[key] == "object") {
+                    out = flat(obj[key], out); //recursively call for nesteds
+                } else {
+                    out[key] = obj[key]; //direct assign for values
+                }
+            });
+            return out;
+        };
+
+        let teamData = team.map((team) => flat(team, {}));
 
         return {
             props: {
-                teams: parseBigInt(team),
+                teamData: teamData,
             },
         };
     },
 });
 
-interface TeamProps {
-    teams: ITeamBasicStats[];
+interface PlayerProps {
+    teamData: ITeamBasicStats[];
 }
 
-const TeamDefenseData: React.FunctionComponent<TeamProps> = ({ ...props }) => {
+const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     const router = useRouter();
     const { query } = router;
-    const columns = teamStatColumns;
-
-    const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
-    const [aggTeams, setAggTeams] = useState(props.teams);
     const [weekFilter, setWeekFilter] = useState(regSeasonWeeks);
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
-
-    useEffect(() => {
-        // if "weeks" query present in URL, update week state
-        if (query.weeks !== undefined && query.weeks !== "none") {
-            const selectedWeeks = (query.weeks as string)
-                ?.split(",")
-                .map(Number);
-
-            setWeekFilter(selectedWeeks);
-        } else if (query.weeks === "none") {
-            setWeekFilter([]);
-        }
-
-        // if "downs" query present in URL, update down state
-        if (query.downs !== undefined && query.downs !== "none") {
-            const selectedDowns = (query.downs as string)
-                ?.split(",")
-                .map(Number);
-
-            setDownFilter(selectedDowns);
-        } else if (query.downs === "none") {
-            setDownFilter([]);
-        }
-
-        const reducedTeams: Array<ITeamBasicStats> = aggregateTeamStats(
-            props.teams,
-            "pass_attempts",
-            "completions",
-            "pass_touchdown",
-            "interceptions",
-            "sacks",
-            "passing_yards",
-            "rush_attempt",
-            "rushing_yards",
-            "rush_touchdown",
-            "points_for",
-            "points_allowed",
-            "down",
-            "week"
-        );
-
-        setAggTeams(reducedTeams);
-    }, []);
-
-    useEffect(() => {
-        const filteredTeams = props.teams
-            .filter((team) =>
-                weekFilter.includes(Number.parseInt(team.week.toString()))
-            )
-            .filter((team) =>
-                downFilter.includes(Number.parseInt(team.down.toString()))
-            );
-
-        const reducedTeams: Array<ITeamBasicStats> = aggregateTeamStats(
-            filteredTeams,
-            "pass_attempts",
-            "completions",
-            "pass_touchdown",
-            "interceptions",
-            "sacks",
-            "passing_yards",
-            "rush_attempt",
-            "rushing_yards",
-            "rush_touchdown",
-            "points_for",
-            "points_allowed",
-            "down",
-            "week"
-        );
-
-        setAggTeams(reducedTeams);
-    }, [weekFilter, downFilter]);
+    const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
 
     return (
         <div className={styles.teamStatsPageContainer}>
@@ -151,15 +117,15 @@ const TeamDefenseData: React.FunctionComponent<TeamProps> = ({ ...props }) => {
                             downFilter={downFilter}
                             phaseUrl={"/stats/teams/offense"}
                             showStatSel={true}
-                            statOption={"Defense"}
+                            statOption={"Offense"}
                             categories={"teams"}
                         />
                     </div>
                     <div className={styles.statTableContainer}>
                         <StatTable
-                            data={aggTeams}
-                            columns={columns}
-                            rowIdCol={"db_id"}
+                            data={props.teamData}
+                            columns={teamStatColumns}
+                            rowIdCol={"posteam"}
                             pageSize={32}
                             disableFooter={false}
                             showToolbar={true}
@@ -171,4 +137,4 @@ const TeamDefenseData: React.FunctionComponent<TeamProps> = ({ ...props }) => {
     );
 };
 
-export default TeamDefenseData;
+export default PlayerWeeks;
