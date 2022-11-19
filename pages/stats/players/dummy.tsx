@@ -3,24 +3,17 @@ import prisma from "../../../lib/prisma";
 import StatTable from "../../../components/StatTable";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import {
-    playerDefenseColumns,
-    playerOffenseColumns,
-} from "../../../data/tableColumns";
+import { playerAdvRushCols } from "../../../data/tableColumns";
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/PlayerStats.module.scss";
-import {
-    aggregateStats,
-    parseBigInt,
-    regSeasonWeeks,
-} from "../../../data/globalVars";
-import { IBasicDefensePlayerStats } from "../../../ts/interfaces/playerInterfaces";
+import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
+import { IPlayerRushingStats } from "../../../ts/interfaces/playerInterfaces";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 export const getServerSideProps = withPageAuthRequired({
     getServerSideProps: async ({ query }) => {
-        let team: IBasicDefensePlayerStats[];
+        let team: IPlayerRushingStats[];
         let season = Number(query.season) || 2022;
         let weeks =
             (query.weeks === "none"
@@ -31,8 +24,8 @@ export const getServerSideProps = withPageAuthRequired({
             ? []
             : (query.downs as string)?.split(",").map(Number)) || [1, 2, 3, 4];
 
-        const playerSubRes = await prisma.player_defense_stats_basic.groupBy({
-            by: ["player_id", "gsis_id", "team_abbr", "position"],
+        const playerSubRes = await prisma.advanced_rushing_stats.groupBy({
+            by: ["player_id", "gsis_id", "posteam"],
             where: {
                 season: season,
                 week: {
@@ -43,25 +36,40 @@ export const getServerSideProps = withPageAuthRequired({
                 },
             },
             _sum: {
-                passes_defended: true,
-                interception: true,
-                int_return_yards: true,
-                int_return_touchdown: true,
-                tackles_for_loss: true,
-                qb_hits: true,
-                fumbles_forced: true,
-                solo_tackles: true,
-                assist_tackls: true,
-                sack: true,
-                half_sack: true,
-                tackle_with_assist: true,
+                key: true,
+                rush_attempt: true,
+                rushing_yards: true,
+                rush_touchdown: true,
+                first_down_rush: true,
+                red_zone_rush: true,
+                red_zone_td: true,
+                red_zone_yards: true,
+                goal_to_go_rush: true,
+                goal_to_go_td: true,
+                goal_to_go_yards: true,
+                goalline_rush: true,
+                goalline_td: true,
+                goalline_yards: true,
+                team_rush_attempt: true,
+                team_rushing_yards: true,
+                team_rush_touchdown: true,
+                team_first_down_rush: true,
+                team_red_zone_rush: true,
+                team_red_zone_td: true,
+                team_red_zone_yards: true,
+                team_goal_to_go_rush: true,
+                team_goal_to_go_td: true,
+                team_goal_to_go_yards: true,
+                team_goalline_rush: true,
+                team_goalline_td: true,
+                team_goalline_yards: true,
             },
             _count: {
                 game_id: true,
             },
             orderBy: {
                 _sum: {
-                    solo_tackles: "desc",
+                    rush_attempt: "desc",
                 },
             },
         });
@@ -90,7 +98,7 @@ export const getServerSideProps = withPageAuthRequired({
 });
 
 interface PlayerProps {
-    playerData: IBasicDefensePlayerStats[];
+    playerData: IPlayerRushingStats[];
 }
 
 const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
@@ -133,7 +141,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                         <div className={styles.statTableContainer}>
                             <StatTable
                                 data={props.playerData}
-                                columns={playerDefenseColumns}
+                                columns={playerAdvRushCols}
                                 rowIdCol={"gsis_id"}
                                 pageSize={25}
                                 showToolbar={true}

@@ -28,7 +28,7 @@ const Footer = () => {
                     <div className={styles.linkHeader}>Player Stats</div>
                     <Link href="/stats/players/offense">Basic Offense</Link>
                     <Link href="/stats/players/defense">Basic Defense</Link>
-                    <Link href="/stats/players/adv_rec">
+                    <Link href="/stats/players/receiving">
                         Advanced Receiving
                     </Link>
                     <div>—</div>
