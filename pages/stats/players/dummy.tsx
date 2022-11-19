@@ -3,17 +3,22 @@ import prisma from "../../../lib/prisma";
 import StatTable from "../../../components/StatTable";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { playerAdvRushCols, teamStatColumns } from "../../../data/tableColumns";
+import {
+    playerAdvRushCols,
+    teamPersonnelGoupingColumns,
+    teamPersonnelGroupingColumns,
+    teamStatColumns,
+} from "../../../data/tableColumns";
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/TeamStats.module.scss";
 import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
-import { ITeamBasicStats } from "../../../ts/interfaces/teamInterfaces";
+import { ITeamFormationStats } from "../../../ts/interfaces/teamInterfaces";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 export const getServerSideProps = withPageAuthRequired({
     getServerSideProps: async ({ query }) => {
-        let team: ITeamBasicStats[];
+        let team: ITeamFormationStats[];
         let season = Number(query.season) || 2022;
         let weeks =
             (query.weeks === "none"
@@ -24,39 +29,55 @@ export const getServerSideProps = withPageAuthRequired({
             ? []
             : (query.downs as string)?.split(",").map(Number)) || [1, 2, 3, 4];
 
-        const teamSubRes = await prisma.team_offense_stats_basic.groupBy({
-            by: ["posteam"],
-            where: {
-                season: season,
-                week: {
-                    in: weeks || [0],
+        const teamSubRes =
+            await prisma.personnel_usage_and_success_by_team.groupBy({
+                by: ["posteam"],
+                where: {
+                    season: season,
+                    week: {
+                        in: weeks || [0],
+                    },
+                    down: {
+                        in: downs,
+                    },
                 },
-                down: {
-                    in: downs,
-                },
-            },
-            _sum: {
-                pass_attempts: true,
-                completions: true,
-                pass_touchdown: true,
-                interceptions: true,
-                sacks: true,
-                passing_yards: true,
-                rush_attempt: true,
-                rushing_yards: true,
-                rush_touchdown: true,
-                points_for: true,
-                points_allowed: true,
-            },
-            _count: {
-                game_id: true,
-            },
-            orderBy: {
                 _sum: {
-                    points_for: "desc",
+                    snap_ct_personnel_00: true,
+                    personnel_epa_personnel_00: true,
+                    snap_ct_personnel_01: true,
+                    personnel_epa_personnel_01: true,
+                    snap_ct_personnel_02: true,
+                    personnel_epa_personnel_02: true,
+                    snap_ct_personnel_10: true,
+                    personnel_epa_personnel_10: true,
+                    snap_ct_personnel_11: true,
+                    personnel_epa_personnel_11: true,
+                    snap_ct_personnel_12: true,
+                    personnel_epa_personnel_12: true,
+                    snap_ct_personnel_13: true,
+                    personnel_epa_personnel_13: true,
+                    snap_ct_personnel_20: true,
+                    personnel_epa_personnel_20: true,
+                    snap_ct_personnel_21: true,
+                    personnel_epa_personnel_21: true,
+                    snap_ct_personnel_22: true,
+                    personnel_epa_personnel_22: true,
+                    snap_ct_personnel_23: true,
+                    personnel_epa_personnel_23: true,
+                    snap_ct_personnel_jumbo: true,
+                    personnel_epa_personnel_jumbo: true,
+                    snap_ct_personnel_wildcat: true,
+                    personnel_epa_personnel_wildcat: true,
+                    team_total_snaps: true,
+                    team_epa: true,
                 },
-            },
-        });
+                _count: {
+                    game_id: true,
+                },
+                orderBy: {
+                    posteam: "asc",
+                },
+            });
 
         team = parseBigInt(teamSubRes);
 
@@ -82,7 +103,7 @@ export const getServerSideProps = withPageAuthRequired({
 });
 
 interface PlayerProps {
-    teamData: ITeamBasicStats[];
+    teamData: ITeamFormationStats[];
 }
 
 const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
@@ -93,45 +114,43 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
 
     return (
-        <div className={styles.playerStatsPageContainer}>
-            <div className={styles.playerStatsPageContainer}>
-                <Head>
-                    <title>Player Stats</title>
-                    <meta
-                        name="description"
-                        content="Player Stats filterable by week"
-                    />
-                    <meta
-                        name="viewport"
-                        content="initial-scale=1.0, width=device-width, height=device-height"
-                    />
-                </Head>
-                <div className={styles.statPageArea}>
-                    <div className={styles.statsMainContainer}>
-                        <div className={styles.selectorTrayContainer}>
-                            <SelectorTray
-                                handleWeekFilters={setWeekFilter}
-                                weekFilter={weekFilter}
-                                seasonFilter={Number(selectedSeason)}
-                                handleSeason={setSelectedSeason}
-                                handleDownFilters={setDownFilter}
-                                downFilter={downFilter}
-                                phaseUrl={"/stats/players/offense"}
-                                showStatSel={true}
-                                statOption={"Basic"}
-                                categories={"players"}
-                            />
-                        </div>
-                        <div className={styles.statTableContainer}>
-                            <StatTable
-                                data={props.teamData}
-                                columns={teamStatColumns}
-                                rowIdCol={"posteam"}
-                                pageSize={25}
-                                showToolbar={true}
-                                disableFooter={false}
-                            />
-                        </div>
+        <div className={styles.teamStatsPageContainer}>
+            <Head>
+                <title>Team Stats</title>
+                <meta
+                    name="description"
+                    content="Team Stats filterable by week"
+                />
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width, height=device-height"
+                />
+            </Head>
+            <div className={styles.statPageArea}>
+                <div className={styles.statsMainContainer}>
+                    <div className={styles.selectorTrayContainer}>
+                        <SelectorTray
+                            handleWeekFilters={setWeekFilter}
+                            weekFilter={weekFilter}
+                            seasonFilter={Number(selectedSeason)}
+                            handleSeason={setSelectedSeason}
+                            handleDownFilters={setDownFilter}
+                            downFilter={downFilter}
+                            phaseUrl={"/stats/teams/defense"}
+                            statOption={"Personnel"}
+                            showStatSel={true}
+                            categories={"teams"}
+                        />
+                    </div>
+                    <div className={styles.statTableContainer}>
+                        <StatTable
+                            data={props.teamData}
+                            columns={teamPersonnelGoupingColumns}
+                            rowIdCol={"posteam"}
+                            pageSize={32}
+                            disableFooter={false}
+                            showToolbar={true}
+                        />
                     </div>
                 </div>
             </div>

@@ -1,17 +1,18 @@
 import { GetServerSideProps } from "next";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import SelectorTray from "../../../components/SelectorTray";
-import StatTable from "../../../components/StatTable";
-import {
-    aggregateTeamStats,
-    parseBigInt,
-    regSeasonWeeks,
-} from "../../../data/globalVars";
-import { teamPersonnelGoupingColumns } from "../../../data/tableColumns";
 import prisma from "../../../lib/prisma";
+import StatTable from "../../../components/StatTable";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import {
+    playerAdvRushCols,
+    teamPersonnelGoupingColumns,
+    teamPersonnelGroupingColumns,
+    teamStatColumns,
+} from "../../../data/tableColumns";
+import Head from "next/head";
+import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/TeamStats.module.scss";
+import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
 import { ITeamFormationStats } from "../../../ts/interfaces/teamInterfaces";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
@@ -19,153 +20,98 @@ export const getServerSideProps = withPageAuthRequired({
     getServerSideProps: async ({ query }) => {
         let team: ITeamFormationStats[];
         let season = Number(query.season) || 2022;
-        let teamQueryResponse;
+        let weeks =
+            (query.weeks === "none"
+                ? []
+                : (query.weeks as string)?.split(",").map(Number)) ||
+            regSeasonWeeks;
+        let downs = (query.downs === ""
+            ? []
+            : (query.downs as string)?.split(",").map(Number)) || [1, 2, 3, 4];
 
-        teamQueryResponse =
-            await prisma.personnel_usage_and_success_by_team.findMany({
+        const teamSubRes =
+            await prisma.personnel_usage_and_success_by_team.groupBy({
+                by: ["posteam"],
                 where: {
-                    week: {
-                        in: regSeasonWeeks,
-                    },
                     season: season,
+                    week: {
+                        in: weeks || [0],
+                    },
+                    down: {
+                        in: downs,
+                    },
+                },
+                _sum: {
+                    snap_ct_personnel_00: true,
+                    personnel_epa_personnel_00: true,
+                    snap_ct_personnel_01: true,
+                    personnel_epa_personnel_01: true,
+                    snap_ct_personnel_02: true,
+                    personnel_epa_personnel_02: true,
+                    snap_ct_personnel_10: true,
+                    personnel_epa_personnel_10: true,
+                    snap_ct_personnel_11: true,
+                    personnel_epa_personnel_11: true,
+                    snap_ct_personnel_12: true,
+                    personnel_epa_personnel_12: true,
+                    snap_ct_personnel_13: true,
+                    personnel_epa_personnel_13: true,
+                    snap_ct_personnel_20: true,
+                    personnel_epa_personnel_20: true,
+                    snap_ct_personnel_21: true,
+                    personnel_epa_personnel_21: true,
+                    snap_ct_personnel_22: true,
+                    personnel_epa_personnel_22: true,
+                    snap_ct_personnel_23: true,
+                    personnel_epa_personnel_23: true,
+                    snap_ct_personnel_jumbo: true,
+                    personnel_epa_personnel_jumbo: true,
+                    snap_ct_personnel_wildcat: true,
+                    personnel_epa_personnel_wildcat: true,
+                    team_total_snaps: true,
+                    team_epa: true,
+                },
+                _count: {
+                    game_id: true,
+                },
+                orderBy: {
+                    posteam: "asc",
                 },
             });
 
-        team = parseBigInt(teamQueryResponse);
+        team = parseBigInt(teamSubRes);
+
+        const flat = (obj: any, out: any) => {
+            Object.keys(obj).forEach((key) => {
+                if (typeof obj[key] == "object") {
+                    out = flat(obj[key], out); //recursively call for nesteds
+                } else {
+                    out[key] = obj[key]; //direct assign for values
+                }
+            });
+            return out;
+        };
+
+        let teamData = team.map((team) => flat(team, {}));
 
         return {
             props: {
-                teams: parseBigInt(team),
+                teamData: teamData,
             },
         };
     },
 });
 
-interface TeamProps {
-    teams: ITeamFormationStats[];
+interface PlayerProps {
+    teamData: ITeamFormationStats[];
 }
 
-const TeamPersonnelData: React.FunctionComponent<TeamProps> = ({
-    ...props
-}) => {
+const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     const router = useRouter();
     const { query } = router;
-
-    const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
-    const [aggTeams, setAggTeams] = useState(props.teams);
     const [weekFilter, setWeekFilter] = useState(regSeasonWeeks);
     const [downFilter, setDownFilter] = useState([1, 2, 3, 4]);
-
-    useEffect(() => {
-        // if "weeks" query present in URL, update week state
-        if (query.weeks !== undefined && query.weeks !== "none") {
-            const selectedWeeks = (query.weeks as string)
-                ?.split(",")
-                .map(Number);
-
-            setWeekFilter(selectedWeeks);
-        } else if (query.weeks === "none") {
-            setWeekFilter([]);
-        }
-
-        // if "downs" query present in URL, update down state
-        if (query.downs !== undefined && query.downs !== "none") {
-            const selectedDowns = (query.downs as string)
-                ?.split(",")
-                .map(Number);
-
-            setDownFilter(selectedDowns);
-        } else if (query.downs === "none") {
-            setDownFilter([]);
-        }
-
-        // aggregate stats when page loads
-        const reducedTeams: Array<ITeamFormationStats> = aggregateTeamStats(
-            props.teams,
-            "down",
-            "snap_ct_personnel_00",
-            "personnel_epa_personnel_00",
-            "snap_ct_personnel_01",
-            "personnel_epa_personnel_01",
-            "snap_ct_personnel_02",
-            "personnel_epa_personnel_02",
-            "snap_ct_personnel_10",
-            "personnel_epa_personnel_10",
-            "snap_ct_personnel_11",
-            "personnel_epa_personnel_11",
-            "snap_ct_personnel_12",
-            "personnel_epa_personnel_12",
-            "snap_ct_personnel_13",
-            "personnel_epa_personnel_13",
-            "snap_ct_personnel_20",
-            "personnel_epa_personnel_20",
-            "snap_ct_personnel_21",
-            "personnel_epa_personnel_21",
-            "snap_ct_personnel_22",
-            "personnel_epa_personnel_22",
-            "snap_ct_personnel_23",
-            "personnel_epa_personnel_23",
-            "snap_ct_personnel_jumbo",
-            "personnel_epa_personnel_jumbo",
-            "snap_ct_personnel_wildcat",
-            "personnel_epa_personnel_wildcat",
-            "team_total_snaps",
-            "team_epa",
-            "season",
-            "week",
-            "week_count"
-        );
-
-        setAggTeams(reducedTeams);
-    }, []);
-
-    useEffect(() => {
-        const filteredTeams = props.teams
-            .filter((team) =>
-                weekFilter.includes(Number.parseInt(team.week.toString()))
-            )
-            .filter((team) =>
-                downFilter.includes(Number.parseInt(team.down.toString()))
-            );
-
-        const reducedTeams: Array<ITeamFormationStats> = aggregateTeamStats(
-            filteredTeams,
-            "down",
-            "snap_ct_personnel_00",
-            "personnel_epa_personnel_00",
-            "snap_ct_personnel_01",
-            "personnel_epa_personnel_01",
-            "snap_ct_personnel_02",
-            "personnel_epa_personnel_02",
-            "snap_ct_personnel_10",
-            "personnel_epa_personnel_10",
-            "snap_ct_personnel_11",
-            "personnel_epa_personnel_11",
-            "snap_ct_personnel_12",
-            "personnel_epa_personnel_12",
-            "snap_ct_personnel_13",
-            "personnel_epa_personnel_13",
-            "snap_ct_personnel_20",
-            "personnel_epa_personnel_20",
-            "snap_ct_personnel_21",
-            "personnel_epa_personnel_21",
-            "snap_ct_personnel_22",
-            "personnel_epa_personnel_22",
-            "snap_ct_personnel_23",
-            "personnel_epa_personnel_23",
-            "snap_ct_personnel_jumbo",
-            "personnel_epa_personnel_jumbo",
-            "snap_ct_personnel_wildcat",
-            "personnel_epa_personnel_wildcat",
-            "team_total_snaps",
-            "team_epa",
-            "season",
-            "week",
-            "week_count"
-        );
-
-        setAggTeams(reducedTeams);
-    }, [weekFilter, downFilter]);
+    const [selectedSeason, setSelectedSeason] = useState(query.season || 2022);
 
     return (
         <div className={styles.teamStatsPageContainer}>
@@ -198,9 +144,9 @@ const TeamPersonnelData: React.FunctionComponent<TeamProps> = ({
                     </div>
                     <div className={styles.statTableContainer}>
                         <StatTable
-                            data={aggTeams}
+                            data={props.teamData}
                             columns={teamPersonnelGoupingColumns}
-                            rowIdCol={"db_id"}
+                            rowIdCol={"posteam"}
                             pageSize={32}
                             disableFooter={false}
                             showToolbar={true}
@@ -212,4 +158,4 @@ const TeamPersonnelData: React.FunctionComponent<TeamProps> = ({
     );
 };
 
-export default TeamPersonnelData;
+export default PlayerWeeks;
