@@ -7,7 +7,7 @@ import { playerOffenseColumns } from "../../../data/tableColumns";
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/PlayerStats.module.scss";
-import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
+import { regSeasonWeeks } from "../../../data/globalVars";
 import { IBasicOffensePlayerStats } from "../../../ts/interfaces/playerInterfaces";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
@@ -59,8 +59,6 @@ export const getServerSideProps = withPageAuthRequired({
                 },
             },
         });
-
-        team = parseBigInt(playerSubRes);
 
         const flat = (obj: any, out: any) => {
             Object.keys(obj).forEach((key) => {
