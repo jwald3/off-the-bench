@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
     playerAdvRushCols,
+    playerDefenseSnapCols,
     playerRushUsageColumns,
     playerUsageColumns,
     teamPersonnelGoupingColumns,
@@ -13,21 +14,18 @@ import {
 } from "../../../data/tableColumns";
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
-import styles from "../../../styles/PersonnelPage.module.scss";
+import styles from "../../../styles/TeamSnaps.module.scss";
 import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
-import {
-    ITeamFormationStats,
-    ITeamPersonnelStats,
-} from "../../../ts/interfaces/teamInterfaces";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import UsageInfo from "../../../components/UsageInfo";
 import TeamLinkFooter from "../../../components/TeamFooter";
+import { IPlayerDefensiveSnapData } from "../../../ts/interfaces/playerInterfaces";
 
 export const getServerSideProps = withPageAuthRequired({
     getServerSideProps: async ({ query }) => {
         const team = String(query.team) || "NYJ";
         let season = Number(query.season) || 2022;
-        let teamParsed: ITeamPersonnelStats[];
+        let teamParsed: IPlayerDefensiveSnapData[];
 
         let weeks =
             (query.weeks === "none"
@@ -38,8 +36,8 @@ export const getServerSideProps = withPageAuthRequired({
             ? []
             : (query.downs as string)?.split(",").map(Number)) || [1, 2, 3, 4];
 
-        const teamSubRes = await prisma.team_personnel_data.groupBy({
-            by: ["posteam", "offense_grouping"],
+        const teamSubRes = await prisma.defense_player_snaps_by_down.groupBy({
+            by: ["defteam", "player_id", "gsis_id", "position"],
             where: {
                 season: season,
                 week: {
@@ -48,27 +46,17 @@ export const getServerSideProps = withPageAuthRequired({
                 down: {
                     in: downs,
                 },
-                posteam: team,
+                defteam: team,
             },
             _sum: {
                 snap_ct: true,
-                epa: true,
-                passing_snap: true,
-                rushing_snap: true,
-                passing_yards: true,
-                pass_touchdown: true,
-                pass_epa: true,
-                rushing_yards: true,
-                rush_touchdown: true,
-                rush_epa: true,
-                week_count: true,
-                total_game_snaps: true,
-            },
-            _count: {
-                game_id: true,
-            },
-            orderBy: {
-                posteam: "asc",
+                rush_snap: true,
+                pass_snap: true,
+                team_total_snaps: true,
+                team_rush_snaps: true,
+                team_pass_snaps: true,
+                week: true,
+                season: true,
             },
         });
 
@@ -96,7 +84,7 @@ export const getServerSideProps = withPageAuthRequired({
 });
 
 interface PlayerProps {
-    teamData: ITeamPersonnelStats[];
+    teamData: IPlayerDefensiveSnapData[];
 }
 
 const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
@@ -114,7 +102,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
 
     useEffect(() => {
         let sumOfSnaps: number;
-        let finalPersonnel: ITeamPersonnelStats[];
+        let finalPersonnel: IPlayerDefensiveSnapData[];
 
         sumOfSnaps = props.teamData.reduce((i, obj) => {
             return i + obj.snap_ct;
@@ -137,7 +125,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
 
     useEffect(() => {
         let sumOfSnaps: number;
-        let finalPersonnel: ITeamPersonnelStats[];
+        let finalPersonnel: IPlayerDefensiveSnapData[];
 
         sumOfSnaps = props.teamData.reduce((i, obj) => {
             return i + obj.snap_ct;
@@ -167,44 +155,46 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
     }, [personnelChartView]);
 
     return (
-        <div className={styles.personnelPageContainer}>
+        <div className={styles.snapSharePageContainer}>
             <Head>
-                <title>Team Personnel Stats</title>
-                <meta name="description" content="Team Personnel Stats" />
+                <title>Player Snaps Defense</title>
+                <meta
+                    name="description"
+                    content="Player Defensive Snaps by Week and Down"
+                />
                 <meta
                     name="viewport"
                     content="initial-scale=1.0, width=device-width, height=device-height"
                 />
             </Head>
-            <div className={styles.personnelPage}>
-                <div className={styles.selectorTrayContainer}>
-                    <SelectorTray
-                        handleWeekFilters={setWeekFilter}
-                        weekFilter={weekFilter}
-                        seasonFilter={Number(selectedSeason)}
-                        handleSeason={setSelectedSeason}
-                        handleDownFilters={setDownFilter}
-                        downFilter={downFilter}
-                        phaseUrl=""
-                        showStatSel={false}
-                        statOption={""}
-                        categories={""}
-                    />
+            <div className={styles.pageArea}>
+                <div className={styles.snapsMainContainer}>
+                    <div className={styles.selectorTrayContainer}>
+                        <SelectorTray
+                            handleWeekFilters={setWeekFilter}
+                            weekFilter={weekFilter}
+                            seasonFilter={Number(selectedSeason)}
+                            handleSeason={setSelectedSeason}
+                            handleDownFilters={setDownFilter}
+                            downFilter={downFilter}
+                            phaseUrl={"/teams/[team]/snap_counts/offense"}
+                            showStatSel={false}
+                            statOption={""}
+                            categories={""}
+                        />
+                    </div>
+                    <div className={styles.snapTableContainer}>
+                        <StatTable
+                            data={props.teamData}
+                            columns={playerDefenseSnapCols}
+                            rowIdCol={"gsis_id"}
+                            pageSize={32}
+                            disableFooter={false}
+                            showToolbar={true}
+                        />
+                    </div>
+                    <TeamLinkFooter />
                 </div>
-
-                <UsageInfo
-                    playerData={aggPersonnel}
-                    columns={teamPersonnelGroupingColumns}
-                    barDataOne={personnelChartDataOne}
-                    barDataTwo={personnelChartDataTwo}
-                    headerTitle="personnel usage"
-                    altOptionOne="Frequency"
-                    altOptionTwo="Success"
-                    altOptionThree=""
-                    changeView={setPersonnelChartView}
-                    dataKey="offense_grouping"
-                />
-                <TeamLinkFooter />
             </div>
         </div>
     );

@@ -118,7 +118,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                                 downFilter={downFilter}
                                 phaseUrl={"/stats/players/defense"}
                                 showStatSel={true}
-                                statOption={"Receiving"}
+                                statOption={"Basic"}
                                 categories={"players"}
                             />
                         </div>
