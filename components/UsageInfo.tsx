@@ -37,7 +37,7 @@ const UsageInfo: React.FunctionComponent<UsageProps> = ({ ...props }) => {
                 <StatTable
                     data={props.playerData}
                     columns={props.columns}
-                    rowIdCol={"db_id"}
+                    rowIdCol={props.dataKey}
                     pageSize={25}
                     disableFooter={true}
                     showToolbar={false}
