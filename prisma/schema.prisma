@@ -394,3 +394,30 @@ model advanced_rushing_stats {
   season                Int?
   db_id                 String  @id
 }
+
+model player_stats_by_play {
+  season                   BigInt?
+  nflverse_game_id         String?
+  week                     BigInt?
+  down                     Float?
+  posteam                  String?
+  play_id                  BigInt?
+  offense_player           String?
+  offense_players          String?
+  snap_ct                  Int?
+  pass                     BigInt?
+  player_passing           Int?
+  player_completion        Int?
+  player_passing_yards     Float?
+  player_passing_touchdown Int?
+  player_targeted          Int?
+  player_reception         Int?
+  player_receiving_yards   Float?
+  pass_snap_epa            Float?
+  rush                     BigInt?
+  player_rushing           Int?
+  player_rushing_yards     Float?
+  player_rushing_touchdown Int?
+  rush_snap_epa            Float?
+  db_id                    String  @id
+}
