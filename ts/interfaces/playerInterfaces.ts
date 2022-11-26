@@ -208,6 +208,7 @@ export interface IPlayerPBPStats {
     player_targeted: number;
     player_reception: number;
     player_receiving_yards: number;
+    player_receiving_touchdown: number;
     pass_snap_epa: number;
     rush: number;
     player_rushing: number;

@@ -80,6 +80,7 @@ export const getServerSideProps = withPageAuthRequired({
                 player_rushing: true,
                 player_rushing_yards: true,
                 player_rushing_touchdown: true,
+                player_receiving_touchdown: true,
             },
             _avg: {
                 pass_snap_epa: true,
@@ -117,6 +118,7 @@ export const getServerSideProps = withPageAuthRequired({
                 player_targeted: true,
                 player_reception: true,
                 player_receiving_yards: true,
+                player_receiving_touchdown: true,
                 rush: true,
                 player_rushing: true,
                 player_rushing_yards: true,
