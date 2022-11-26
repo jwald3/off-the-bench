@@ -26,6 +26,7 @@ export const getServerSideProps = withPageAuthRequired({
         const team = String(query.team) || "NYJ";
         let season = Number(query.season) || 2022;
         let teamParsed: IPlayerPBPStats[];
+        let filteredTeamParsed: IPlayerPBPStats[];
 
         let weeks =
             (query.weeks === "none"
@@ -35,6 +36,23 @@ export const getServerSideProps = withPageAuthRequired({
         let downs = (query.downs === ""
             ? []
             : (query.downs as string)?.split(",").map(Number)) || [1, 2, 3, 4];
+
+        const playerOptions = await prisma.player_stats_by_play.findMany({
+            where: {
+                season: season,
+                week: {
+                    in: weeks || [0],
+                },
+                down: {
+                    in: downs,
+                },
+                posteam: team,
+            },
+            distinct: ["offense_player"],
+            select: {
+                offense_player: true,
+            },
+        });
 
         const teamSubRes = await prisma.player_stats_by_play.groupBy({
             by: ["posteam", "offense_player"],
@@ -74,6 +92,47 @@ export const getServerSideProps = withPageAuthRequired({
 
         teamParsed = parseBigInt(teamSubRes);
 
+        const filteredTeamSubRes = await prisma.player_stats_by_play.groupBy({
+            by: ["posteam", "offense_player"],
+            where: {
+                season: season,
+                week: {
+                    in: weeks || [0],
+                },
+                down: {
+                    in: downs,
+                },
+                posteam: team,
+                offense_players: {
+                    contains: "Joe Flacco",
+                },
+            },
+            _sum: {
+                snap_ct: true,
+                pass: true,
+                player_passing: true,
+                player_completion: true,
+                player_passing_yards: true,
+                player_passing_touchdown: true,
+                player_targeted: true,
+                player_reception: true,
+                player_receiving_yards: true,
+                rush: true,
+                player_rushing: true,
+                player_rushing_yards: true,
+                player_rushing_touchdown: true,
+            },
+            _avg: {
+                pass_snap_epa: true,
+                rush_snap_epa: true,
+            },
+            orderBy: {
+                offense_player: "asc",
+            },
+        });
+
+        filteredTeamParsed = parseBigInt(filteredTeamSubRes);
+
         const flat = (obj: any, out: any) => {
             Object.keys(obj).forEach((key) => {
                 if (typeof obj[key] == "object") {
@@ -85,11 +144,17 @@ export const getServerSideProps = withPageAuthRequired({
             return out;
         };
 
+        let filteredTeamData = filteredTeamParsed.map((team) => flat(team, {}));
         let teamData = teamParsed.map((team) => flat(team, {}));
+        const playerOptionsList = playerOptions.map(
+            (option) => option.offense_player
+        );
 
         return {
             props: {
+                filteredTeamData: filteredTeamData,
                 teamData: teamData,
+                playerOptions: playerOptionsList,
             },
         };
     },
@@ -97,6 +162,8 @@ export const getServerSideProps = withPageAuthRequired({
 
 interface PlayerProps {
     teamData: ITeamPersonnelStats[];
+    filteredTeamData: ITeamPersonnelStats[];
+    playerOptions: String[];
 }
 
 const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
@@ -119,11 +186,11 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                         <div className={styles.selectorTrayContainer}></div>
                         <div className={styles.statTableContainer}>
                             <StatTable
-                                data={props.teamData}
+                                data={props.filteredTeamData}
                                 columns={playerBySnapData}
                                 rowIdCol={"offense_player"}
                                 pageSize={10}
-                                showToolbar={true}
+                                showToolbar={false}
                                 disableFooter={false}
                             />
                         </div>
@@ -136,7 +203,7 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                                 columns={playerBySnapData}
                                 rowIdCol={"offense_player"}
                                 pageSize={10}
-                                showToolbar={true}
+                                showToolbar={false}
                                 disableFooter={false}
                             />
                         </div>
