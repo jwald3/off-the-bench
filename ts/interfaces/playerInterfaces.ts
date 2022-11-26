@@ -189,3 +189,30 @@ export interface IPlayerUsageStats {
     total_team_target: number;
     total_team_rushes: number;
 }
+
+export interface IPlayerPBPStats {
+    season: number;
+    nflverse_game_id: string;
+    week: number;
+    down: number;
+    posteam: string;
+    play_id: number;
+    offense_player: string;
+    offense_players: string;
+    snap_ct: number;
+    pass: number;
+    player_passing: number;
+    player_completion: number;
+    player_passing_yards: number;
+    player_passing_touchdown: number;
+    player_targeted: number;
+    player_reception: number;
+    player_receiving_yards: number;
+    pass_snap_epa: number;
+    rush: number;
+    player_rushing: number;
+    player_rushing_yards: number;
+    player_rushing_touchdown: number;
+    rush_snap_epa: number;
+    db_id: string;
+}
