@@ -111,7 +111,7 @@ export const getServerSideProps = withPageAuthRequired({
                 AND: [
                     {
                         offense_players: {
-                            contains: pickedPlayers ? pickedPlayers[0] : "",
+                            contains: "Joe Flacco",
                         },
                     },
                 ],
