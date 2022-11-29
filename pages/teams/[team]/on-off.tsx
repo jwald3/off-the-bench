@@ -20,6 +20,8 @@ import { ITeamPersonnelStats } from "../../../ts/interfaces/teamInterfaces";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { IPlayerPBPStats } from "../../../ts/interfaces/playerInterfaces";
 import StatTable from "../../../components/StatTable";
+import Select from "react-select";
+import OnOffSelector from "../../../components/OnOffSelector";
 
 export const getServerSideProps = withPageAuthRequired({
     getServerSideProps: async ({ query }) => {
@@ -27,6 +29,8 @@ export const getServerSideProps = withPageAuthRequired({
         let season = Number(query.season) || 2022;
         let teamParsed: IPlayerPBPStats[];
         let filteredTeamParsed: IPlayerPBPStats[];
+
+        let pickedPlayers = query.included === "" ? [] : query.included;
 
         let weeks =
             (query.weeks === "none"
@@ -104,9 +108,13 @@ export const getServerSideProps = withPageAuthRequired({
                     in: downs,
                 },
                 posteam: team,
-                offense_players: {
-                    contains: "Joe Flacco",
-                },
+                AND: [
+                    {
+                        offense_players: {
+                            contains: pickedPlayers ? pickedPlayers[0] : "",
+                        },
+                    },
+                ],
             },
             _sum: {
                 snap_ct: true,
@@ -148,15 +156,23 @@ export const getServerSideProps = withPageAuthRequired({
 
         let filteredTeamData = filteredTeamParsed.map((team) => flat(team, {}));
         let teamData = teamParsed.map((team) => flat(team, {}));
-        const playerOptionsList = playerOptions.map(
-            (option) => option.offense_player
+        const playerOptionsDict = Object.assign(
+            [{}],
+            playerOptions.map((x) => ({
+                value: x.offense_player,
+                label: x.offense_player,
+            }))
         );
+
+        // .map(
+        //     (option) => {{value: option.offense_player, label: option.offense_player}}
+        // );
 
         return {
             props: {
                 filteredTeamData: filteredTeamData,
                 teamData: teamData,
-                playerOptions: playerOptionsList,
+                playerOptions: playerOptionsDict,
             },
         };
     },
@@ -165,10 +181,18 @@ export const getServerSideProps = withPageAuthRequired({
 interface PlayerProps {
     teamData: ITeamPersonnelStats[];
     filteredTeamData: ITeamPersonnelStats[];
-    playerOptions: String[];
+    playerOptions: string[];
 }
 
 const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
+    const router = useRouter();
+    const { pathname, query } = router;
+
+    const [players, setPlayers] = useState<Array<string>>(props.playerOptions);
+    const [onPlayers, setOnPlayers] = useState<Array<string>>(
+        query.included as Array<string>
+    );
+
     return (
         <div className={styles.playerStatsPageContainer}>
             <div className={styles.playerStatsPageContainer}>
@@ -184,6 +208,37 @@ const PlayerWeeks: React.FunctionComponent<PlayerProps> = ({ ...props }) => {
                     />
                 </Head>
                 <div className={styles.statPageArea}>
+                    <div
+                        style={{
+                            padding: "5%",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "5%",
+                        }}
+                    >
+                        <div
+                            style={{
+                                padding: "2%",
+                            }}
+                        >
+                            <OnOffSelector
+                                players={players}
+                                playersPicked={onPlayers}
+                                pickPlayers={setOnPlayers}
+                            />
+                        </div>
+                        <div
+                            style={{
+                                padding: "2%",
+                            }}
+                        >
+                            <Select
+                                options={players}
+                                isMulti
+                                onChange={(value) => console.log(value)}
+                            />
+                        </div>
+                    </div>
                     <div className={styles.statsMainContainer}>
                         <div className={styles.selectorTrayContainer}></div>
                         <div className={styles.statTableContainer}>

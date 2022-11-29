@@ -28,6 +28,7 @@
         "react-dom": "18.2.0",
         "react-dropdown-select": "^4.9.0",
         "react-icons": "^4.4.0",
+        "react-select": "^5.6.1",
         "recharts": "^2.1.12",
         "sass": "^1.55.0"
     },
