@@ -7,6 +7,7 @@ import TeamLinkFooter from "../../../components/TeamFooter";
 import UsageInfo from "../../../components/UsageInfo";
 import {
     aggregatePersonnelStats,
+    flat,
     parseBigInt,
     regSeasonWeeks,
 } from "../../../data/globalVars";
@@ -142,17 +143,6 @@ export const getServerSideProps = withPageAuthRequired({
         });
 
         filteredTeamParsed = parseBigInt(filteredTeamSubRes);
-
-        const flat = (obj: any, out: any) => {
-            Object.keys(obj).forEach((key) => {
-                if (typeof obj[key] == "object") {
-                    out = flat(obj[key], out); //recursively call for nesteds
-                } else {
-                    out[key] = obj[key]; //direct assign for values
-                }
-            });
-            return out;
-        };
 
         let filteredTeamData = filteredTeamParsed.map((team) => flat(team, {}));
         let teamData = teamParsed.map((team) => flat(team, {}));

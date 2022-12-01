@@ -7,7 +7,7 @@ import { playerOffenseColumns } from "../../../data/tableColumns";
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/PlayerStats.module.scss";
-import { regSeasonWeeks } from "../../../data/globalVars";
+import { flat, regSeasonWeeks } from "../../../data/globalVars";
 import { IBasicOffensePlayerStats } from "../../../ts/interfaces/playerInterfaces";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
@@ -59,17 +59,6 @@ export const getServerSideProps = withPageAuthRequired({
                 },
             },
         });
-
-        const flat = (obj: any, out: any) => {
-            Object.keys(obj).forEach((key) => {
-                if (typeof obj[key] == "object") {
-                    out = flat(obj[key], out); //recursively call for nesteds
-                } else {
-                    out[key] = obj[key]; //direct assign for values
-                }
-            });
-            return out;
-        };
 
         let playerData = playerSubRes.map((player) => flat(player, {}));
 

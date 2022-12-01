@@ -9,7 +9,7 @@ import {
 import Head from "next/head";
 import SelectorTray from "../../../components/SelectorTray";
 import styles from "../../../styles/UsagePage.module.scss";
-import { parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
+import { flat, parseBigInt, regSeasonWeeks } from "../../../data/globalVars";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { IPlayerUsageStats } from "../../../ts/interfaces/playerInterfaces";
 import UsageInfo from "../../../components/UsageInfo";
@@ -81,17 +81,6 @@ export const getServerSideProps = withPageAuthRequired({
         });
 
         teamParsed = parseBigInt(teamSubRes);
-
-        const flat = (obj: any, out: any) => {
-            Object.keys(obj).forEach((key) => {
-                if (typeof obj[key] == "object") {
-                    out = flat(obj[key], out); //recursively call for nesteds
-                } else {
-                    out[key] = obj[key]; //direct assign for values
-                }
-            });
-            return out;
-        };
 
         let teamData = teamParsed.map((team) => flat(team, {}));
 
